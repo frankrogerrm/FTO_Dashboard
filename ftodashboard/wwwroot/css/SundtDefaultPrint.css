@@ -1,0 +1,419 @@
+/* This is the main Print-Specific .CSS file for all .NET apps as of 09/09/2022 (Sonar Cloud Clean-up Update) */
+
+@media print {
+    /* These three classes are in case the user prints with background colours enabled */
+    .main .top-row {
+        background-color: #FFFFFF !important;
+        color: var(--SundtDarkGray);
+    }
+
+    .k-tabstrip > .k-content {
+        background-color: #FFFFFF !important;
+        overflow: hidden !important;
+        border: 0px;
+    }
+
+    thead {
+        background-color: var(--SundtQDRGray) !important;
+    }
+
+
+    .PopupWindowHelp {
+        display: none;
+    }
+
+    .k-icon.k-i-more-vertical { /* This hides the Telerik grid filter icon from printing */
+        display: none;
+    }
+
+    .k-column-title { /* This darkens the Telerik grid heading text when printing */
+        color: #313131;
+    }
+
+    article.PrintArticle { /* This eliminates some of the unnecessary margins when printing */
+        margin-left: -2em;
+        margin-right: -2em;
+        position: relative; /* This line & next 3 lines are a failed attempt to fix printing 08/06/2021 -DD */
+        float: none;
+        overflow: initial !important
+    }
+
+    .IconPageLevel {
+        display: none;
+    }
+
+    .ArticleHelp {
+        display: none;
+    }
+
+    .HideFromPrinting { /* Add this class to all elements that you don't want printed */
+        display: none;
+    }
+
+    .PrintOnly {
+        display: inline-block;
+        font-style: italic;
+        color: var(--SundtDarkGray);
+    }
+
+    .PrintOnlyBreak {
+        display: block;
+    }
+
+
+    .PrintOnlyArticleBar {
+        display: block;
+        border-radius: 100%;
+        height: 10px;
+        border: 0px;
+        background-color: var(--SundtDarkGray);
+    }
+
+    .PageBreakAfter {
+        break-after: page !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* #region Attempting Page Break */
+    /* None of these actually fix the page break when printing (break between sections) as of 08/06/2021 -DD */
+    article {
+        position: relative;
+        float: none;
+        overflow: initial !important;
+    }
+
+        article.PrintBar {
+            padding-bottom: 1rem !important;
+            border-bottom: 1px solid var(--SundtBlack20);
+        }
+
+    section {
+        position: relative;
+        float: none;
+        overflow: initial !important;
+        page-break-inside: avoid !important;
+        display: block;
+        break-after: always !important;
+        page-break-after: always !important;
+    }
+
+    .main {
+        position: relative;
+        float: none;
+        overflow: initial !important
+    }
+
+    .NonTelerikContainer {
+        position: relative;
+        float: none;
+        overflow: initial !important
+    }
+    /* #endregion Attempting Page Break */
+
+    .PrintLogo {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 9999999;
+    }
+
+    .HeaderLeft { /* Different than screen so it only prints once */
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 48px;
+    }
+
+    .HeaderRight { /* Different than screen so it only prints once */
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+
+    .HeaderLogoImage { /* Moves it over to the left for printing */
+        margin-left: 8px;
+    }
+
+    .HeaderName { /* Class for who printed it */
+        margin: 0px;
+        padding: 0px;
+        padding-top: 2px;
+    }
+
+    .HeaderTitle {
+        position: absolute;
+        top: 6px;
+        color: black;
+        font-size: 14pt;
+    }
+
+    .HeaderTitleNav {
+        position: absolute;
+        top: 6px;
+        left: calc(50% - 150px);
+        color: black;
+        font-size: 14pt;
+    }
+
+    .HeaderWhatsNewButton,
+    .WhatsNewPopoutChevron {
+        display: none;
+    }
+
+
+
+    .Index {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .LeftSide {
+        display: none;
+    }
+
+    .MainContent {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        float: none;
+        overflow: initial !important
+    }
+
+        .MainContent.ShowNav { /* Navigation forced collapsed when printed */
+            left: 0px;
+            width: 100%;
+        }
+
+    .expandNavIcon {
+        display: none;
+    }
+
+    .collapseNavIcon {
+        display: none;
+    }
+
+    .LeftMenuO365Closer {
+        display: none;
+    }
+
+    .LeftMenuIcon {
+        display: none;
+    }
+
+    .HeaderMenuImage {
+        display: none;
+    }
+
+    .HeaderMenuO365Image {
+        display: none;
+    }
+
+    .LeftMenuO365 {
+        display: none;
+    }
+
+    .LeftMenu {
+        display: none;
+    }
+
+    .RedButton {
+        display: none;
+    }
+
+    .YellowButton {
+        display: none;
+    }
+
+    .BlueButton {
+        display: none;
+    }
+
+    .GreenButton {
+        display: none;
+    }
+
+    .GrayButton {
+        display: none;
+    }
+
+    .DarkGrayButton { /* Check each app to see if this is used; if not, delete it (redundant) */
+        display: none;
+    }
+
+    .NavyButton {
+        display: none;
+    }
+
+    .SubmitButton {
+        display: none;
+    }
+
+    .DisabledButton {
+        display: none;
+    }
+
+    .PrintLargeGrid { /* Screen-version is 1665px and larger font */
+        font-size: 6pt;
+        min-width: 100%;
+        width: 100%;
+    }
+
+        .PrintLargeGrid th {
+            color: #000000;
+            padding: 0.25rem 0.25rem;
+        }
+
+        .PrintLargeGrid td {
+            padding: 0.25rem 0.25rem;
+        }
+
+    .RotatePrinting { /* First used in the MPR app (Reconciliation); this rotates the content of a page so it prints bottom to top. */
+        opacity: 1;
+        /*        transform: rotate(270deg);
+        height: 1800px;*/
+    }
+
+    .CloseIcon {
+        display: none;
+    }
+
+    .ProductionEnvironment {
+        opacity: 0;
+    }
+
+    .StagingEnvironment {
+        opacity: 0;
+    }
+
+    .DevelopmentEnvironment {
+        opacity: 0;
+    }
+
+    .main .top-row a:link {
+        color: var(--SundtDarkGray);
+    }
+
+    .main .top-row a:visited {
+        color: var(--SundtDarkGray);
+    }
+
+    .main .top-row a:hover {
+        color: var(--SundtDarkGray);
+    }
+
+    .main .top-row a:active {
+        color: var(--SundtDarkGray);
+    }
+
+    .k-tabstrip-items .k-item {
+        border: 0px;
+        color: var(--SundtLightGray);
+    }
+
+        .k-tabstrip-items .k-item.k-state-active, .k-tabstrip-items .k-item.k-state-selected {
+            border: 1px solid var(--SundtLightGray);
+            color: var(--SundtBlack);
+        }
+
+    .k-pager-numbers .k-link.k-state-selected {
+        color: #333333;
+        border-color: var(--SundtLightGray);
+    }
+
+    .k-pager-numbers .k-link {
+        color: var(--SundtLightGray);
+    }
+
+    .k-icon {
+        color: var(--SundtLightGray);
+    }
+
+    .alert-warning {
+        color: var(--SundtBlack);
+        background-color: var(--SundtAlmostWhite);
+        border-color: var(--SundtBlack);
+    }
+
+        .alert-warning hr {
+            border-top-color: var(--SundtBlack);
+        }
+
+        .alert-warning .alert-link {
+            color: var(--SundtBlack);
+        }
+
+    .CSSa {
+        color: var(--SundtDarkGray);
+    }
+
+    .CSSaHeader {
+        color: var(--SundtDarkGray);
+    }
+
+    .PrintWidth {
+        width: 950px;
+    }
+
+    .mx-print-0 {
+        opacity: 1;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .Footer {
+        padding: 0px;
+        width: 100%;
+        min-height: 0px;
+        background: rgb(255,255,255);
+        border-top: 0px;
+    }
+
+    .PrintOnlyFooter {
+        display: block;
+        margin: 0px;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        min-height: 100px;
+        border-top: 1px solid var(--SundtBlack20);
+        font-family: Body, sans-serif;
+        color: var(--SundtBlack80);
+        z-index: 9999999;
+    }
+
+    /* Not 100% sure it's required again; colour declarations: */
+    :root {
+        --SundtRed: #EE373D;
+        --SundtDarkGray: #898A8D; /* Bootstrap: swatch-600 & bg-secondary */
+        --SundtLightGray: #B7BABC; /* Bootstrap: swatch-500 */
+        --SundtBlack: #000000; /* Bootstrap: black */
+        --SundtWhite: #FFFFFF; /* Bootstrap: white & bg-white */
+        --SundtNavy: #006699; /* Bootstrap: cyan & bg-info */
+        --SundtBlue: #0099CC; /* Bootstrap: blue & bg-primary */
+        --SundtYellow: #F3D03E; /* Bootstrap: yellow & bg-warning */
+        --SundtBlack5: #F2F2F2; /* Bootstrap: swatch-200 */
+        --SundtBlack20: #CCCCCC; /* Bootstrap: swatch-400 */
+        --SundtBlack80: #333333; /* Bootstrap: swatch-800 & bg-dark */
+        --SundtGreen: #78C196; /* Bootstrap: teal */
+        --SundtQDRGray: #E2E3E6; /* Bootstrap: swatch-300 */
+        --SundtQDRGreen: #00A200; /* For submit buttons only */
+        --SundtRequiredYellow: #FFFFC8; /* For required field backgrounds only */
+        --SundtAlmostWhite: #F8F9FB; /* Bootstrap: swatch-100 & bg-light */
+        --SundtBlack70: #636467; /* Bootstrap: swatch-700 */
+        --SundtBlack90: #16171A; /* Bootstrap: swatch-900 */
+        --SundtOrange: #E6A83E; /* Bootstrap: orange */
+        --SundtBSIndigo: #6842FF; /* Bootstrap: indigo */
+        --SundtBSPink: #C62A3D; /* Bootstrap: pink */
+        --SundtBSGreen: #65C27D; /* Bootstrap: green */
+    }
+}

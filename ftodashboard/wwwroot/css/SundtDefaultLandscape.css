@@ -1,0 +1,308 @@
+﻿/* This is the main Landscape .CSS file for all .NET apps as of 09/09/2022 (Sonar Cloud Clean-up Update) */
+
+@media (orientation: landscape) {
+    html, body {
+        font-size: 1vw;
+    }
+
+    .LeftBar {
+        background-color: #FFFFFF; /* for IE */
+        background-color: var(--SundtWhite);
+        width: 18vw;
+        padding-right: 2vw;
+        min-height: 100vh;
+        float: left;
+        text-align: center;
+    }
+
+    .Logo {
+        padding: 1.25vh 1.5vw 0.75vh 1vh;
+    }
+
+    .LogoSizer {
+        max-height: 100%;
+        max-width: 80%;
+    }
+
+    .SmLogo {
+        float: left;
+    }
+
+    .SmLogoSizer {
+        height: 3.75vw;
+        padding: 0.5vw 1vw 0vw 0vw;
+    }
+
+    .User {
+        opacity: 1; /* This is a placeholder for future use; a feature we started & put on hold. */
+    }
+
+    .UserImage {
+        padding: 1.25vh 1vh 0.75vh 1vh;
+    }
+
+    .UserImageSizer {
+        max-height: 100%;
+        max-width: 60%;
+        border-radius: 50%;
+    }
+
+    .SmUserImage {
+        position: absolute;
+        top: 0.5vw;
+        right: 1.5vw;
+    }
+
+    .SmUserImageSizer {
+        padding: 0.2vw;
+        max-width: 3.25vw;
+        max-height: 3.25vw;
+        border-radius: 50%;
+    }
+
+    .UserName {
+        color: #313131; /* for IE */
+        color: var(--SundtBlack80);
+        text-transform: capitalize;
+        padding: 1vh 0vh 0vh 0vh;
+        font-weight: 700;
+    }
+
+    .UserTitle {
+        color: #313131; /* for IE */
+        color: var(--SundtBlack80);
+        text-transform: capitalize;
+        padding-top: 1.5vh;
+        padding-bottom: 2.25vh;
+    }
+
+    .LogInOut {
+        position: absolute;
+        top: 0.5vw;
+        right: 0.75vw;
+    }
+
+    .LogInOutIcon {
+        padding: 0.25vw;
+        max-width: 3.25vw;
+        max-height: 3.25vw;
+    }
+
+    .Hamburger {
+        display: none;
+    }
+
+    .HamburgerIcon {
+        display: none;
+    }
+
+    .LeftSelections {
+        margin-top: 2vh;
+        color: #313131; /* for IE */
+        color: var(--SundtBlack80);
+        font-weight: 700;
+        font-size: larger;
+    }
+
+    .LeftSelection {
+        margin-top: 1vh;
+        /*padding: 0.5em;*/
+    }
+
+    .LeftSelectionIcon {
+        float: left;
+        padding: 0vw;
+        width: 2.75vw;
+        height: 2.75vw;
+        background-image: url(/images/PendingSelected.png);
+        background-size: contain;
+    }
+
+
+    .LeftSelectionIconRedOval {
+        padding: 0vw;
+        position: relative;
+        bottom: 15%;
+        left: 60%;
+        width: 2vw;
+        height: 1.24vw;
+        background-image: url(/images/RedOval.png);
+        background-size: contain;
+        text-align: center;
+        font-size: smaller;
+        color: #FFFFFF; /* for IE */
+        color: var(--SundtWhite);
+    }
+
+    .LeftSelectionText {
+        text-align: left;
+        padding: 0.7vw 0.5vw 0.7vw 3.25vw;
+        background-color: #FFFFFF; /* for IE */
+        background-color: var(--SundtWhite);
+    }
+
+        .LeftSelectionText:hover {
+            color: #0099CC; /* for IE */
+            color: var(--SundtBlue);
+            background-image: url(/images/TopLevelHovered.png);
+            background-size: contain;
+        }
+
+    .LeftSelectionTextSelected {
+        text-align: left;
+        padding: 0.7vw 0.5vw 0.7vw 3.25vw;
+        background-image: url(/images/TopLevelSelected.png);
+        background-size: contain;
+    }
+
+        .LeftSelectionTextSelected:hover {
+            color: #0080B3; /* for IE */
+            color: var(--SundtDarkBlue);
+            background-image: url(/images/TopLevelSelectedHovered.png);
+            background-size: contain;
+        }
+
+    .RightBar {
+        margin-left: 16vw;
+        position: absolute;
+        top: 0px;
+        width: 84vw;
+        height: 100vh;
+    }
+
+    .Collapse {
+        position: relative;
+        left: -2.5vw;
+        top: 0.5vw;
+    }
+
+    .CollapseIcon {
+        max-width: 2.5vw;
+        padding: 0.75vh 0vh 0.75vh 1.25vh;
+        float: left;
+        cursor: pointer;
+    }
+
+    .Expand {
+        position: relative;
+        left: -2.25vw;
+        top: 0.5vw;
+    }
+
+    .ExpandIcon {
+        max-width: 2.5vw;
+        padding: 0.75vh 0vh 0.75vh 1.25vh;
+        float: left;
+        cursor: pointer;
+    }
+
+    .RightBarLarge {
+        background-color: #E6E6E6; /* for IE */
+        background-color: var(--SundtQDRGray);
+        padding-left: 1.5vw;
+        padding-right: 1vw;
+        padding-bottom: 2vw;
+        position: absolute;
+        top: 0px;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .Header {
+        padding-left: 0em; /* This was before the expand/collapse: padding-left: 0.45em; */
+        font-size: 3.75vw;
+        width:70vw;
+    }
+
+    .SubHeader {
+        font-size: 2vw;
+    }
+
+    .HeadlineFourCallout {
+        font-size: 1.35vw;
+    }
+
+    .HeadlineFiveCallout {
+        font-size: 1.35vw;
+    }
+
+    .Tabs {
+        font-family: Tabs, sans-serif;
+    }
+
+    .TabActive {
+        color: #FFFFFF; /* for IE */
+        color: var(--SundtWhite);
+        background-color: #000000; /* for IE */
+        background-color: var(--SundtBlack);
+    }
+
+    .TabInactive {
+        color: #FFFFFF; /* for IE */
+        color: var(--SundtWhite);
+        background-color: #E6E6E6; /* for IE */
+        background-color: var(--SundtQDRGray)
+    }
+
+    .MainFooter {
+        font-family: Buttons, sans-serif;
+        color: #FFFFFF; /* for IE */
+        color: var(--SundtWhite);
+        padding: 1em;
+        text-align: center;
+    }
+
+    .TwoButtonLeft {
+        width: 49%;
+        float: left;
+        text-align: right;
+        padding: 0vw 5vw 0vw 0vw;
+    }
+
+    .TwoButtonRight {
+        width: 49%;
+        float: left;
+        text-align: left;
+        padding: 0vw 0vw 0vw 5vw;
+    }
+
+    .Buttons {
+        font-size: 1.25vw;
+    }
+
+    .SmallButtons {
+        margin-top: 0.5em;
+        font-size: 0.75vw;
+    }
+
+    .ToggledForms {
+        padding: 0em 3em 0em 3em;
+    }
+
+    table.TSTable {
+        margin: 0.5em;
+        width: 90%;
+    }
+
+        table.TSTable td, th {
+            padding: 0.5em;
+        }
+
+/*    table.BGTable {
+        margin-left: 5%;
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+    }
+
+        table.BGTable td, th {
+            padding: 0.25em 2em 0.25em 2em;
+        }
+
+        table.BGTable td {
+            font-size: smaller;
+        }*/
+
+    .PortraitOnly {
+        display: none;
+    }
+}

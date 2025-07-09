@@ -1,0 +1,26 @@
+﻿@layout TelerikLayout
+@inherits LayoutComponentBase
+
+<div class="main">
+    <Header />
+
+    @Body
+
+    <Footer />
+    <!--
+
+        The above should really look more like this:
+        <Footer @bind-footerTextPosition="_footerTextPosition" />
+
+    -->
+</div>
+
+@code 
+
+{
+    
+    // We need "footerTextPosition" to be passed down from Index so it can be passed up to Footer
+    // The next variable is for the new 'Note' text in the footer (delete this comment once it works) -DD
+    // string _footerTextPosition = "FTONavShown";       // This is the default
+
+}

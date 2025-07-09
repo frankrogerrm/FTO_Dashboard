@@ -1,0 +1,3673 @@
+/*
+    This is the main .CSS file for all .NET apps as of 11/14/2022 
+    
+    Latest Release Notes:
+
+    IS article.WideArticle NEW??  FIGURE IT OUT & DOCUMENT UPDATES 8/16
+
+    ADDED: .k-link .k-icon.k-i-sort-asc-small, .k-link .k-icon.k-i-sort-desc-small, TO .k-grid-header .k-i-sort-asc-sm, .k-grid-header .k-i-sort-desc-sm, .k-grid-header .k-sort-order -- Fixes the grid sort arrows (DevOps Story 3710)
+
+    MODIFIED: .k-grid-header .k-grid-filter.k-state-active, .k-grid-header .k-grid-filter.k-active, .k-grid-header .k-header-column-menu.k-state-active, .k-grid-header .k-header-column-menu.k-active, .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, .k-grid-header .k-hierarchy-cell .k-icon.k-active -- Promoting a fix I wrote for Margin App
+    TELERIK 3.6.1 UPDATE: .k-grid-filter-menu & .k-grid-header-menu replaced .k-grid-filter for placement of the filter icon in grids in the update; these fixed the bugs created (DevOps Story 3537):
+        WHAT WAS: .GridSmallerPad .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu 
+            IS NOW: .GridSmallerPad .k-grid-header .k-grid-filter-menu, .GridSmallerPad .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu 
+        WHAT WAS: .NoFilter .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu 
+            IS NOW: .NoFilter .k-grid-header .k-grid-filter-menu, .NoFilter .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu
+        WHAT WAS: .GridSmallerPad.WrapGridHeading .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu 
+            IS NOW: .GridSmallerPad.WrapGridHeading .k-grid-header .k-grid-filter-menu, .GridSmallerPad.WrapGridHeading .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu
+        WHAT WAS: .k-grid-header .k-grid-filter.k-state-active, .k-grid-header .k-grid-filter.k-active, .k-grid-header .k-header-column-menu.k-state-active, .k-grid-header .k-header-column-menu.k-active, .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, .k-grid-header .k-hierarchy-cell .k-icon.k-active
+            IS NOW: .k-grid-header .k-grid-filter.k-state-active, .k-grid-header .k-grid-filter-menu.k-active, .k-grid-filter.k-active, .k-grid-header .k-header-column-menu.k-state-active, .k-grid-header .k-header-column-menu.k-active, .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, .k-grid-header .k-hierarchy-cell .k-icon.k-active
+    ADDED: .GridHeaderIcon -- Allows for (i) hover help icons to be placed in a grid header instead of a filter icon (instead of is important)
+    MODIFIED: .HeaderWhatsNewButton & .WhatsNewPopoutChevron -- to allow for longer names & have the chevron still point to the button
+    ADDED: .PseudoRow -- I put it after .row, it's the simplest 'row' possible, no margin/padding
+    FIXED: .FixHeader -- This was broken & unused, but needed for the Release Notes feature
+    ADDED: "WhatsNew..." -- All used for formatting the Release Notes pop-out, more were added 7/18
+    ADDED: .GreenText && .QDRGreenText -- These are just like the existing .RedText & .NavyText, etc. (they were just missing)
+    ADDED: .PrintVisible && .PrintVisible.Visible && .PrintVisible.Hidden -- These make the Print Preview much more efficient, instant expand/collapse times (how I should have done it the first time)
+    ADDED: .k-grid-header .k-grid-filter.k-state-active, .k-grid-header .k-grid-filter.k-active, .k-grid-header .k-header-column-menu.k-state-active, .k-grid-header .k-header-column-menu.k-active, .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, .k-grid-header .k-hierarchy-cell .k-icon.k-active -- This is to override the wrong blue in the header when filtering a grid.
+    ADDED: .k-grid-header .k-i-sort-asc-sm, .k-grid-header .k-i-sort-desc-sm, .k-grid-header .k-sort-order && .k-grid-header .k-cell-inner > .k-link > .k-icon.k-i-sort-desc-sm, .k-grid-header .k-cell-inner > .k-link > .k-icon.k-i-sort-asc-sm-- These are the sort arrows in the grid header (hopefully that's all they are)
+    ADDED: .k-pager-numbers .k-link.k-state-selected, .k-pager-numbers .k-link.k-selected  -- This is an override to fix another colour that 3.4.0 messed up.
+    ADDED: min-width1366a -- This is the one that makes sure it fills a laptop width (with a few pixel buffer to allow for a vertical scrollbar) without having a required horizontal scrollbar
+    ADDED: article.NoTabs -- This is for when we use articles on pages without a Telerik TabStrip
+    PROMOTED: RequiredPlaceholder -- Promoted from GNG's Dev-Only, this makes the placeholder text of required textboxes red
+    MOVED: Blocks of CSS code that were commented out long ago to archive\deprecated.css
+*/
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"); /* Enables Bootstrap Icons */
+
+/*  site.css and custom.css were merged into this .css file - over time, I will merge them fully, but I'm intentionally taking it one step at a time so as to avoid a possible UI issue getting missed until it's too late to easily find and correct it. */
+
+/*  
+    When we upgraded Telerik past 2.22, a handful of UI elements were messed up.  To find all changes made for this, search for: 
+    "Telerik UI update" (without the quotes, that's in a comment on every single one) -DD
+*/
+
+/* #region Imported from site.css on 06/15/2021 */
+/* Imported from site.css on 06/15/2021 - I modified colours to suit the Sundt palette -DD */
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+a, .btn-link {
+    color: var(--SundtBlue);
+}
+
+.btn-primary {
+    color: var(--SundtWhite);
+    background-color: var(--SundtNavy);
+    border-color: var(--SundtQDRGray);
+    /*border-color: var(--SundtDarkNavy);*/
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid var(--SundtBSGreen);
+}
+
+.invalid {
+    outline: 1px solid var(--SundtRed);
+}
+
+.validation-message {
+    color: var(--SundtRed);
+}
+
+#blazor-error-ui {
+    background: var(--SundtYellow);
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+@media (max-width: 767.98px) {
+    .main .top-row:not(.auth) {
+        display: none;
+    }
+
+    .main .top-row.auth {
+        justify-content: space-between;
+    }
+
+    .main .top-row a, .main .top-row .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100%;
+        position: sticky;
+        top: 0;
+    }
+
+    .main .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .main > div {
+        /*        padding-left: 2rem !important;
+            padding-right: 1.5rem !important;*/
+        padding: 0px; /* Don updated this because it messed up the layout */
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+
+    .sidebar .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+/* #endregion Imported from site.css on 06/15/2021 */
+
+/* #region Imported from custom.css on 06/15/2021 */
+/* Imported from custom.css on 06/15/2021 - I modified colours to suit the Sundt palette -DD */
+.notification .k-notification-container .k-notification-wrap {
+    position: relative;
+    font-size: 18px;
+    margin: 10px;
+}
+
+.shaded {
+    background-color: var(--SundtQDRGray) !important;
+}
+
+.k-grid .k-grid-header .k-header .k-link {
+    height: auto;
+}
+
+.k-grid .k-grid-header .k-header {
+    /*white-space: pre;*/ /* This had to be removed due to a Telerik UI update -DD 01/20/2022 */
+    text-align: center;
+}
+
+.forecast td:first-child, .forecast td:nth-child(4), .forecast td:nth-child(5), .forecast td:nth-child(7) {
+    background-color: var(--SundtBlack5);
+}
+
+.alignRight.k-numerictextbox {
+    text-align: right;
+}
+/* icon-48 is overridden in the TelerikOverride - not sure about the others, but I am commenting them all out at this time -DD 06/15/2021 */
+/*.icon-32 {
+        font-size: 32px;*/ /* Sets icon size to 32px */
+/*}
+    .icon-48 {
+        font-size: 48px;*/ /* Sets icon size to 48px */
+/*}
+    .icon-64 {
+        font-size: 64px;*/ /* Sets icon size to 64px */
+/*}*/
+/* #endregion Imported from custom.css on 06/15/2021 */
+
+/* #region General Purpose */
+html, body {
+    font-family: Body, sans-serif;
+    color: var(--SundtBlack80);
+    background-color: var(--SundtWhite);
+    padding: 0px;
+    margin: 0px;
+    font-size: 10pt !important;
+}
+
+a {
+    color: var(--SundtBlue);
+    text-decoration: underline;
+}
+
+    a.CSSaNoUL {
+        color: var(--SundtNavy);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        a.CSSaNoUL:hover {
+            color: var(--SundtBlue);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+article {
+    position: relative;
+    margin: 0px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem !important;
+    padding: 0.25rem;
+    padding-bottom: 1rem;
+    color: #333;
+    background: linear-gradient(180deg, rgb(250,250,250), rgb(255,255,255));
+    background-clip: padding-box;
+    border: 1px solid rgba(183,186,188,0.5);
+    border-radius: 5px;
+    max-width: 1100px;
+}
+
+    article.NoTabs { /* This is for when there's no Telerik TabStrip in the app */
+        margin-top: 25px !important;
+        padding: 0px !important;
+        color: #333;
+        background: #FFFFFF;
+        border: 0px;
+        border-radius: 0px;
+    }
+
+    article.WideArticle {
+        max-width: 100%;
+    }
+
+    article h2 {
+        padding-left: 15px;
+    }
+
+    article.PrintArticle {
+        background: rgba(0,0,0,0);
+        border: 0px;
+        padding: 0px;
+        max-width: 1050px;
+    }
+
+    article.PrintBar {
+        border-bottom: 0px;
+    }
+
+.HeadingButtonContainer { /* This places the "Heading Button" at the bottom of the Left Navigation (Refresh from Cosential, GNG) */
+    position: fixed;
+    top: calc(100vh - 61px);
+    left: 0px;
+    height: 125px;
+    width: 253px;
+    text-align: center;
+}
+
+.HeadingButton {
+    opacity: 1;
+    /* This was a button at the top of the Left Navigation (GNG, Refresh from Cosential)
+    position: absolute;
+    top: 12px;
+    left: -256px;
+*/
+    /*  This was before it was placed "in" the left-side navigation (not technically in, but visually in) - DD 12/06/2021
+    top: 12px;
+    right: 0px;
+    text-align: right;
+*/
+}
+
+.HeadingButtonCompanionText {
+    width: 253px;
+    font-style: italic;
+    color: var(--SundtLightGray);
+    /*  This was when the Heading Button was at the top of the Left Navigation (GNG, Refresh from Cosential)
+    position: absolute;
+    top: 0px;
+    left: 50px;
+    height: 35px;
+    width: 200px;
+    margin: 8px,0px,0px,0px;
+    font-style: italic;
+    color: var(--SundtLightGray);
+    text-align: left;
+*/
+}
+
+.HeadingButtonWithClose { /* Any time I need a button opposite the <h2> in an <article> that has a Close "X" */
+    position: absolute;
+    top: 21px;
+    right: 75px;
+}
+
+.RemoveArticle article { /* This is for Print Preview / printing */
+    background: rgba(0,0,0,0);
+    border: 0px;
+    padding: 0px;
+}
+
+    .RemoveArticle article .HeadingButton { /* Any time I need to remove the button opposite the <h2> in an <article> */
+        display: none;
+    }
+
+.PrintVisible {
+    display: block;
+}
+
+    .PrintVisible.Visible {
+        display: block;
+    }
+
+    .PrintVisible.Hidden {
+        display: none;
+    }
+
+
+section {
+    padding: 0px;
+    margin: 0px;
+    max-width: 1050px;
+}
+
+    section.LessWideSection {
+        max-width: calc(100% - 20px);
+    }
+
+    section.WideSection {
+        max-width: 100%;
+    }
+
+    section.mainsection {
+        padding: 0px;
+        margin: 0.75rem 0px;
+        background-color: rgba(0,0,0,0) !important;
+    }
+
+    section.subsection { /* Essentially a 'col-6' 'row' */
+        padding: 0px;
+        margin: 0.25rem 0px;
+        /*        width: 500px;
+        min-width: 500px;*/
+        width: 50%;
+        display: -ms-flexbox; /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    section.subsection-wide { /* Essentially a 'col-12' 'row' */
+        padding: 0px;
+        margin: 0.25rem 0px;
+        /*        width: 1000px;
+        min-width: 1000px;*/
+        width: 100%;
+        display: -ms-flexbox; /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    section .label {
+        font-family: BoldBody, sans-serif;
+        font-size: 10.5pt;
+        padding-top: 6px;
+        padding-bottom: 2px;
+    }
+
+    section .text {
+        font-family: LightBody, sans-serif;
+        font-size: 10pt;
+        padding-top: 7px;
+        padding-bottom: 2px;
+        font-weight: 600;
+    }
+
+    section .section-top-border {
+        padding-bottom: 0.25em;
+        border: 0px;
+        border-top: 1px solid rgba(183,186,188,0.25);
+    }
+
+/* h1 is reserved for heading title */
+h2 { /* For use in the body as needed */
+    padding-top: 0.25em;
+    color: var(--SundtBlack80);
+    text-transform: none;
+    font-family: BoldHeadline, sans-serif;
+}
+/* h3 is reserved for heading subtitle */
+h4 { /* For use in the body as needed */
+    color: var(--SundtBlack80);
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 1.25em;
+    padding-top: 0.5em;
+}
+
+    h4.H4SmallerSemiBold { /* For use in the body as needed */
+        color: var(--SundtBlack80);
+        font-family: SemiBoldBody, sans-serif;
+        font-size: 1em;
+        padding-top: 0.5em;
+    }
+
+    h4.H4SmallerBold { /* For use in the body as needed */
+        color: var(--SundtBlack80);
+        font-family: BoldBody, sans-serif;
+        font-size: 1em;
+        padding-top: 0.5em;
+    }
+
+    h4.H4Heading {
+        margin-top: -6px;
+    }
+
+.H4SmallerSemiBold { /* For use in the body as needed it needs to be inline */
+    font-family: SemiBoldBody, sans-serif;
+}
+
+hr {
+    border-top: 1px solid var(--SundtBlack5);
+    margin: 1% 0px 0px 0px;
+}
+
+.PrintOnly {
+    display: none;
+}
+
+.PrintOnlyFooter {
+    display: none;
+}
+
+.PrintOnlyBreak {
+    display: none;
+}
+
+.PrintOnlyArticleBar {
+    display: none;
+}
+
+.PrintLogo {
+    display: none;
+}
+/* #endregion General Purpose */
+
+/* #region MainLayout.razor / app.razor */
+/* .page is above (site.css) and is outermost wrapper (currently) - TODO: Look into this further, simplify if possible. */
+/* .main is above (site.css) and is outermost wrapper (currently) - TODO: Look into this further, simplify if possible. */
+.EncapsulateBodyForFooter {
+    margin: 0px;
+    padding: 0px;
+    /*height: 100%;*/
+    /*min-height: calc(100vh - 169px);*/
+    /* 
+        This encapsulates everything but the header & footer and sets the min-height to 
+        the viewport height minus the combined header and footer heights minus 32px (the 
+        combined top & bottom margins of "main") & causes the footer to always be at the 
+        bottom of the screen (so long as the user is scrolled down, if/as needed).
+    */
+}
+
+.EncapsulateBodyForFooterBackground {
+    background-image: url(/images/GrayBarBackground.png);
+    background-repeat: repeat-y;
+}
+
+.Footer {
+    margin: 0px;
+    text-align: center;
+    align-items: center;
+    vertical-align: middle;
+    width: 100%;
+    min-height: 100px;
+    background: rgb(250,250,250);
+    background: linear-gradient(180deg, rgba(239,240,243,1), rgba(255,255,255,1));
+    border-top: 1px solid var(--SundtQDRGray);
+    font-family: Body, sans-serif;
+    color: var(--SundtBlack80);
+    z-index: 9999999;
+}
+
+.FooterVersion {
+    padding-top: 12px;
+}
+
+.FooterTagline {
+    opacity: 1; /* Just so Sonar doesn't complain about an empty class - this is for future use */
+}
+
+.FooterKAPBCS {
+    font-weight: 800;
+}
+/* #endregion MainLayout.razor / app.razor */
+
+/* #region Header.razor */
+/* .top-row is above (site.css) and is outermost wrapper (currently) - TODO: Look into this further, simplify if possible. */
+.HeaderLeft { /* Container class for SundtWeb-style logo */
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    /*    width: 100%;
+    height: 48px;*/
+}
+
+.HeaderLogoImage { /* Class for the logo image itself */
+    margin-left: 56px;
+    width: 172px;
+    height: 48px;
+    z-index: 9997;
+}
+
+.HeaderName { /* Class for the user's name */
+    position: relative;
+    padding: 15px;
+    display: inline-block;
+    text-decoration: none;
+    font-family: Body, sans-serif;
+}
+/*      Class for the link on the user's name - not currently used (to log out).
+        .HeaderName:hover {
+            text-decoration: none;
+        }
+    */
+.HeaderUserImage { /* Class for the user's image itself */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 8px 7px;
+    padding: 0px;
+}
+
+.HeaderTitle {
+    position: fixed;
+    top: 12px;
+    left: calc(50% - 250px);
+    width: 500px;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    color: var(--SundtWhite);
+    font-size: 12pt;
+    text-decoration: none;
+    font-family: SemiBoldBody, sans-serif;
+    z-index: 9999;
+}
+
+.HeaderTitleNav {
+    position: fixed;
+    top: 12px;
+    left: calc(50% - 30px);
+    width: 300px;
+    text-align: center;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    color: var(--SundtWhite);
+    font-size: 12pt;
+    text-decoration: none;
+    font-family: SemiBoldBody, sans-serif;
+    z-index: 9999;
+}
+
+/* This is for the application's main help menu */
+.HeaderRight {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.HeaderRightFloat {
+    float: left;
+}
+
+.Help46Box {
+    border: 1px solid rgba(0, 0, 0, 0);
+    margin: 0px;
+    padding: 7px;
+    height: 46px;
+    width: 46px;
+    color: var(--SundtWhite);
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.Help46BoxSelected {
+    border: 1px solid rgba(0, 0, 0, 0);
+    margin: 0px;
+    padding: 7px;
+    height: 46px;
+    width: 46px;
+    color: var(--SundtBlack80);
+    /*color: var(--SundtDarkDarkGray);*/
+    background-color: var(--SundtBlack5);
+    cursor: pointer;
+    z-index: 9999;
+}
+
+    .Help46BoxSelected:hover {
+        color: var(--SundtWhite);
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+.HelpRightPopoutBackground {
+    position: fixed;
+    top: 48px;
+    bottom: 0px;
+    right: 0px;
+    width: 320px;
+    z-index: 997;
+    background-color: #FAF9F8; /* This matches O365 */
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+
+.HelpRightPopout {
+    position: absolute;
+    top: 48px;
+    bottom: 0px;
+    right: 0px;
+    width: 320px;
+    z-index: 998;
+}
+
+    .HelpRightPopout h2 {
+        padding: 20px 0px 20px 10px;
+        font-size: 16pt;
+        display: inline-block;
+    }
+
+.CloseHelpRightPopout {
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    color: var(--SundtBlack80);
+    cursor: pointer;
+}
+
+.HelpRightPopoutItem {
+    position: absolute;
+    top: 65px;
+    min-width: 90%;
+    padding: 0px;
+    padding-right: 5px;
+    font-size: 9.5pt !important;
+}
+
+    .HelpRightPopoutItem li {
+        margin-bottom: 8px;
+    }
+
+.HelpOuterContainer {
+    margin-bottom: 10px;
+}
+
+.HelpIconContainer { /* This is for the main help */
+    float: left;
+    width: 50px;
+    margin-bottom: 25px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.HelpTextContainer { /* This is for the main help */
+    width: 300px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.HelpRightPopoutHelpDesk {
+    display: block;
+    min-width: 90%;
+    margin: 25px 10px;
+    margin-right: 10px;
+    padding: 20px;
+    font-size: 10pt !important;
+    color: var(--SundtBlack);
+    background-color: var(--SundtWhite);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
+}
+
+.HelpRightPopoutHelpDeskItem {
+    padding-left: 15px;
+}
+
+/* This is the button for the "What's New" feature (Announcements): https://dev.azure.com/sundt/ MarginReportApp/_workitems/edit/3195 */
+.HeaderWhatsNewButton {
+    position: absolute;
+    top: 0px;
+    right: 261px;
+    width: 99px;
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 1px 10px;
+    margin: 12px 15px;
+    border-radius: 100px;
+    display: inline-block;
+    cursor: pointer;
+    float: left;
+    border: 1px solid rgba(0,0,0,0);
+}
+    .HeaderWhatsNewButton.ProductionEnvironment {
+        background-color: #E93238 !important; /* -2% */
+        border-color: #FF5157 !important; /* +10% */
+    }
+        .HeaderWhatsNewButton.ProductionEnvironment:hover {
+            background-color: #FF5157 !important; /* +10% */
+            border-color: #BB040A !important; /* -20% */
+            text-shadow: 0px 0px 4px #880000 !important; /* -40% */
+            box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25); /* -40% - AKA #880000 */
+            -webkit-box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25);
+            -moz-box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25);
+        }
+        .HeaderWhatsNewButton.ProductionEnvironment:active {
+            background-color: #FF5157 !important; /* +10% */
+            border-color: #AE0000 !important; /* -25% */
+            text-shadow: 0px 0px 4px #550000 !important; /* -60% */
+            box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5); /* -50% - AKA #6F0000 */
+            -webkit-box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5);
+        }
+
+    .HeaderWhatsNewButton.StagingEnvironment {
+        background-color: #006194 !important; /* -2% */
+        border-color: #1A80B3 !important; /* +10% */
+    }
+        .HeaderWhatsNewButton.StagingEnvironment:hover {
+            background-color: #1A80B3 !important; /* +10% */
+            border-color: #003366 !important; /* -20% */
+            text-shadow: 0px 0px 4px #00001A !important; /* -50% */
+            box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25); /* -50% - AKA #00001A */
+            -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25);
+            -moz-box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25);
+        }
+        .HeaderWhatsNewButton.StagingEnvironment.StagingEnvironment:active {
+            background-color: #1A80B3 !important; /* +10% */
+            border-color: #002659 !important; /* -25% */
+            text-shadow: 0px 0px 4px #00001A !important; /* -50% */
+            box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5); /* -40% - AKA #000033*/
+            -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5);
+        }
+
+    .HeaderWhatsNewButton.TestEnvironment {
+        background-color: #73BC91 !important; /* -2% */
+        border-color: #92DBB0 !important; /* +10% */
+    }
+        .HeaderWhatsNewButton.TestEnvironment:hover {
+            background-color: #92DBB0 !important; /* +10% */
+            border-color: #458E63 !important; /* -20% */
+            text-shadow: 0px 0px 4px #000033 !important; /* -40% */
+            box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25); /* -40% - AKA #000033 */
+            -webkit-box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25);
+            -moz-box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25);
+        }
+        .HeaderWhatsNewButton.TestEnvironment:active {
+            background-color: #92DBB0 !important; /* +10% */
+            border-color: #388156 !important; /* -25% */
+            text-shadow: 0px 0px 4px #002800 !important; /* -60% */
+            box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5); /* -50% - AKA #004217 */
+            -webkit-box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5);
+        }
+
+    .HeaderWhatsNewButton.DevelopmentEnvironment {
+        background-color: #E1A339 !important; /* -2% */
+        border-color: #FFC258 !important; /* +10% */
+    }
+        .HeaderWhatsNewButton.DevelopmentEnvironment:hover {
+            background-color: #FFC258 !important; /* +10% */
+            border-color: #B3750B !important; /* -20% */
+            text-shadow: 0px 0px 4px #672900 !important; /* -50% */
+            box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25); /* -50% - AKA #672900 */
+            -webkit-box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25);
+            -moz-box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25);
+        }
+        .HeaderWhatsNewButton.DevelopmentEnvironment:active {
+            background-color: #FFCE64 !important; /* +10% */
+            border-color: #A66800 !important; /* -25% */
+            text-shadow: 0px 0px 4px #4D0F00 !important; /* -60% */
+            box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5); /* -50% - AKA #672900 */
+            -webkit-box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5);
+        }
+
+    .HeaderWhatsNewButton.Open {
+        display: inline-block; /* Just so it's not an empty class - it's here to sort the next eight under */
+    }
+        .HeaderWhatsNewButton.Open.ProductionEnvironment { /* .Open is added when the pane is visible; it's the same as the non-Open active state */
+            background-color: #FF5157 !important;
+            border-color: #AE0000 !important;
+            text-shadow: 0px 0px 4px #550000 !important;
+            box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5);
+            -webkit-box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(111, 0, 0, 0.5);
+        }
+            .HeaderWhatsNewButton.Open.ProductionEnvironment:hover {
+                background-color: #FF5157 !important;
+                border-color: #BB040A !important;
+                text-shadow: 0px 0px 4px #880000 !important;
+                box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25);
+                -webkit-box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25);
+                -moz-box-shadow: 3px 3px 3px rgba(136, 0, 0, 0.25);
+            }
+
+        .HeaderWhatsNewButton.Open.StagingEnvironment {
+            background-color: #1A80B3 !important;
+            border-color: #002659 !important;
+            text-shadow: 0px 0px 4px #00001A !important;
+            box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5);
+            -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(0, 0, 51, 0.5);
+        }
+            .HeaderWhatsNewButton.Open.StagingEnvironment:hover {
+                background-color: #1A80B3 !important;
+                border-color: #003366 !important;
+                text-shadow: 0px 0px 4px #00001A !important;
+                box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25);
+                -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25);
+                -moz-box-shadow: 3px 3px 3px rgba(0, 0, 26, 0.25);
+            }
+
+        .HeaderWhatsNewButton.Open.TestEnvironment {
+            background-color: #92DBB0 !important;
+            border-color: #388156 !important;
+            text-shadow: 0px 0px 4px #002800 !important;
+            box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5);
+            -webkit-box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(0, 66, 23, 0.5);
+        }
+            .HeaderWhatsNewButton.Open.TestEnvironment:hover {
+                background-color: #92DBB0 !important;
+                border-color: #458E63 !important;
+                text-shadow: 0px 0px 4px #000033 !important;
+                box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25);
+                -webkit-box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25);
+                -moz-box-shadow: 3px 3px 3px rgba(0, 66, 23, 0.25);
+            }
+
+        .HeaderWhatsNewButton.Open.DevelopmentEnvironment {
+            background-color: #FFCE64 !important;
+            border-color: #A66800 !important;
+            text-shadow: 0px 0px 4px #4D0F00 !important;
+            box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5);
+            -webkit-box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5);
+            -moz-box-shadow: 1px 1px 2px rgba(103, 41, 0, 0.5);
+        }
+            .HeaderWhatsNewButton.Open.DevelopmentEnvironment:hover {
+                background-color: #FFC258 !important;
+                border-color: #B3750B !important;
+                text-shadow: 0px 0px 4px #672900 !important;
+                box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25);
+                -webkit-box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25);
+                -moz-box-shadow: 3px 3px 3px rgba(103, 41, 0, 0.25);
+            }
+
+h2.WhatsNew {
+    color: var(--SundtBlack);
+    padding: 9px 0px 10px 10px;
+    margin: 0px 0px 10px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 0px solid rgba(0,0,0,.1);
+    border-width: 0px 0px 1px 0px;
+    box-shadow: -9px 5px 10px 0 rgba(150,150,150,.1);
+    background-color: #FAF9F8;
+}
+    h2.WhatsNew.App {
+        display: inline-block;
+        float: left;
+        max-width: calc(100% - 120px);
+    }
+    h2.WhatsNew.Version {
+        padding-left: 0.25em;
+        box-shadow: 0px 5px 10px 0 rgba(150,150,150,.1);
+    }
+
+h4.WhatsNew {
+    color: var(--SundtNavy);
+    padding: 5px 0px 15px 10px;
+    margin: 0px;
+}
+div.WhatsNew {
+    padding: 10px 5px 5px 15px;
+    margin: 0px 18px 10px 18px;
+    font-size: 10pt !important;
+    color: var(--SundtBlack);
+    background-color: var(--SundtWhite);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
+    border-radius: 5px;
+}
+    div.WhatsNew p {
+        margin: 0px 0px 5px 0px;
+        padding: 0px;
+    }
+    div.WhatsNew p.Title {
+        font-size: 11pt !important;
+        font-weight: 600;
+        margin: 0px;
+        padding: 0px 0px 5px 0px;
+    }
+    div.WhatsNew .Image {
+        margin: 5px 5px 10px 50px;
+        float: none;
+        display: inline-block;
+        max-width: 100%;
+    }
+        div.WhatsNew .Image img {
+            max-width: 100%;
+        }
+        div.WhatsNew .Image .Caption {
+            font-size: 9pt !important;
+            color: var(--SundtDarkGray);
+            margin-top: 10px;
+            padding: 0px;
+            text-align: center;
+            border: 0px solid rgba(0,0,0,.1);
+            border-width: 1px 0px;
+        }
+
+.CloseHelpRightPopout.WhatsNew {
+    top: 15px;
+    padding: 0px;
+    margin: 0px;
+    font-size: 10pt !important;
+    color: var(--SundtBlack80);
+    background-color: rgba(0,0,0,.0);
+    box-shadow: 0 0 0px 0 rgba(0,0,0,0);
+}
+.WhatsNewPopout {
+    position: absolute;
+    top: 48px;
+    bottom: 0px;
+    right: 0px;
+    width: calc(100vw - 385px);
+    min-width: 476px;
+    z-index: 998;
+    background-color: #FAF9F8;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+}
+    .WhatsNewPopout .PreviousRelease {
+        margin-top: 20px;
+        padding-top: 10px;
+        border: 0px solid #E1E0DF;
+        border-width: 1px 0px 0px 0px;
+    }
+    .WhatsNewPopout .Release {
+        font-size: 17pt;
+        margin: 0px 0px 5px 10px;
+        color: var(--SundtBlack80);
+        text-transform: none;
+        font-family: BoldHeadline, sans-serif;
+    }
+    .WhatsNewPopout .HideOldReleases {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        font-family: BoldHeadline, sans-serif;
+        font-size: 14pt;
+    }
+    .WhatsNewPopout .ReleaseNotesLink {
+        text-align: center;
+        font-size: 14pt;
+        font-family: SemiBoldBody, sans-serif;
+        padding: 10px 0px 25px 0px;
+    }
+
+.WhatsNewPopoutBackground { /* This combined with the background of element .WhatsNewPopout correct most scrolling issues without resorting to JavaScript. */
+    position: fixed;
+    top: 48px;
+    bottom: 0px;
+    right: 0px;
+    width: calc(100vw - 385px);
+    min-width: 476px;
+    z-index: 997;
+    background-color: #FAF9F8;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+}
+.WhatsNewPopoutChevron {
+    position: fixed;
+    top: 37px;
+    right: 306px;
+    width: 35px;
+    height: 11px;
+    z-index: 999;
+    background-image: url(/images/ReleaseNotesChevron.png);
+}
+/* #endregion Header.razor */
+/* #region Index.razor */
+/* See O365 section for O365-related classes (they are used by both & more easily sorted there. */
+.Index { /* Outer-most container in Index.razor except for O365 */
+    position: relative;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    margin: 0px;
+    padding: 0px;
+    background-image: url("../images/NavBackground.png");
+    background-repeat: repeat-y;
+}
+
+.Index.NoNav {
+    background-repeat: no-repeat;
+}
+
+.LeftSide { /* Left navigation pane wrapper */
+    display: inline-block;
+    width: 249px;
+    margin: 0px;
+    padding: 25px 0px 0px 0px; /* There is not a button over the navigation */
+    /* padding: 54px 0px 0px 0px; */ /* There is a button over the navigation (a GNG design - was the 'Refresh from Cosential' button) */
+}
+
+/* START User information in left navigation pane */
+.LeftSideUser { /* Wrapper for all user details in left pane */
+    position: relative;
+    top: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.LeftSideUserImage { /* Class for user image container and user image, if used */
+    margin: 0 auto;
+    padding: 0px;
+    padding-bottom: 10px;
+    text-align: center;
+    width: 125px;
+    border-radius: 50%;
+}
+
+.LeftSideUserName { /* Container class for user's name */
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-family: Body, sans-serif;
+    font-size: 12pt;
+    text-transform: initial;
+}
+
+.LeftSideUserTitle { /* Container class for user's title */
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 27px;
+    text-align: center;
+    font-family: LightBody, sans-serif;
+    font-size: 12pt;
+    font-style: italic;
+    text-transform: initial;
+}
+/* END User information in left navigation pane */
+
+/* START Top Level Menu Selections */
+
+.TopLevelSelectionHeading {
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 0px;
+    color: var(--SundtNavy);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 15pt;
+}
+
+.TopLevelSelectionHeadingHelpIcon {
+    font-size: 12pt !important;
+    font-weight: 400;
+}
+
+.TopLevelSelectionActive { /* The active top-level selection */
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 32px;
+    color: var(--SundtBlack80);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 15pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtLightGray);
+    background-color: var(--SundtQDRGray);
+}
+
+.TopLevelSelectionActiveWithSub { /* The active top-level selection when it's expandable */
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 10px;
+    color: var(--SundtBlack80);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 15pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtLightGray);
+    background-color: var(--SundtQDRGray);
+}
+
+.TopLevelSelectionInactive { /* All inactive top-level selections */
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 32px;
+    color: var(--SundtNavy);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 15pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtBlack5); /* Verify this looks OK -DD 06/17/2021 */
+    /*border-color: var(--SundtLightQDRGray);*/
+    cursor: pointer;
+}
+
+    .TopLevelSelectionInactive:hover {
+        color: var(--SundtBlue);
+        border-width: 1px;
+        border-left: 0px;
+        border-right: 0px;
+        border-style: solid;
+        border-color: var(--SundtLightGray);
+        background-color: var(--SundtAlmostWhite);
+    }
+
+.TopLevelSelectionInactiveWithSub {
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 10px;
+    color: var(--SundtNavy);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 15pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtBlack5); /* Verify this looks OK -DD 06/17/2021 */
+    /*border-color: var(--SundtLightQDRGray);*/
+    cursor: pointer;
+}
+
+    .TopLevelSelectionInactiveWithSub:hover {
+        color: var(--SundtBlue);
+        border-width: 1px;
+        border-left: 0px;
+        border-right: 0px;
+        border-style: solid;
+        border-color: var(--SundtLightGray);
+        background-color: var(--SundtAlmostWhite);
+    }
+
+.SubLevelSelectionActive { /* The active sub-level selection, if any */
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 7px 3px 6px 53px;
+    color: var(--SundtBlack80);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 12pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtLightGray);
+    background-color: var(--SundtQDRGray);
+}
+
+.SubLevelSelectionInactive { /* All inactive sub-level selections, if any */
+    position: relative;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 7px 3px 6px 53px;
+    color: var(--SundtNavy);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 12pt;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
+    border-color: var(--SundtBlack5); /* Verify this looks OK -DD 06/17/2021 */
+    /*border-color: var(--SundtLightQDRGray);*/
+    cursor: pointer;
+}
+
+    .SubLevelSelectionInactive:hover {
+        color: var(--SundtBlue);
+        border-width: 1px;
+        border-left: 0px;
+        border-right: 0px;
+        border-style: solid;
+        border-color: var(--SundtLightGray);
+        background-color: var(--SundtAlmostWhite);
+    }
+/* This is to simulate the red oval from Time Sheets, but it was decided to not use it anymore. */
+/*
+        .TopLevelRedOval {
+            padding: 0px;
+            position: absolute;
+            bottom: 28px;
+            left: 5px;
+            width: 34px;
+            height: 21px;
+            background-image: url(/images/RedOval.png);
+            background-size: contain;
+            text-align: center;
+            font-size: 10.5pt;
+            color: var(--SundtWhite);
+        }
+        .SubLevelRedOval {
+            padding: 0px;
+            position: absolute;
+            bottom: 21px;
+            left: 22px;
+            width: 34px;
+            height: 21px;
+            background-image: url(/images/RedOval.png);
+            background-size: contain;
+            text-align: center;
+            font-size: 10.5pt;
+            color: var(--SundtWhite);
+        }
+    */
+/* END Top Level MenuSelections */
+/* #endregion Index.razor */
+
+/* #region MainContent.razor (and others at this level) */ /* THIS IS NOT LONGER ACCURATE - FIX 07/01/2021 */
+.MainContent { /* Outer-most wrapper of this .razor file, everything except the collapse/expand icons.  */
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 15px;
+}
+
+    .MainContent.ShowNav { /* When the navigation is expanded (default) */
+        width: calc(100% - 253px);
+    }
+
+    .MainContent.HideNav { /* When the navigation is collapsed */
+        width: 100%;
+    }
+
+/*    This is for Telerik Grids that have a search box    */
+/* It's based on the new (as of 09-21-2021) heading below */
+
+.GridSearchRow { /* The container to keep it on the screen with no left-side navigation */
+    margin: 0px !important;
+    padding: 0px !important;
+    position: relative;
+    width: 100%;
+    max-width: calc(100vw - 36px);
+    min-width: 1008px;
+}
+
+    .GridSearchRow .SearchCol {
+        margin: 0px !important;
+        padding: 7px 15px !important;
+        text-align: left;
+    }
+
+    .GridSearchRow .CheckboxCol {
+        margin: 0px !important;
+        padding: 0px !important;
+        padding-top: 14px !important;
+        text-align: center;
+    }
+
+    .GridSearchRow .DropdownCol {
+        margin: 0px !important;
+        padding: 7px 15px !important;
+        text-align: right;
+    }
+
+.ShowNav .GridSearchRow { /* The container to keep it on the screen with left-side navigation visible */
+    max-width: calc(100vw - 285px);
+    min-width: 1008px;
+}
+
+.HideNav .GridSearchRow { /* The container to keep it on the screen with left-side navigation hidden */
+    max-width: calc(100vw - 36px);
+    min-width: 1008px;
+}
+
+.GridSearchBox { /* The search box itself */
+    font-family: LightBody, sans-serif;
+    font-size: 10pt;
+}
+
+/*    This is for Telerik Grids that have heading info icons    */
+.GridHeaderIcon {
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    background-color: rgba(255,255,255,0.95);
+    color: var(--SundtNavy);
+    cursor: help;
+}
+    .GridHeaderIcon:hover {
+        background-color: rgba(255,255,255,1);
+        color: var(--SundtBlue);
+    }
+
+/* New (09/21/2021) heading, created for GNG & with testing be applied to all apps that use left-side navigation */
+/* New heading is aware of collapsed/expanded state & accomodates laptop screens regardless of width of content  */
+.ShowNav .Heading { /*<h1>Title</h1><h3>Subtitle (optionally)</h3> */
+    position: relative;
+    max-width: calc(100vw - 295px);
+    min-width: 1085px;
+    text-align: center;
+}
+
+.HideNav .Heading { /*<h1>Title</h1><h3>Subtitle (optionally)</h3> */
+    position: relative;
+    max-width: calc(100vw - 46px);
+    min-width: 1337px;
+    text-align: center;
+}
+/* Original heading for apps that don't use the left-side navigation  */
+.Heading { /*<h1>Title</h1><h3>Subtitle (optionally)</h3> */
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    max-width: calc(100vw - 36px);
+    min-width: 1337px;
+    text-align: center;
+}
+
+h1 { /* For the title in the heading */
+    color: var(--SundtRed);
+    text-transform: uppercase;
+    font-family: Headlines, sans-serif;
+    font-size: 26pt;
+    padding-top: 10px;
+    margin-bottom: 5px;
+}
+
+h3 { /* For the optional Subtitle in the heading */
+    color: var(--SundtBlack80);
+    text-transform: uppercase;
+    font-family: BoldHeadline, sans-serif;
+    font-size: 14pt;
+}
+
+.expandNavIcon { /* This is the class for the container the expand icon is in */
+    position: absolute;
+    top: -1px;
+    left: 0px;
+    text-align: right;
+    color: var(--SundtDarkGray);
+    background-color: var(--SundtQDRGray);
+    border: 1px solid var(--SundtLightGray);
+    z-index: 9996;
+}
+
+    .expandNavIcon:hover {
+        width: 71px;
+        background-image: url(../images/Expand.png);
+        color: var(--SundtWhite);
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtBlack80);
+        cursor: pointer;
+    }
+
+.collapseNavIcon { /* This is the class for the container the collapse icon is in */
+    position: absolute;
+    top: -1px;
+    left: 249px;
+    text-align: left;
+    color: var(--SundtDarkGray);
+    background-color: var(--SundtQDRGray);
+    border: 1px solid var(--SundtLightGray);
+    z-index: 9996;
+}
+
+    .collapseNavIcon:hover {
+        width: 78px;
+        background-image: url(../images/Collapse.png);
+        color: var(--SundtWhite);
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtBlack80);
+        cursor: pointer;
+    }
+/* #endregion MainContent.razor (and others at this level) */
+
+/* #region O365.razor */
+/* Some of these are used in MainLayout.razor as well. */
+/* START Left Menu (Office 365-style menu) */
+.LeftMenuO365Closer {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 9998;
+}
+
+.LeftMenuO365CloserImage {
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+}
+
+.LeftMenuIcon {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+}
+
+.HeaderMenuImage {
+    margin: 1px;
+}
+
+    .HeaderMenuImage:active {
+        margin: 0px;
+        background-color: rgba(64, 0, 0, .4);
+        border: 1px solid var(--SundtWhite);
+        cursor: pointer;
+    }
+
+.HeaderMenuO365Image {
+    margin: 4px;
+    border: 2px solid var(--SundtWhite);
+}
+
+    .HeaderMenuO365Image:hover {
+        margin: 4px;
+        border: 2px solid var(--SundtWhite);
+        background-color: var(--SundtBlack5);
+        cursor: pointer;
+    }
+
+    .HeaderMenuO365Image:active {
+        margin: 4px;
+        border: 2px var(--SundtBlack) solid;
+        border-radius: 4px;
+        background-color: var(--SundtBlack5);
+        cursor: pointer;
+    }
+
+.LeftMenuO365 {
+    position: fixed;
+    top: 17px;
+    left: 202px;
+    z-index: 9999;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 10pt;
+}
+
+    .LeftMenuO365 a {
+        text-decoration: none;
+        color: var(--SundtNavy);
+    }
+
+        .LeftMenuO365 a:hover {
+            text-decoration: underline;
+        }
+
+.LeftMenu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 320px;
+    z-index: 9998;
+    background-color: var(--SundtWhite);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+
+.LeftMenuLink {
+    padding-left: 10px;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtNavy);
+}
+
+    .LeftMenuLink a {
+        text-decoration: none;
+        color: var(--SundtNavy);
+    }
+
+        .LeftMenuLink a:hover {
+            text-decoration: underline;
+        }
+
+.LeftMenu h2 {
+    padding: 25px 0px 20px 10px;
+    font-size: 16pt;
+}
+
+.LeftMenu a {
+    text-decoration: none;
+}
+
+    .LeftMenu a:hover {
+        text-decoration: underline;
+    }
+
+.LeftMenuContent {
+    margin-top: 47px;
+    padding: 5px 5px 5px 5px;
+    height: calc(100vh - 47px); /* Note: This calculation only works with vh, not % */
+    background-color: var(--SundtWhite);
+    overflow: hidden;
+}
+
+    .LeftMenuContent h2 {
+        margin: 0px;
+        padding: 33px 0px 10px 13px;
+    }
+
+    .LeftMenuContent p.Icons {
+        margin: 0px;
+        padding: 0px;
+        padding-top: 10px;
+    }
+
+.LeftMenuContentAllDocs {
+    position: relative;
+    top: 25px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 8px;
+}
+
+    .LeftMenuContentAllDocs h2 {
+        margin: 0px;
+        padding: 0px 0px 15px 8px;
+    }
+
+.LeftMenuO365IconBox {
+    width: 145px;
+    height: 42px;
+    margin: 2px 4px 4px 3px;
+    display: inline-block;
+    float: left;
+}
+
+    .LeftMenuO365IconBox:hover {
+        z-index: 99999;
+        box-shadow: 0px 4px 10px rgba(183,186,188,0.35);
+    }
+
+.LeftMenuO365RegularIcon {
+    position: relative;
+    top: -42px;
+    margin: 0px;
+    padding: 0px;
+    z-index: 9997;
+}
+
+    .LeftMenuO365RegularIcon:hover {
+        display: none;
+        z-index: 99999;
+    }
+
+.LeftMenuO365HoverIcon {
+    margin: 0px;
+    padding: 0px;
+}
+
+    .LeftMenuO365HoverIcon:hover {
+        z-index: 99999;
+    }
+/* END Left Menu */
+/* #endregion O365.razor */
+
+/* #region Any Interstitial Pages */
+.CloseIcon { /* This returns to the Interstitial */
+    position: absolute;
+    top: 21px; /* Aligns with the H1 */
+    right: 21px;
+    padding: 5px;
+}
+/* #endregion Any Interstitial Pages */
+
+/* #region Other */
+/* This may not be currently used - TODO: Verify & remove if not needed */
+.Logout {
+    background-color: var(--SundtWhite);
+    border-radius: 1em;
+    padding: 0.75em;
+    margin: 0em 1.5em 1.5em 1.5em;
+    text-align: center;
+}
+/* #endregion Other */
+
+/* #region Buttons */
+/* Buttons was depricated on 06/17/2021, but not deleting until I confirm it doesn't break anything -DD */
+/*.Buttons {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    margin: 0px;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+}*/
+.ButtonSpacing {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.ButtonLeftSpacing {
+    margin-left: 20px;
+}
+
+.ButtonRightSpacing {
+    margin-right: 20px;
+}
+
+.RoundButton {
+    font-size: 9pt !important;
+    border-radius: 100px !important;
+    height: 30px;
+    width: 30px;
+    padding: 5px 6px !important; /* This is to center "Go" */
+}
+
+.RedButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtRed);
+}
+
+    .RedButton:hover {
+        background-color: var(--SundtRed);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkRed);*/
+    }
+
+    .RedButton:active {
+        background-color: var(--SundtRed);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightRed);*/
+    }
+
+.YellowButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtYellow);
+}
+
+    .YellowButton:hover {
+        background-color: var(--SundtYellow);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkYellow);*/
+    }
+
+    .YellowButton:active {
+        background-color: var(--SundtYellow);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightYellow);*/
+    }
+
+.BlueButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtBlue);
+}
+
+    .BlueButton:hover {
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkBlue);*/
+    }
+
+    .BlueButton:active {
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightBlue);*/
+    }
+
+.GreenButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtGreen);
+}
+
+    .GreenButton:hover {
+        background-color: var(--SundtGreen);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkGreen);*/
+    }
+
+    .GreenButton:active {
+        background-color: var(--SundtGreen);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightGreen);*/
+    }
+
+.GrayButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtDarkGray);
+}
+
+    .GrayButton:hover {
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkDarkGray);*/
+    }
+
+    .GrayButton:active {
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightDarkGray);*/
+    }
+
+.DarkGrayButton { /* Check each app to see if this is used; if not, delete it (redundant) */
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtDarkGray);
+}
+
+    .DarkGrayButton:hover { /* Check each app to see if this is used; if not, delete it (redundant) */
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkDarkGray);*/
+    }
+
+    .DarkGrayButton:active {
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtDarkDarkGray);*/
+    }
+
+.NavyButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtNavy);
+}
+
+    .NavyButton:hover {
+        background-color: var(--SundtNavy);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkNavy);*/
+    }
+
+    .NavyButton:active {
+        background-color: var(--SundtNavy);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 3px #898A8D);
+        color: var(--SundtWhite);
+        /*background-color: var(--SundtLightNavy);*/
+    }
+
+.SubmitButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtQDRGreen);
+}
+
+    .SubmitButton:hover {
+        background-color: var(--SundtQDRGreen);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+        /*background-color: var(--SundtDarkQDRGreen);*/
+    }
+
+    .SubmitButton:active {
+        background-color: var(--SundtQDRGreen);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+        /*background-color: var(--SundtLightQDRGreen);*/
+    }
+
+.DisabledButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtBlack80);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtLightGray);
+    cursor: not-allowed;
+}
+
+.RemoveCommandButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtNavy);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButton:hover {
+        color: var(--SundtBlue);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
+
+    .RemoveCommandButton:active {
+        color: var(--SundtBlue);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
+
+.RemoveCommandButtonBlue {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtBlue);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButtonBlue:hover {
+        color: var(--SundtBlue);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .RemoveCommandButtonBlue:active {
+        color: var(--SundtBlue);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.RemoveCommandButtonNavy {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtNavy);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButtonNavy:hover {
+        color: var(--SundtNavy);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .RemoveCommandButtonNavy:active {
+        color: var(--SundtNavy);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.RemoveCommandButtonGreen {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtBSGreen);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButtonGreen:hover {
+        color: var(--SundtBSGreen);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .RemoveCommandButtonGreen:active {
+        color: var(--SundtBSGreen);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.RemoveCommandButtonRed {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtRed);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButtonRed:hover {
+        color: var(--SundtRed);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .RemoveCommandButtonRed:active {
+        color: var(--SundtBSGreen);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.RemoveCommandButtonDisabled {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    margin: 6px 0px;
+    color: var(--SundtGray);
+    padding: 0px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: not-allowed;
+    border: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+    .RemoveCommandButtonDisabled:hover {
+        color: var(--SundtGray);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
+
+    .RemoveCommandButtonDisabled:active {
+        color: var(--SundtGray);
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
+
+.SmallCommandIcon {
+    font-size: 9pt;
+    padding: 2px 4px 0px 4px;
+    margin: 2px 3px;
+}
+/* #endregion Buttons */
+
+/* #region Tables */
+/* NOTE: 
+    table is for generic, undeclared tables (from sundt.css); 
+    TSTable is the Time Sheet App standard; 
+    BGTable is Brand Guideline compliant
+*/
+/* START Tables */
+table {
+    font-family: TableElse, sans-serif;
+    background-color: var(--SundtWhite);
+    color: var(--SundtBlack80);
+}
+
+thead {
+    background-color: var(--SundtDarkGray);
+    color: var(--SundtWhite);
+    text-transform: uppercase;
+    font-family: TSTableCondensed, sans-serif;
+}
+
+.table .thead-light th {
+    background-color: var(--SundtLightGray);
+    color: var(--SundtBlack);
+    text-transform: uppercase;
+    font-family: TSTableCondensed, sans-serif;
+}
+
+tr .thead-light {
+    background-color: var(--SundtLightGray);
+    color: var(--SundtBlack);
+    text-transform: uppercase;
+    font-family: TSTableCondensed, sans-serif;
+}
+
+.table .thead-white th {
+    background-color: var(--SundtWhite);
+    border-color: var(--SundtWhite);
+}
+
+tfoot {
+    background-color: var(--SundtDarkGray);
+    color: var(--SundtWhite);
+    text-transform: uppercase;
+    font-family: TSTableCondensed, sans-serif;
+}
+
+table.TSTable {
+    border-collapse: collapse;
+    color: var(--SundtBlack80);
+    text-align: left;
+    width: 100%;
+}
+
+    table.TSTable a {
+        color: var(--SundtBlack80);
+    }
+
+        table.TSTable a:hover {
+            color: var(--SundtBlack80);
+        }
+
+    table.TSTable th {
+        font-family: TSTableCondensed, sans-serif;
+        color: var(--SundtBlack80);
+        background-color: var(--SundtLightGray);
+        padding: 5px;
+    }
+
+    table.TSTable td {
+        font-family: TSTable, sans-serif;
+        border-top: 1px solid var(--SundtLightGray);
+        color: var(--SundtBlack80);
+        padding: 5px;
+    }
+
+table.BGTable {
+    border-collapse: collapse;
+    color: var(--SundtBlack80);
+}
+
+    table.BGTable th {
+        font-family: TableColumnHeadline, serif;
+        font-size: larger;
+        background-color: var(--SundtRed);
+        color: var(--SundtWhite);
+        border: 1px solid var(--SundtWhite);
+    }
+
+    table.BGTable td, th {
+        text-align: left;
+    }
+
+    table.BGTable tr:nth-child(even) {
+        background-color: var(--SundtBlack5);
+        border: 1px solid var(--SundtWhite);
+    }
+
+.TableHeader {
+    color: var(--SundtBlack80);
+}
+
+    .TableHeader:hover {
+        color: var(--SundtBlack);
+        cursor: pointer;
+    }
+
+.TableHeaderSort {
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    margin-right: 2px;
+    width: 16px;
+}
+
+.TableHeaderName {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    width: calc(100% - 18px);
+    min-width: 25px;
+}
+/* END Tables */
+/* #endregion Tables */
+
+/* #region Forms */
+/* START Form-specific */
+.Form {
+    border-style: solid;
+    border-width: thin;
+    border-color: var(--SundtBlack20);
+}
+
+.Required {
+    font: inherit;
+    background-color: var(--SundtRequiredYellow);
+}
+
+    .Required:valid {
+        background-color: var(--SundtBlack5);
+    }
+
+.RequiredTelerik {
+    font: inherit;
+    background-color: var(--SundtRequiredYellow);
+}
+
+.RequiredPopupLabel {
+    font-size: 11pt;
+    font-family: SemiBoldBody, sans-serif;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+
+.RequiredPopupText {
+    font-size: 10pt;
+    font-family: Body, sans-serif;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-bottom: 2px;
+}
+
+.RequiredPlaceholder ::placeholder {
+    color: var(--SundtRed);
+}
+
+.Optional {
+    font: inherit;
+    background-color: var(--SundtBlack5);
+}
+
+.FormFullWidth input {
+    width: 100%;
+}
+
+.FormFullWidth select {
+    width: 100%;
+}
+/* END Form-specific */
+/* #endregion Forms */
+
+/* #region Pop-ups */
+.PopupAlert {
+    position: fixed;
+    background-color: var(--SundtBlack5);
+    /*background-color: var(--SundtLightQDRGray);*/
+    border-color: var(--SundtBlack80);
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+
+    .PopupAlert h3 {
+        color: var(--SundtRed);
+    }
+
+.PopupHelp {
+    position: fixed;
+    background-color: var(--SundtBlack5);
+    /*background-color: var(--SundtLightQDRGray);*/
+    border-color: var(--SundtBlack80);
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+
+    .PopupHelp h3 {
+        color: var(--SundtNavy);
+    }
+
+.PageHelpNoTelerikTabs {
+    position: absolute;
+    top: 48px;
+    right: 0px;
+}
+
+.TabHelpSubtitle {
+    position: absolute;
+    top: -49px;
+    right: 16px;
+}
+
+.TabHelpNoSubtitle {
+    position: absolute;
+    top: -49px; /* This is likely wrong; update it first time it's used */
+    right: 16px;
+}
+
+.ArticleHelp { /* Also the 'hide from printing' version */
+    position: absolute;
+    top: 11px;
+    right: 16px;
+}
+
+.PopupError { /* This is for error messages that need to block all other input */
+    position: fixed;
+    top: 250px;
+    left: calc(50% - 325px);
+    margin: 0px;
+    padding: 25px;
+    padding-bottom: 10px;
+    width: 650px;
+    font-size: 12pt;
+    color: var(--SundtBlack80);
+    background-color: var(--SundtWhite);
+    border: solid 2px var(--SundtBlack);
+    border-radius: 5px;
+    text-align: center;
+    z-index: 9999;
+}
+
+    .PopupError .Buttons { /* Gives the Buttons good spacing inside the pop-up 'window' */
+        margin: 25px;
+    }
+
+.PopupMaxHeight {
+    max-height: calc(100vh - 150px);
+    overflow: hidden;
+    overflow-y: auto;
+    padding: 5px 10px;
+    margin: -12px -10px;
+    border: 1px solid rgba(183,186,188,0.5);
+    border-radius: 5px 0px 0px 5px;
+}
+
+    .PopupMaxHeight.White {
+        background-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .PopupMaxHeight.NoBorder {
+        border: 0px;
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+.DropdownLabel { /* This centers text vertically on dropdowns (and uses 'Bolder' rather than changing font-face)  Also has pr-2 built-in */
+    display: inline-block;
+    font-weight: bolder;
+    vertical-align: bottom;
+    margin-bottom: 6px;
+    padding-right: 0.5rem !important;
+}
+
+/* The next four classes are for centering a heading of a Telerik pop-up with or without minimize/maximize/close WindowActions */
+.PopupCenterHeadingPadding0Actions {
+    width: 100%;
+    text-align: center;
+    margin: 0px 0px 0px 1px;
+}
+
+.PopupCenterHeadingPadding1Action {
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px 0px 0px 31px;
+}
+
+.PopupCenterHeadingPadding2Actions {
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px 0px 0px 70px;
+}
+
+.PopupCenterHeadingPadding3Actions {
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px 0px 0px 108px;
+}
+
+.PopupWindowHelp {
+    position: absolute;
+    top: 11px;
+    right: 16px;
+}
+/* #endregion Pop-ups */
+
+/* #region Telerik Notifications */
+.k-notification-group {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.k-notification-container {
+    margin: 10px 0;
+    display: block;
+    width: 100%;
+}
+/* #endregion Telerik Notifications */
+
+/* #region Formatting */
+.BoldRow {
+    font-family: Body, sans-serif;
+}
+
+.BoldText {
+    font-family: BoldBody, sans-serif;
+}
+
+.SemiBoldText {
+    font-family: SemiBoldBody, sans-serif;
+}
+
+.LightText {
+    font-family: LightBody, sans-serif;
+}
+
+.Size8 {
+    font-size: 8pt;
+}
+
+.Size9 {
+    font-size: 9pt;
+}
+
+.Size10 {
+    font-size: 10pt;
+}
+
+.Size11 {
+    font-size: 11pt;
+}
+
+.Size12 {
+    font-size: 12pt;
+}
+
+.Size13 {
+    font-size: 13pt;
+}
+
+.Size14 {
+    font-size: 14pt;
+}
+
+.Size15 {
+    font-size: 15pt;
+}
+
+.Size16 {
+    font-size: 16pt;
+}
+
+.Size18 {
+    font-size: 18pt;
+}
+
+.Size20 {
+    font-size: 20pt;
+}
+
+.Size24 {
+    font-size: 24pt;
+}
+
+.RedText {
+    color: var(--SundtRed);
+}
+
+.BlueText {
+    color: var(--SundtBlue);
+}
+
+.NavyText {
+    color: var(--SundtNavy);
+}
+
+.GreenText {
+    color: var(--SundtGreen);
+}
+
+.QDRGreenText {
+    color: var(--SundtQDRGreen);
+}
+
+.SemiBoldRedTableText {
+    color: var(--SundtRed);
+    font-family: TSTableRegular, sans-serif;
+    font-weight: 600;
+}
+
+.RedBorder {
+    border-color: var(--SundtRed);
+}
+
+.Icon16 { /* This sets the Bootstrap icons to the size we prefer (default is 16px, but it depends on the font size)  */
+    font-size: 1.231em;
+}
+
+.IconPageLevel { /* This is for page-level help icons  */
+    font-size: 1.75em;
+}
+
+.FilesIcon {
+    color: var(--SundtDarkQDRGray);
+    text-align: right;
+    display: inline-block;
+    min-height: 32px;
+    margin: 0px;
+    width: 32px;
+    padding: 5px 2px 3px 6px;
+    float: right;
+}
+
+.FileTypeIcon {
+    margin: -4px 7px 0px 5px;
+    height: 20px;
+}
+
+.Width100Important {
+    width: 100% !important;
+}
+
+.ParagraphSingleSpaced p { /* For making Rich Text <p> tags work like <br /> */
+    margin: 0px;
+}
+/* #endregion  */
+
+/* #region Sizing & Spacing Aids */
+.DoNotShow { /* So I can use icons and no icons and maintain spacing */
+    opacity: 0;
+}
+
+.Center {
+    text-align: center;
+}
+
+.Right {
+    text-align: right;
+}
+
+.Left {
+    text-align: left;
+}
+
+.Clear {
+    clear: both;
+}
+
+.Long {
+    width: 100%;
+}
+
+.Half {
+    width: 50%;
+}
+
+.Quarter {
+    width: 25%;
+}
+
+.Third {
+    display: inline-block;
+    width: 33%;
+}
+
+.Smaller {
+    font-size: smaller;
+}
+
+.Outer { /* Used when CSS is being stupid & inserting spacing */
+    margin: 0px;
+    padding: 0px;
+}
+
+.InlineBlock {
+    display: inline-block;
+}
+
+.VAlignTop {
+    vertical-align: top;
+}
+
+.VAlignMiddle {
+    vertical-align: middle;
+}
+
+.VAlignBottom {
+    vertical-align: bottom;
+}
+
+.FloatLeft {
+    float: left;
+}
+
+.AutoWidth {
+    width: auto;
+    overflow: hidden;
+}
+
+.Indent25 {
+    margin-left: 25px;
+}
+
+.Indent50 {
+    margin-left: 50px;
+}
+
+.Red {
+    color: var(--SundtRed);
+}
+
+/* These are used mainly to colour-code things like priority or score */
+.ColourRed {
+    color: #EE373D !important;
+}
+
+.ColourOrange {
+    color: #E6A83E !important;
+}
+
+.ColourYellow {
+    color: #F3D03E !important;
+}
+
+.ColourGreen {
+    color: #65C27D !important;
+}
+
+.ColourBlue {
+    color: #0085C1 !important;
+}
+
+.ColourTransparent {
+    color: RGBA(0, 0, 0, 0) !important;
+}
+/* These are used mainly to colour-code things like priority or score */
+
+.StickyHeader1 { /* This fixes the Combobox and DropDown in place in the header */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+    padding-top: 7px;
+    height: 45px;
+    display: inline-block;
+}
+
+.StickyHeader2 { /* This fixes the text after the Combobox and DropDown in place in the header */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+    padding-top: 13px;
+    height: 45px;
+    display: inline-block;
+}
+
+.BottomMargin25 { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    margin-bottom: 25px;
+}
+
+.TopPad10 { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    padding-top: 10px;
+}
+
+.FixHeadingLeftPadding { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    padding-left: 1em;
+}
+
+.FixHeaderScrolling {
+    z-index: 100;
+}
+
+.PaddingBump { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    padding: 0em 1em 0em 0em;
+    display: inline;
+}
+
+.PaddingBumpLeft { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    margin-left: 15px;
+}
+
+.PaddingBumpBottom { /* CONSIDER DEMOTING TO APP-SPECIFIC OR UPGRADING TO BOOTSTRAP */
+    margin-bottom: 10px;
+}
+
+.SubProject { /* CONSIDER DEMOTING TO APP-SPECIFIC */
+    padding: 1em 1em 1em 3em;
+    border-bottom: 1px solid var(--SundtQDRGray);
+    display: block;
+}
+
+.w750 { /* CONSIDER DEMOTING TO APP-SPECIFIC */
+    width: 750px;
+    display: inline-block;
+}
+
+.PrintLargeGrid {
+    min-width: 1665px;
+}
+
+.TabbedGrid {
+    margin: 0.5rem 1rem;
+    width: calc(100% - 2rem);
+}
+
+.RotatePrinting { /* First used in the MPR app (Reconciliation); this rotates the content of a page so it prints bottom to top. */
+    opacity: 1;
+}
+/* #endregion Sizing & Spacing Aids */
+
+/* #region Telerik Grid */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* This has multiple versions; GridSmallPad & GridSmallerPad, both with a NoFilter option  */
+/* The difference between Small and Smaller is margin/padding size (Smaller is tighter)    */
+/* NoFilter removes the filter icon from grids that don't need it (otherwise the same)     */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.GridSmallerPad { /* Further reduces the padding of Telerik Grids - important for data-heavy grids */
+    margin: 0px;
+    padding: 0px;
+}
+
+    .GridSmallerPad th { /* This is the Grid Header Row Text */
+        margin: 0px;
+        padding: 0.4rem 0rem;
+    }
+
+    .GridSmallerPad .k-grid-table { /* This is the row below the grid header row */
+        margin: 0px;
+        padding: 0px;
+    }
+
+    /* .k-grid-filter-menu & .k-grid-header-menu replaced .k-grid-filter for placement of the filter icon in grids in the 3.6.1 update */
+
+    .GridSmallerPad .k-grid-header .k-grid-filter-menu, .GridSmallerPad .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu { /* This is the Grid Header Row's standard filter icon */
+        position: absolute;
+        top: -1px; /* This had to be changed from -6 to -1 due to a Telerik UI update -DD 01/20/2022 */
+        right: 1px;
+        margin: 0px;
+        padding: 0px;
+        font-size: 9pt;
+        width: 1em;
+    }
+
+.NoFilter .k-grid-header .k-grid-filter-menu, .NoFilter .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu { /* This is the Grid Header Row's standard filter icon (but hidden) */
+    display: none;
+}
+
+.GridSmallerPad.WrapGridHeading .k-grid-header .k-grid-filter-menu, .GridSmallerPad.WrapGridHeading .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu { /* This is the Wrapped Heading Grid Header Row's standard filter icon */
+    position: absolute;
+    top: -1px; /* This had to be changed from -6 to -1 due to a Telerik UI update -DD 01/20/2022 */
+    right: 1px;
+    margin: 0px;
+    padding: 0px;
+    font-size: 9pt;
+    width: 1em;
+}
+
+.GridSmallerPad td { /* This is the Grid Body Rows */
+    padding: 0.25rem;
+}
+
+    .GridSmallerPad td.k-command-cell { /* This is the Grid Body Rows of the Command Column (or maybe nothing ...) */
+        padding: 0.25rem;
+    }
+/* Messing with the header for FilterRow: */
+.GridSmallerPad th .k-icon { /* Sets the icon itself size */
+    font-size: 1rem;
+}
+
+.GridSmallerPad th .k-input { /* Reduces the padding in text fields */
+    padding: 0.5rem 2px;
+}
+
+.GridSmallerPad th .k-numerictextbox .k-select { /* Hides the +/- on numerical inputs */
+    width: 0px;
+}
+
+.GridSmallerPad th .k-filtercell-operator { /* Sets the width of the container of the filter icons */
+    width: 25px;
+}
+
+.GridSmallerPad th .k-textbox {
+    font-size: 0.75rem;
+    padding: 0.375rem 2px;
+}
+
+.GridSmallerPad th .k-dropdown .k-dropdown-wrap .k-select, .k-dropdowntree .k-dropdown-wrap .k-select { /* Sets the main icon overall size */
+    padding: 3px;
+    margin: 2px 0px;
+}
+
+.GridSmallerPad th .k-filtercell-wrapper {
+    position: relative;
+}
+
+.GridSmallerPad th .k-filtercell .k-filtercell-operator > .k-button.k-clear-button-visible { /* This is the 'cancel filter' icon */
+    position: absolute;
+    right: 28px;
+    padding: 3px 0px;
+    margin: 2px 0px;
+}
+
+.GridSmallerPad th .k-dropdown-operator .k-dropdown-wrap .k-select {
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.k-grid-header-wrap { /* This is the Grid Header Row's height (when ShowColumnMenu="false") */
+    height: 2.45em; /* Matches the height of ShowColumnMenu="true" */
+}
+
+.GridSmallerPad .k-grid-header-wrap { /* Same as above but shorter */
+    height: 29px;
+}
+
+.WrapGridHeading .k-grid-header-wrap { /* Same as above but for 2-row header names */
+    height: 3.5em;
+}
+
+/* These allow hiding columns in Telerik Grids */
+.HideColumn0 [aria-colindex="0"] {
+    display: none;
+}
+
+.HideColumn1 [aria-colindex="1"] {
+    display: none;
+}
+
+.HideColumn2 [aria-colindex="2"] {
+    display: none;
+}
+
+.HideColumn3 [aria-colindex="3"] {
+    display: none;
+}
+
+.HideColumn4 [aria-colindex="4"] {
+    display: none;
+}
+
+.HideColumn5 [aria-colindex="5"] {
+    display: none;
+}
+
+.HideColumn6 [aria-colindex="6"] {
+    display: none;
+}
+
+.HideColumn7 [aria-colindex="7"] {
+    display: none;
+}
+
+.HideColumn8 [aria-colindex="8"] {
+    display: none;
+}
+
+.HideColumn9 [aria-colindex="9"] {
+    display: none;
+}
+
+.HideColumn10 [aria-colindex="10"] {
+    display: none;
+}
+
+.HideColumn11 [aria-colindex="11"] {
+    display: none;
+}
+
+.HideColumn12 [aria-colindex="12"] {
+    display: none;
+}
+
+.GridChangeFont {
+    font-weight: 400;
+}
+/* #endregion Telerik Grid */
+
+/* #region Brand Guideline Availability */
+/* NOTE: The below are named for concepts cited in the Sundt Brand Guidelines to facilitate any future need of them. */
+.SubHeader {
+    text-transform: capitalize;
+}
+
+.Notice {
+    font-family: BoldHeadline, sans-serif;
+    color: var(--SundtBlack);
+    padding: 0em 0em 1em 0em;
+}
+
+.HeadlineFourCallout {
+    font-family: HeadlineFourCallout, serif;
+    color: var(--SundtRed);
+    padding-bottom: 0.5em;
+}
+
+.HeadlineFiveCallout {
+    font-family: HeadlineFiveCallout, serif;
+    color: var(--SundtRed);
+    padding-bottom: 0.5em;
+}
+/* #endregion Brand Guideline Availability */
+
+/* #region Font Declarations */
+/* NOTE: Fonts are straight out of the Sundt 2019 Brand Guidelines with (except for the tabs; this was done to accommodate long tab names in the Time Sheet app) 
+         with Google Free font substitution to avoid licensing issues.
+         Font-family names are based on the guidelines to make it easier to select the right font */
+@font-face {
+    font-family: "Headlines";
+    src: url("/fonts/BigShouldersDisplay-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Subheadings";
+    src: url("/fonts/LibreBaskerville-Italic.ttf");
+}
+
+@font-face {
+    font-family: "BoldHeadline";
+    src: url("/fonts/OpenSans-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: "Body";
+    src: url("/fonts/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "BoldBody";
+    src: url("/fonts/OpenSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "SemiBoldBody";
+    src: url("/fonts/OpenSans-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: "LightBody";
+    src: url("/fonts/OpenSans-Light.ttf");
+}
+
+@font-face {
+    font-family: "HeadlineFourCallout";
+    src: url("/fonts/LibreBaskerville-Italic.ttf");
+}
+
+@font-face {
+    font-family: "HeadlineFiveCallout";
+    src: url("/fonts/LibreBaskerville-Italic.ttf");
+}
+
+@font-face {
+    font-family: "TableColumnHeadline";
+    src: url("/fonts/LibreBaskerville-Italic.ttf");
+}
+
+@font-face {
+    font-family: "TableCallout";
+    src: url("/fonts/BigShouldersDisplay-Light.ttf");
+}
+
+@font-face {
+    font-family: "TableElse";
+    src: url("/fonts/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Footnotes";
+    src: url("/fonts/BigShouldersDisplay-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Buttons";
+    src: url("/fonts/OpenSans-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: "Tabs";
+    src: url("/fonts/OpenSansCondensed-Light.ttf");
+}
+
+@font-face {
+    font-family: "TSTableCondensed";
+    src: url("/fonts/OpenSansCondensed-Bold.ttf");
+}
+
+@font-face {
+    font-family: "TSTable";
+    src: url("/fonts/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "TSTableLight";
+    src: url("/fonts/OpenSans-Light.ttf");
+}
+
+@font-face {
+    font-family: "TSTableRegular";
+    src: url("/fonts/OpenSans-Regular.ttf");
+}
+/* #endregion Font Declarations */
+
+/* #region Colour Declarations */
+:root {
+    /* Sundt 2019 Brand Guidelines: */
+    --SundtRed: #EE373D;
+    --SundtDarkGray: #898A8D; /* Bootstrap: swatch-600 & bg-secondary */
+    --SundtLightGray: #B7BABC; /* Bootstrap: swatch-500 */
+    --SundtBlack: #000000; /* Bootstrap: black */
+    --SundtWhite: #FFFFFF; /* Bootstrap: white & bg-white */
+    --SundtNavy: #006699; /* Bootstrap: cyan & bg-info */
+    --SundtBlue: #0099CC; /* Bootstrap: blue & bg-primary */
+    --SundtYellow: #F3D03E; /* Bootstrap: yellow & bg-warning */
+    --SundtBlack5: #F2F2F2; /* Bootstrap: swatch-200 */
+    --SundtBlack20: #CCCCCC; /* Bootstrap: swatch-400 */
+    --SundtBlack80: #333333; /* Bootstrap: swatch-800 & bg-dark */
+    /* Provided by Marketing: */
+    --SundtGreen: #78C196; /* Bootstrap: teal */
+    /* Added by Cloudscale: */
+    --SundtQDRGray: #E2E3E6; /* Bootstrap: swatch-300 */
+    --SundtLightQDRGray: #EFF0F3; /* I needed a gray between 200 & 300 for navigation background */
+    --SundtQDRGreen: #00A200; /* Used for Submit Buttons only */
+    /* Carried over from eForms: */
+    --SundtRequiredYellow: #FFFFC8; /* For required field backgrounds only */
+    /* Bootstrap Additional Grays & Colours: */
+    --SundtAlmostWhite: #F8F9FB; /* Bootstrap: swatch-100 & bg-light */
+    --SundtBlack70: #636467; /* Bootstrap: swatch-700 */
+    --SundtBlack90: #16171A; /* Bootstrap: swatch-900 */
+    --SundtOrange: #E6A83E; /* Bootstrap: orange */
+    --SundtBSIndigo: #6842FF; /* Bootstrap: indigo */
+    --SundtBSPink: #C62A3D; /* Bootstrap: pink */
+    --SundtBSGreen: #65C27D; /* Bootstrap: green */
+    /* For hover-effects & borders only (+/- 10% except QDRGreen): */
+    /* These were replaced these with formulas; hold off on deleting until fully tested (delete commented versions throughout then too):
+                --SundtLightRed: #FF5157;
+                --SundtDarkRed: #D51E24;
+                --SundtLightNavy: #1A80B3;
+                --SundtDarkNavy: #004D80;
+                --SundtLightBlue: #1AB3E6;
+                --SundtDarkBlue: #0080B3;
+                --SundtLightYellow: #FFEA58;
+                --SundtDarkYellow: #DAB725;
+                --SundtLightGreen: #92DBB0;
+                --SundtDarkGreen: #5FA87D;
+                --SundtLightDarkGray: #A3A4A7;
+                --SundtDarkDarkGray: #707174;
+                --SundtLightQDRGray: #EFF0F3;
+                --SundtDarkQDRGray: #D5D6D9;
+                --SundtLightQDRGreen: #50CA65;
+                --SundtDarkQDRGreen: #2B8C3C;
+                 */
+}
+/* #endregion Colour Declarations */
+
+/* #region Bootstrap Colour Overrides */
+.bg-primary {
+    background-color: #0085C1;
+}
+
+.bg-danger {
+    background-color: #EE373D;
+}
+
+.bg-warning {
+    background-color: #F3D03E;
+}
+
+.bg-success {
+    background-color: #65C27D;
+}
+
+.bg-info {
+    background-color: #65C27D;
+}
+
+.bg-light {
+    background-color: #F8F9FB;
+}
+
+.bg-secondary {
+    background-color: #898A8D;
+}
+
+.bg-dark {
+    background-color: #333333;
+}
+/* #endregion Bootstrap Colour Overrides */
+
+/* #region Overrides */
+.container { /* This defines minimum "Y" for footer */
+    min-height: 400px;
+}
+
+.NonTelerikContainer { /* This is for those rare pages that don't use Telerik tabs */
+    padding: 0px;
+    margin: 0px;
+}
+
+    .NonTelerikContainer .min-width1366 { /* For wide grids in a non-Telerik container */
+        min-width: 1330px;
+        margin: 0px;
+    }
+
+.min-width1330 { /* For wide grids in a non-Telerik container & added to containers */
+    min-width: 1330px;
+    margin: 0px;
+}
+
+.min-width1366 {
+    /*min-width: 1066px;*/
+    max-width: 1875px;
+    margin: 0px;
+}
+
+.min-width1366a { /* This is the one that makes sure it fills a laptop width (with a few pixel buffer to allow for a vertical scrollbar) without having a required horizontal scrollbar -DD */
+    min-width: 1000px;
+    max-width: 1900px;
+    margin: 0px;
+    margin-right: 7px;
+}
+
+.min-width1366b {
+    min-width: 1185px;
+    max-width: 1920px;
+    margin: 0px;
+    margin-right: 7px;
+}
+
+.min-width1366wide {
+    min-width: 1285px;
+    max-width: 1920px;
+    margin: 0px;
+    margin-right: 7px;
+}
+
+.min-width1366wider {
+    /* min-width: 1405px; Before "Created On" was added to GNG on 06-20-2022 -DD */
+    min-width: 1505px;
+    max-width: 1920px;
+    margin: 0px;
+    margin-right: 7px;
+}
+
+.max-width1920 {
+    max-width: 1875px;
+}
+
+.container-fluid .min-width1366 {
+    min-width: 1066px;
+    max-width: 1266px;
+    margin: 0px;
+}
+
+.FullLaptopMinusNavigation {
+    min-width: 1090px;
+    margin: 0px;
+}
+
+/* The below is the main body area in the Telerik framing.  It is currently set to grow on desktops, delete that line if you don't want it to. */
+@media (min-width:1200px) {
+    .container {
+        max-width: 1100px; /* This ensures no horizonal scrollbar on laptops */
+        max-width: 100%; /* This alows it to grow on desktops */
+    }
+}
+
+/* START Override the default header colours to look like SundtWeb */
+
+.top-row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.main {
+    flex: 1;
+}
+
+    .main .top-row {
+        border-bottom: 1px solid var(--SundtQDRGray);
+        justify-content: flex-end;
+        z-index: 9997; /* Keeps the header on top when it should be */
+        height: 48px;
+        font-size: 10pt;
+        font-family: SemiBoldBody, sans-serif;
+        background-color: var(--SundtRed);
+        color: var(--SundtWhite);
+        opacity: 1;
+        padding: 0px;
+        margin: 0px;
+    }
+
+        .main .top-row > a, .main .top-row .btn-link {
+            white-space: nowrap;
+            margin-left: 1.5rem;
+        }
+
+        .main .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+.FixHeader { /* This ensures that scrolling doesn't change the header colour to white */
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 47px;
+}
+
+
+.ProductionEnvironment { /* Default for when environment is Production */
+    opacity: 1;
+}
+
+.StagingEnvironment { /* Override above when environment is Staging */
+    background-color: var(--SundtNavy) !important;
+    opacity: 1;
+}
+
+.DevelopmentEnvironment { /* Override above when environment is Development */
+    background-color: var(--SundtOrange) !important;
+    opacity: 1;
+}
+
+.TestEnvironment { /* Override above when environment is Test */
+    background-color: var(--SundtGreen) !important;
+    opacity: 1;
+}
+
+.main .top-row a:link {
+    color: var(--SundtWhite);
+}
+
+.main .top-row a:visited {
+    color: var(--SundtWhite);
+}
+
+.main .top-row a:hover {
+    color: var(--SundtWhite);
+}
+
+.main .top-row a:active {
+    color: var(--SundtWhite);
+}
+/* END Override the default header colours */
+
+/* Apply white background colour to all .row elements & helps fix horizonal scroll issue on laptops */
+.row {
+    background-color: var(--SundtWhite);
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+/* #endregion Overrides */
+
+
+/* This is enough code to put 'col's in but no other formatting */
+.PseudoRow { 
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+
+/* #region Telerik-Specific */
+
+/* The next two are the sort arrows & arrow numbers in the header */
+.k-link .k-icon.k-i-sort-asc-small, .k-link .k-icon.k-i-sort-desc-small, /* Added to do the arrows when the below started to just do the numbers 11/14/2022 */
+.k-grid-header .k-i-sort-asc-sm, .k-grid-header .k-i-sort-desc-sm, .k-grid-header .k-sort-order {
+    color: var(--SundtWhite); /* Arrow & Number Colour */
+    filter: drop-shadow(0 0 3px var(--SundtBlack)); /* Arrow & Number Shadow & Colour */
+}
+.k-grid-header .k-cell-inner > .k-link > .k-icon.k-i-sort-desc-sm, .k-grid-header .k-cell-inner > .k-link > .k-icon.k-i-sort-asc-sm {
+    padding: 0px; /* Arrow Padding */
+    margin: 0px; /* Arrow Margin */
+}
+
+/* This next one is the 'used' filter on a grid that uses FilterMenuType="@FilterMenuType.CheckBoxList" filters -DD  */
+/* The below is a promotion from Margin app + a fix from the Telerik 3.6.1 update (.k-grid-filter is now .k-grid-filter-menu) */
+.k-grid-header .k-grid-filter.k-state-active, .k-grid-header .k-grid-filter-menu.k-active, .k-grid-filter.k-active, .k-grid-header .k-header-column-menu.k-state-active, .k-grid-header .k-header-column-menu.k-active, .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, .k-grid-header .k-hierarchy-cell .k-icon.k-active {
+    color: var(--SundtBlue);
+    background-color: rgba(255,255,255,0.65); /* Was SundtQDRGray, this provides a small transparency (promotion) */
+    padding-left: 0px;
+    padding-right: 2px;
+    width: 14px;
+    border-top: 2px solid var(--SundtDarkGray);
+    border-bottom: 0px solid var(--SundtDarkGray); /* Was 1px (promotion) */
+}
+
+.k-pager-numbers .k-link.k-state-selected, .k-pager-numbers .k-link.k-selected { /* Added when 3.4.0 messed up the background colour of the current page indicator of paginated grids */
+    border-color: #0099CC;
+    color: white;
+    background-color: #0099CC;
+}
+
+.k-grid-footer-wrap { /* I forget what this did, I didn't document it at the time, but it was important */
+    font-family: BoldHeadline, sans-serif;
+    color: var(--SundtRed);
+}
+
+.k-state-active { /* This makes the Selected/Active tab bold */
+    font-weight: 600;
+}
+
+.k-tabstrip-items { /* This is the main body area top */
+    margin-top: 1em;
+    border-color: var(--SundtLightGray);
+    background-color: var(--SundtWhite);
+    font-family: SemiBoldBody, sans-serif;
+}
+
+    .k-tabstrip-items .k-item { /* This is the Inactive tab */
+        color: var(--SundtNavy);
+    }
+
+        .k-tabstrip-items .k-item:hover, .k-tabstrip-items .k-item.k-state-hover { /* This is the hovered tab */
+            border-color: var(--SundtLightGray);
+            color: var(--SundtBlue);
+            background-color: var(--SundtAlmostWhite);
+        }
+
+        .k-tabstrip-items .k-item.k-state-active, .k-tabstrip-items .k-item.k-state-selected { /* This is the Selected/Active tab */
+            border-color: var(--SundtLightGray);
+            color: var(--SundtBlack80);
+            font-family: BoldBody, sans-serif;
+            background-color: var(--SundtQDRGray);
+        }
+
+.k-tabstrip > .k-content { /* This is the main body area sides and bottom */
+    border-color: var(--SundtLightGray);
+    background-color: var(--SundtQDRGray);
+}
+
+.k-grid-pager { /* Probably among other things, this is the main footer of an object with multiple pages (with the blue buttons) */
+    color: var(--SundtBlack80);
+}
+
+.k-pager-wrap { /* This is where they declared the font for the above */
+    font-family: TSTableRegular, sans-serif;
+}
+
+/* These three direct from Telerik, they hide the scrollbar on grids - https://www.telerik.com/forums/set-scrollbar-invisible */
+.no-scroll .k-grid-content {
+    overflow-x: hidden; /* I need to make sure this doesn't break anything else as of 01/18/2021 -DD */
+    overflow-y: hidden;
+}
+
+.no-scroll .k-grid-header {
+    padding-right: 0px !important;
+}
+
+.no-scroll .k-grid-header-wrap {
+    border-width: 0px !important;
+}
+
+.no-scroll .k-grid-footer { /* Telerik forgot about this one, but I caught it -DD */
+    padding-right: 0px !important;
+}
+
+.k-window { /* This is for Grid pop-up messages */
+    width: 325px; /* Feel free to finesse this the first time it is used; Raquel wanted it approximately 1/2 the width of a help pop-up -DD 12/06/2021 */
+    background-color: var(--SundtBlack5);
+    border-color: var(--SundtBlack80);
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+
+    .k-window .k-window-titlebar.k-dialog-titlebar.k-header {
+        color: var(--SundtNavy);
+        text-transform: uppercase;
+        font-family: BoldHeadline, sans-serif;
+        font-size: 14pt;
+    }
+
+    .k-window .k-window-content.k-dialog-content {
+        margin: 15px 5px;
+    }
+
+    .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end {
+        justify-content: center;
+    }
+
+        .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button {
+            font-family: Buttons, sans-serif;
+            font-size: 10pt;
+            color: var(--SundtWhite);
+            padding: 5px 10px 5px 9px;
+            margin: 10px;
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+            border: 1px solid var(--SundtQDRGray);
+            background-color: var(--SundtDarkGray);
+        }
+
+            .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button:hover {
+                background-color: var(--SundtDarkGray);
+                border-color: var(--SundtLightGray);
+                filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+                /*background-color: var(--SundtDarkDarkGray);*/
+            }
+
+            .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button:active {
+                background-color: var(--SundtDarkGray);
+                border-color: var(--SundtLightGray);
+                filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+                /*background-color: var(--SundtLightDarkGray);*/
+            }
+
+            .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button.k-primary {
+                font-family: Buttons, sans-serif;
+                font-size: 10pt;
+                color: var(--SundtWhite);
+                padding: 5px 10px 5px 9px;
+                margin: 10px;
+                border-radius: 4px;
+                display: inline-block;
+                cursor: pointer;
+                border: 1px solid var(--SundtQDRGray);
+                background-color: var(--SundtBlue);
+            }
+
+                .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button.k-primary:hover {
+                    background-color: var(--SundtBlue);
+                    border-color: var(--SundtLightGray);
+                    filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+                    /*background-color: var(--SundtDarkBlue);*/
+                }
+
+                .k-window .k-dialog-buttongroup.k-hstack.k-justify-content-end .k-button.k-primary:active {
+                    background-color: var(--SundtBlue);
+                    border-color: var(--SundtLightGray);
+                    filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+                }
+
+.k-button-solid-primary { /* Added due to Telerik UI update 3.0 - blue button */
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    margin: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtBlue);
+}
+
+    .k-button-solid-primary:hover {
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .k-button-solid-primary:active {
+        background-color: var(--SundtBlue);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.telerik-blazor.k-button.k-dialog-cancel.k-button-solid.k-rounded-md.k-button-rectangle.k-button-md.k-button-solid-base { /* Added due to Telerik UI update 3.0 - gray button */
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    padding: 5px 10px 5px 9px;
+    margin: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+}
+
+    .telerik-blazor.k-button.k-dialog-cancel.k-button-solid.k-rounded-md.k-button-rectangle.k-button-md.k-button-solid-base:hover {
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        color: var(--SundtWhite);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+
+    .telerik-blazor.k-button.k-dialog-cancel.k-button-solid.k-rounded-md.k-button-rectangle.k-button-md.k-button-solid-base:active {
+        background-color: var(--SundtDarkGray);
+        border-color: var(--SundtLightGray);
+        color: var(--SundtWhite);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.centered-header-grid .k-cell-inner > .k-link { /* This centers the headings of a Telerik Grid - to use, add Class="centered-header-grid" to the <TelerikGrid> tag */
+    justify-content: center;
+    padding-left: 0px !important; /* Assuming you're using class "no-scroll" on the grid, this makes the left padding match the right */
+}
+
+.k-filterable > .k-cell-inner {
+    margin: -0.5rem 0px; /* This had to be added due to a Telerik UI update -DD 01/20/2022 */
+}
+
+/* START These overrides are specifically for inserting a URL in a Telerik Rich Text Box */
+.k-window.k-window-wrapper.telerik-blazor.k-centered { /* The width of the pop-up */
+    /* Before Telerik UI update 3.0, this was: .k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered */
+    width: 450px;
+}
+
+.k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-window-content.k-dialog-content .k-form.k-form-horizontal .k-form-field { /* The label + field width */
+    width: 100%;
+    text-align: left;
+}
+
+    .k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-window-content.k-dialog-content .k-form.k-form-horizontal .k-form-field .k-form-label { /* Web Address label */
+        margin: 0px;
+        padding: 5px;
+        width: 25%;
+        align-items: flex-start;
+    }
+
+    .k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-window-content.k-dialog-content .k-form.k-form-horizontal .k-form-field .k-form-field { /* Title Label */
+        margin: 0px;
+        padding: 5px;
+        width: 25%;
+        align-items: flex-start;
+    }
+
+    .k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-window-content.k-dialog-content .k-form.k-form-horizontal .k-form-field .k-form-field-wrap { /* Both text boxes */
+        width: 75%;
+        text-align: left;
+    }
+
+.k-window.k-window-wrapper.telerik-blazor.k-centered .k-window-content.k-dialog-content .k-actions.k-actions-end { /* Centering the buttons */
+    /* Before Telerik UI update 3.0, this was: .k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-window-content.k-dialog-content .k-form.k-form-horizontal .k-actions.k-hstack.k-justify-content-end */
+    margin-top: 10px;
+    justify-content: center !important;
+}
+
+.k-window.k-window-wrapper.telerik-blazor.k-widget.k-centered .k-form-field-wrap .k-textbox.telerik-blazor.k-widget { /* The general area of the pop-up */
+    width: 100%;
+}
+/* END These overrides are specifically for inserting a URL in a Telerik Rich Text Box */
+
+/* This was added on 06/28/2022 after the Telerik 3.4.0 update (it makes the background not white) -DD */
+.k-tabstrip-items-wrapper .k-item:active, .k-tabstrip-items-wrapper .k-item.k-state-active, .k-tabstrip-items-wrapper .k-item.k-active, .k-tabstrip-items-wrapper .k-item.k-state-selected, .k-tabstrip-items-wrapper .k-item.k-selected {
+    border-color: var(--SundtLightGray);
+    font-family: BoldBody, sans-serif;
+    background-color: var(--SundtQDRGray);
+}
+/* #endregion Telerik-Specific */
+
+/* #region Bootstrap-Specific */
+.alert-warning {
+    color: var(--SundtBlack);
+    background-color: var(--SundtYellow);
+    border-color: var(--SundtYellow);
+    padding: 5px;
+    margin: 5px 0px 10px 0px;
+    text-align: center;
+}
+
+    .alert-warning hr {
+        border-top-color: var(--SundtYellow);
+    }
+
+    .alert-warning .alert-link {
+        color: var(--SundtBlack);
+    }
+
+.bd-callout { /* I got this from Bootstrap's site, but it isn't part of BS4 */
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.bd-callout-primary {
+    border-left-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.bd-callout-info {
+    border-left-color: #17a2b8;
+    background-color: rgba(23, 162, 184, 0.05);
+}
+
+.bd-callout-warning {
+    border-left-color: #ffc107;
+    background-color: rgba(255, 193, 7, 0.05);
+}
+
+.bd-callout-danger {
+    border-left-color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+/* #endregion Bootstrap-Specific */
+
+/* #region C# Visibility Controls */
+.Visible {
+    opacity: 1;
+}
+
+.Hidden {
+    display: none;
+}
+/* #endregion C# Visibility Controls */
+
+/* #region CSS "Hacks" */
+/* START: Links that were created with CSS rather than HTML */
+/* For making things look clickable, including colour and underline */
+.CSSa {
+    color: var(--SundtNavy);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    .CSSa:hover {
+        color: var(--SundtBlue);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+.CSSaRed {
+    color: var(--SundtRed);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    .CSSaRed:hover {
+        color: var(--SundtRed);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+.CSSaTooltip {
+    color: var(--SundtNavy);
+    cursor: help;
+}
+
+    .CSSaTooltip:hover {
+        color: var(--SundtBlue);
+        cursor: help;
+    }
+
+.CSSaNoUL {
+    color: var(--SundtNavy);
+    cursor: pointer;
+}
+
+    .CSSaNoUL:hover {
+        color: var(--SundtBlue);
+        cursor: pointer;
+    }
+/* For making things in the header look clickable, including colour and underline */
+.CSSaHeader {
+    color: var(--SundtWhite);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.CSSaSimple { /* For making things look clickable, but not change colour or underline */
+    cursor: pointer;
+}
+/* END: Links that were created with CSS rather than HTML */
+
+.NoIcon { /* For left-side navigation to keep text lined up when there is no icon */
+    padding-left: 33px;
+}
+
+/* This washes the screen with a 10% opacity black and makes nothing clickable */
+.BlockInput {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+
+/* The print version of this sets a specific value */
+.PrintWidth {
+    width: 100%;
+}
+
+/* The print version of this sets the left & right margins to 0 */
+.mx-print-0 {
+    opacity: 1;
+}
+
+/* NOTE: Leave this as the last item in the file; it's protection against old browsers */
+.PortraitOnly {
+    display: none;
+}
+/* #endregion CSS "Hacks" */

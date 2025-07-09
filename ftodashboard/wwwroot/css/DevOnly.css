@@ -1,0 +1,439 @@
+﻿/*
+    This CSS is only used in development
+    (mainly for notes & things that aren't part of the actual web app)
+*/
+
+/*.GradientTest {
+    background: linear-gradient(180deg, rgb(250,250,248), rgb(255,255,255));
+    border-radius: 5px;
+    border: 1px solid rgba(183,186,188,0.5);
+}*/
+
+/* TEST ONLY */
+.foo-bar {
+    background-color: red;
+}
+
+.TopPurpleButton {
+    position: absolute;
+    top: 10px;
+    right: 49px;
+}
+
+/* PROMOTE THESE SOON: */
+article {
+    position: relative;
+    margin: 0px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem !important;
+    padding: 0.25rem;
+    padding-bottom: 1rem;
+    color: #333;
+    background: linear-gradient(180deg, rgb(250,250,250), rgb(255,255,255));
+    background-clip: padding-box;
+    border: 1px solid rgba(183,186,188,0.5);
+    border-radius: 5px;
+    max-width: 1100px;
+}
+    article h2 {
+        padding-left: 15px;
+    }
+    article.PrintArticle { 
+        background: rgba(0,0,0,0);
+        border: 0px;
+        padding: 0px;
+        max-width: 1050px;
+    }
+    article.Full {
+        max-width: 100%;
+    }
+    article.FullPlus {
+        max-width: 150%;
+    }
+    .HeadingButton {    /* Any time I need a button opposite the <h2> in an <article> */
+        position: absolute;
+        top: 21px;
+        right: 21px;
+    }
+    .HeadingButtonWithClose { /* Any time I need a button opposite the <h2> in an <article> that has a Close "X" */
+        position: absolute;
+        top: 21px;
+        right: 75px;
+    }
+
+.RemoveArticle article {    /* This is for Print Preview / printing */
+    background: rgba(0,0,0,0);
+    border: 0px;
+    padding: 0px;
+}
+
+    .RemoveArticle article .HeadingButton { /* Any time I need to remove the button opposite the <h2> in an <article> */
+        display: none;
+    }
+
+section {
+    padding: 0px;
+    margin: 0px;
+    max-width: 1050px;
+}
+    section.mainsection {
+        padding: 0px;
+        margin: 0.75rem 0px;
+        background-color: rgba(0,0,0,.0) !important;
+    }
+    section.subsection { /* Essentially a 'col-6' 'row' */
+        padding: 0px;
+        margin: 0.25rem 0px;
+        /*        width: 500px;
+        min-width: 500px;*/
+        width: 50%;
+        display: -ms-flexbox; /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    section.subsection-wide {   /* Essentially a 'col-12' 'row' */
+        padding: 0px;
+        margin: 0.25rem 0px;
+/*        width: 1000px;
+        min-width: 1000px;*/
+        width: 100%;
+        display: -ms-flexbox;   /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    section .label {
+        font-family: BoldBody, sans-serif;
+        font-size: 10.5pt;
+        padding-top: 6px;
+        padding-bottom: 2px;
+    }
+    section .text {
+        font-family: LightBody, sans-serif;
+        font-size: 10pt;
+        padding-top: 7px;
+        padding-bottom: 2px;
+    }
+    section .section-top-border {
+        padding-bottom: 0.25em;
+        border: 0px;
+        border-top: 1px solid rgba(183,186,188,0.25);
+    }
+
+.NoBackgroundTest {
+    background-color: rgba(0,0,0,0);
+}
+
+.LightGrayText {
+    color: var(--SundtLightGray);
+}
+.DarkGrayText {
+    color: var(--SundtDarkGray);
+}
+
+
+
+/* Promote this all the way up: */
+.Icon16 { /* This sets the Bootstrap icons to the size we prefer (default is 16px, but it depends on the font size)  */
+    font-size: 1.231em;
+}
+.IconPageLevel { /* This is for page-level help icons  */
+    font-size: 1.75em;
+}
+
+
+
+
+.DOBorder {
+    border: 1px solid black;
+}
+
+.DOBox {
+    background-color: #C69BF7;
+}
+
+.DOTIBCDropdown {
+    position: fixed;
+    top: 8px;
+    left: 280px;
+    font-size: 10pt;
+    font-family: SemiBoldBody, sans-serif;
+    color: #EEDDFF;
+    z-index: 9999;
+}
+
+.DOGNG100WidthLaptopExpanded {
+    width: 1220px;
+    background-color: aqua;
+}
+.DOGNG100WidthLaptop {
+    width: 980px;
+    background-color: aquamarine;
+}
+.DOGNG100WidthPrint {
+    width: 960px;
+    border: 1px solid burlywood;
+}
+
+
+/* This defines minimum "Y" for footer - overriding the default for short lists & tabs (might keep this in the app-specific .css) */
+.container {
+    min-height: 449px;
+}
+
+.NonTelerikContainer {
+    min-height: 549px;
+}
+
+.DOToolTip {
+    color: #898A8D;
+}
+
+.PurpleText {
+    color: var(--SundtDevPurple);
+}
+
+/*                         ********************                        */
+/*                         * Generic Dev-Only *                        */
+/*                         ********************                        */
+:root {
+    --SundtDevPurple: #8C37EE;
+    --SundtDevLightPurple: #C69BF7;
+    --SundtDevDarkPurple: #461C77;
+}
+
+.CheatsheetFooter {
+    text-align: center;
+    font-style: italic;
+    padding: 10px;
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+}
+
+.HelperIndentation {
+    padding: 0 0 0.5em 3em
+}
+
+.NowViewing {
+    position: fixed;
+    top: 14px;
+    left: 250px;
+    z-index: 9998;
+    font-family: BoldBody, sans-serif;
+    color: #FFFFFF; /* SundtWhite, for IE */
+    color: var(--SundtWhite);
+}
+
+    .NowViewing a {
+        text-decoration: none;
+        color: #F3D03E; /* SundtYellow, for IE */
+        color: var(--SundtYellow);
+    }
+
+        .NowViewing a:hover {
+            text-decoration: underline;
+            color: #F3D03E; /* SundtYellow, for IE */
+            color: var(--SundtYellow);
+        }
+
+h4.DOAlert {
+    padding: 0.25em;
+    margin: 0px 0px 0.75em 0px;
+    color: #664ebc;
+    background-color: #c8bfe7;
+    border: 2px solid #8774cb;
+    border-left: 5px solid #664ebc;
+}
+
+.DEVCSSa {
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+article.DODevColours {
+    color: rgb(135,116,203);
+    background: linear-gradient(180deg, rgb(217,210,238), rgb(232,227,244));
+    border: 1px solid rgba(135,116,203,0.25);
+    padding-bottom: 5px;
+}
+
+.DODevColours {
+    background-color: #C69BF7; /* for IE */
+    background-color: var(--SundtDevLightPurple);
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+}
+
+.DODevColours2 {
+    margin: 2em 3em 1em 3em;
+    padding: 0.5em;
+    background-color: #C69BF7; /* for IE */
+    background-color: var(--SundtDevLightPurple);
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+}
+
+.DODevColours a {
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+    text-decoration: underline;
+}
+
+.DODev {
+    color: #8C37EE; /* for IE */
+    color: var(--SundtDevPurple);
+}
+
+.DODev2 {
+    color: #C69BF7; /* for IE */
+    color: var(--SundtDevLightPurple);
+    display: inline-block;
+    width: 44%;
+    font-style: italic;
+}
+
+.DODev3 {
+    color: #C69BF7; /* for IE */
+    color: var(--SundtDevLightPurple);
+    font-style: italic;
+}
+
+.DODevAddSpace {
+    position: absolute;
+    bottom: 1vw;
+    width: 16vw;
+    margin-top: 5vw;
+    padding: 0.5em;
+}
+
+.DODevButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    color: var(--SundtWhite);
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    background-color: var(--SundtDevPurple);
+}
+    .DODevButton:hover {
+        background-color: var(--SundtDevPurple);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(120%) drop-shadow(0px 0px 2px #B7BABC);
+    }
+    .DODevButton:active {
+        background-color: var(--SundtDevPurple);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.DoDevHeight36 {
+    height: 36px;
+}
+
+.DevDoNotShow {
+    opacity: 0;
+}
+
+
+
+
+/*************************************************************/
+/*      Promote the below as needed to app-specific too      */
+/*************************************************************/
+@media print {
+    .DEVPrintMessage {
+        display: none;
+    }
+
+    .CheatsheetFooter {
+        display: none;
+    }
+
+    .HelperIndentation {
+        padding: 0 0 0.5em 3em
+    }
+
+    .NowViewing {
+        display: none;
+    }
+
+    .DEVCSSa {
+        display: none;
+    }
+
+    .DODevColours {
+        display: none;
+    }
+
+    .DODevColours2 {
+        display: none;
+    }
+
+    .DODevColours a {
+        display: none;
+    }
+
+    .DODev {
+        display: none;
+    }
+
+    .DODev2 {
+        display: none;
+    }
+
+    .DODev3 {
+        display: none;
+    }
+
+    .DODevAddSpace {
+        display: none;
+    }
+
+    .DODevButton {
+        display: none;
+    }
+
+
+    article {
+        background: rgba(0,0,0,0);
+        border: 0px;
+        padding: 0px;
+        border-radius: 0px;
+    }
+
+        article .HeadingButton { /* Any time I need a button opposite the <h2> in an <article> */
+            display: none;
+        }
+
+
+}
+
+    /*
+
+    Code to try for conditional colouring (yellow mandatory fields):
+    https://stackoverflow.com/questions/3617020/matching-an-empty-input-box-using-css
+    https://stackoverflow.com/questions/33030923/conditional-css-different-colors-for-different-input-text
+
+    Code to grow/shrink fields for data entry:
+    https://www.w3schools.com/cssref/sel_attribute_value.asp
+
+    How I did the original button links:
+    https://jsfiddle.net/abhishekcghosh/7k48ctcu/
+
+    I'm not using this at the moment, but this will scale font with window/screen width dynamically:
+        font-size: calc(0.875em + 0.25 * (100vw - 80em) / 40);
+        font-size: -webkit-calc(87.5% + 0.25 * (100vw - 8000%) / 40);
+    source: https://zellwk.com/blog/viewport-based-typography/
+
+    Finding +/- 10% of a colour:
+    https://www.cssfontstack.com/oldsites/hexcolortool/
+
+    Gray out app to display something on top:
+    https://codepen.io/sahil4test/pen/xERYvX
+
+*/

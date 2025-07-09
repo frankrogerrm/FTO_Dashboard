@@ -1,0 +1,49 @@
+parameters:
+- name: jobDisplayName
+  default: ''
+- name: azDevOpsEnvironment
+  default: ''
+- name: azServicePrincipal
+  default: ''
+- name: azKeyVaultName
+  default: ''
+- name: azResourceGroupName
+  default: ''
+- name: azWebAppName
+  default: ''
+- name: azWebAppSlotName
+  default: ''
+
+jobs:
+- deployment:
+  displayName: ${{ parameters.jobDisplayName }} # Template Parameter
+  environment: ${{ parameters.azDevOpsEnvironment }} # Template Parameter
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+
+        - task: AzureKeyVault@2
+          displayName: Access Azure Key Vault
+          inputs:
+            azureSubscription: ${{ parameters.azServicePrincipal }} # Template Parameter
+            KeyVaultName: ${{ parameters.azKeyVaultName }} # Template Parameter
+
+        - task: AzureCLI@2
+          displayName: Deploy website
+          inputs:
+            azureSubscription: ${{ parameters.azServicePrincipal }} # Template Parameter
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              if ( '${{ parameters.azWebAppSlotName }}' -ne 'production')
+              {
+              echo "Deploying to ${{ parameters.azWebAppSlotName }} slot"
+              az webapp deployment source config-zip --src $(Pipeline.Workspace)/drop/output.zip -g ${{ parameters.azResourceGroupName }} -n ${{ parameters.azWebAppName }} -s ${{ parameters.azWebAppSlotName }}
+              }
+              else
+              {
+              echo "Deploying to ${{ parameters.azWebAppSlotName }}"
+              az webapp deployment source config-zip --src $(Pipeline.Workspace)/drop/output.zip -g ${{ parameters.azResourceGroupName }} -n ${{ parameters.azWebAppName }}
+              }
+              

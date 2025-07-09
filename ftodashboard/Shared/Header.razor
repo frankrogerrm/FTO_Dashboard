@@ -1,0 +1,190 @@
+﻿@using System.Threading.Tasks;
+@using Microsoft.AspNetCore.Hosting;
+@using Microsoft.Extensions.Hosting;
+@using Microsoft.Identity.Web
+@using Classes
+@*@using Microsoft.Graph*@
+@using Microsoft.Extensions.Configuration;
+@*@using Microsoft.AspNetCore.Authentication.OpenIdConnect;*@
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@*@inject Microsoft.Graph.GraphServiceClient GraphServiceClient*@
+@inject MicrosoftIdentityConsentAndConditionalAccessHandler ConsentHandler
+@inject NavigationManager Navigate
+@inject IWebHostEnvironment Env
+@inject AppUser appUser
+
+<div class="top-row @envClass">
+    <AuthorizeView>
+
+        <Authorized>
+            <div class="HeaderLeft">
+                <a href="https://web.sundt.com/" title="SundtWeb">
+                    <img class="HeaderLogoImage PrintOnly" src="/images/ColorHeaderLogo.png" />
+                    <img class="HeaderLogoImage HideFromPrinting" src="/images/WhiteHeaderLogo.png" />
+                </a>
+            </div>
+            <div class="HeaderRight">
+
+                @if (helpRightPane)
+                {
+                    <div @onclick="HidehelpRightPane" class="HeaderRightFloat Help46BoxSelected HideFromPrinting" title="Hide Help">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
+                            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                        </svg>
+                        &nbsp;
+                    </div>
+                }
+                else
+                {
+                    <div @onclick="ShowhelpRightPane" class="HeaderRightFloat Help46Box HideFromPrinting" title="Show Help">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
+                            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                        </svg>
+                        &nbsp;
+                    </div>
+                }
+                <div class="HeaderRightFloat">
+                    <div class="HeaderName">
+                        <span class="PrintOnly Right">Printed by: @appUser.Name<br />@timeDate</span>
+                        <span class="HideFromPrinting">@appUser.Name</span>
+                    </div>
+                </div>
+                @if (photo == null)
+                {
+                    <img class="HeaderUserImage HideFromPrinting" src="/images/userimage.png" />
+                }
+                else
+                {
+                    <img class="HeaderUserImage HideFromPrinting" src="data:image/jpeg;base64, @photo" />
+                }
+
+            </div>
+        </Authorized>
+
+        <NotAuthorized>
+            You are not authorized to use this application
+        </NotAuthorized>
+
+    </AuthorizeView>
+</div>
+
+
+<div class="HeaderTitle">
+    <span>FTO Dashboard</span><span>@envName</span>    <!-- This is the name of the application -->
+</div>
+
+@if (helpRightPane)
+{
+    <div class="HelpRightPopout">
+        <MainHelp />
+        <div @onclick="HidehelpRightPane" class="CloseHelpRightPopout" title="Hide Help">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+            </svg>
+        </div>
+    </div>
+    <div class="HelpRightPopoutBackground"></div>
+}
+
+@code {
+    string envClass;
+    string envName;
+    protected IConfiguration config;
+
+    protected void DetermineEnvironment()
+    {
+        if (Env.IsProduction())
+        {
+            envClass = "ProductionEnvironment";
+            envName = "";
+        }
+        else if (Env.IsStaging())
+        {
+            envClass = "StagingEnvironment";
+            envName = " (Staging)";
+        }
+        else if (Env.IsDevelopment())
+        {
+            envClass = "DevelopmentEnvironment";
+            envName = " (Development)";
+        }
+        else if (Env.IsEnvironment("Local"))
+        {
+            envClass = "DevelopmentEnvironment";
+            envName = " (Development)";
+        }
+        else
+        {
+            //this is for testing temp
+            envClass = "StagingEnvironment";
+            envName = " (Staging)";
+        }
+    }
+
+
+
+    // Used for printing the webapp:
+    private string timeDate;
+
+    string photo;
+
+    private bool helpRightPane { get; set; }
+    protected void ShowhelpRightPane()
+    {
+        helpRightPane = true;
+    }
+    protected void HidehelpRightPane()
+    {
+        helpRightPane = false;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //try
+        //{
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            
+
+
+            await appUser.Startup(AuthenticationStateProvider);
+
+        }
+        //user = await GraphServiceClient.Me.Request().GetAsync();
+        //photo = await GetPhoto();
+        //}
+        //catch (Exception ex)
+        //{
+        //    ConsentHandler.HandleException(ex);
+
+        //}
+        timeDate = DateTime.Now.ToString("MM-dd-yyyy hh:mm tt");
+        helpRightPane = false;
+        DetermineEnvironment();
+    }
+
+    //protected async Task<string> GetPhoto()
+    //{
+    //    string photo;
+
+    //    try
+    //    {
+    //        using (var photoStream = await GraphServiceClient.Me.Photo.Content.Request().GetAsync())
+    //        {
+    //            byte[] photoByte = ((System.IO.MemoryStream)photoStream).ToArray();
+    //            photo = Convert.ToBase64String(photoByte);
+    //            this.StateHasChanged();
+    //        }
+
+    //    }
+    //    catch (Exception)
+    //    {
+    //        photo = null;
+    //    }
+    //    return photo;
+    //}
+}

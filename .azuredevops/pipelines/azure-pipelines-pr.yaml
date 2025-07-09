@@ -1,0 +1,19 @@
+trigger: none
+
+pool:
+  vmImage: windows-latest
+  
+stages:
+
+- stage: Build
+  jobs:
+  - template: templates/build.yaml
+    parameters:
+      jobDisplayName: Build
+      appName: ftodashboard
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      sonarCloud: SonarCloud-sundt_FTODashboard
+      sonarOrg: sundt
+      sonarProjectKey: sundt_FTODashboard
+      sonarProjectName: FTODashboard

@@ -1,0 +1,197 @@
+﻿/* FTO_Dashboard App-Specific */
+
+/* BELOW THIS IS FTO-SPECIFIC */
+.GridSmallPad { /* Reduces the padding of Telerik Grids - important for data-heavy grids */
+    margin: 0px;
+    padding: 0px;
+}
+    .GridSmallPad th { /* This is the Grid Header Row */
+        padding: 0.5rem 0px 0.5rem 0.25rem;
+    }
+    .GridSmallPad .k-grid-header .k-grid-filter, .k-grid-header .k-header-column-menu { /* This is the Grid Header Row's (when not using FilterRow) Filter Icon */
+        position: absolute;
+        top: 4px;
+        right: 3px;
+        margin: 0px;
+        padding: 0px;
+        font-size: 9pt;
+        height: 2em;
+        width: 1em;
+    }
+    .GridSmallPad td { /* This is the Grid Body Rows */
+        padding: 0.25rem;
+        padding: 0px;
+    }
+        .GridSmallPad td.k-command-cell { /* This is the Grid Body Rows of the Command Collumn */
+            padding: 0.25rem;
+        }
+
+    /* Messing with the header for FilterRow: */
+    .GridSmallPad th .k-icon { /* Sets the icon itself size */
+        font-size: 12px;
+    }
+    .GridSmallPad th .k-input { /* Reduces the padding in text fields */
+        height: 2rem;
+        padding: 0.5rem 2px;
+    }
+    .GridSmallPad th .k-numerictextbox .k-select { /* Hides the +/- on numerical inputs */
+        width: 0px;
+    }
+    .GridSmallPad th .k-filtercell-operator { /* Sets the width of the container of the filter icons */
+        width: 25px;
+    }
+    .GridSmallPad th .k-textbox {
+        font-size: 0.75rem;
+        padding: 0.375rem 2px;
+    }
+    .GridSmallPad th .k-dropdown .k-dropdown-wrap .k-select, .k-dropdowntree .k-dropdown-wrap .k-select { /* Sets the main icon overall size */
+        padding: 3px;
+        margin: 2px 0px;
+    }
+    .GridSmallPad th .k-filtercell-wrapper {
+        position: relative;
+    }
+    .GridSmallPad th .k-filtercell .k-filtercell-operator > .k-button.k-clear-button-visible { /* This is the 'cancel filter' icon */
+        position: absolute;
+        right: 28px;
+        padding: 3px 0px;
+        margin: 2px 0px;
+    }
+    .GridSmallPad th .k-dropdown-operator .k-dropdown-wrap .k-select {
+        height: 1.5em;
+        width: 1.5em;
+    }
+/* ABOVE THIS IS FTO-SPECIFIC */
+
+
+.weekend {
+    color: #E2E3E6;
+    background-color: #E2E3E6;
+}
+
+.fto {
+    color: #0099CC;
+    background-color: #0099CC;
+}
+
+.fto-part {
+    color: rgba(0,0,0,0);
+    background-color: #0099CC;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .5) 50%, rgba(255, 255, 255, .5) 75%, transparent 75%, transparent);
+}
+
+.holiday {
+    color: #65C27D;
+    background-color: #65C27D;
+}
+
+.GimmePadding {
+    padding: 0.25rem;
+}
+
+.TableHelpIcon { /* This also exists in MPR - should be promoted to SundtDefault -DD 07/12/2021 */
+    color: var(--SundtNavy);
+    background-color: rgba(0,0,0,0);
+    border: 0px;
+}
+
+    .TableHelpIcon:hover {
+        color: var(--SundtBlue);
+        background-color: rgba(0,0,0,0);
+        border: 0px;
+    }
+
+.NavRow {
+    display: -ms-flexbox; /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    z-index: 999;
+}
+
+.FTORelative {
+    position: relative;
+    z-index: 99;
+}
+
+.FTOClearFilters {
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 3px 7px 10px;
+    color: var(--SundtNavy);
+    vertical-align: middle;
+    font-family: SemiBoldBody, sans-serif;
+    font-size: 12pt;
+    cursor: pointer;
+}
+
+    .FTOClearFilters:hover {
+        color: var(--SundtBlue);
+    }
+
+.SubtleButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    color: var(--SundtNavy);
+    background-color: RGBA(0, 0, 0, .05);
+}
+
+    .SubtleButton:hover {
+        background-color: RGBA(0, 0, 0, .075);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(110%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+    .SubtleButton:active {
+        background-color: RGBA(0, 0, 0, .025);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+
+.SubtleButtonDisabled {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: default;
+    border: 1px solid var(--SundtQDRGray);
+    color: var(--SundtLightGray);
+    background-color: RGBA(0, 0, 0, .025);
+}
+
+.FTONavHidden {
+    position: absolute;
+    top: -25px;
+    min-width: 1000px;
+    left: 15px;
+    font-size: 10pt;
+    text-align: left;
+    color: var(--SundtRed);
+}
+
+.FTONavShown {
+    position: absolute;
+    top: -25px;
+    min-width: 1000px;
+    left: 265px;
+    font-size: 10pt;
+    text-align: left;
+    color: var(--SundtRed);
+}
+
+.FTONote {
+    color: var(--SundtRed);
+}
+
+@media print {
+
+}

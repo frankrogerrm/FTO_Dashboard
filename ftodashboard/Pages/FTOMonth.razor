@@ -1,0 +1,410 @@
+﻿
+@using ftodashboard.Models
+@using ftodashboard.Services
+@using System.Collections.ObjectModel
+@using System.Reflection
+@inject NavigationManager NavigationManager
+@inject EmployeeService EmployeeService
+@inject IJSRuntime JsInterop
+
+<div class="container-fluid FullLaptopMinusNavigation">
+    <div class="Heading FullLaptopMinusNavigation mb-4">
+        <h1 class="mb-0">FTO Month-View</h1>
+    </div>
+
+    @* Month Filter *@ <!-- I relocated this per George; it may not work as copied - 08-06-2021 -DD -->
+    <TelerikDropDownList Data="@MonthNames"
+                         ValueChanged="@( (string p) => MonthSelected(p) )"
+                         Width="175px"
+                         Class="mt-0 mb-3"
+                         Value="@monthValue"
+                         ItemHeight="28"
+                         PageSize="10"
+                         ScrollMode="@DropDownScrollMode.Virtual">
+                                         <DropDownListSettings>
+                    <DropDownListPopupSettings Height="Auto"
+                                           Width="200px" />
+                </DropDownListSettings>
+    </TelerikDropDownList>
+
+    <div class="row FullLaptopMinusNavigation align-items-center my-0 py-0" style="background-color: black; color: white;">
+        <div class="col-2 Left my-0 py-0">
+            <h3 class="my-2">
+                @if (firstmonth)
+                {
+                    <i class="bi bi-arrow-left-circle text-muted" title="Viewing First Month"></i>
+                }
+                else
+                {
+                    <i class="bi bi-arrow-left-circle CSSaSimple text-white" @onclick="()=>ChangeMonth(-1)" title="View Previous Month"></i> <!-- I'd rather the title mention the month, like 'View July, 2021' -->
+                }
+            </h3>
+        </div>
+        <div class="col-8 Center my-0 py-0"><h3 class="my-2" style="color:white;">@monthName @year</h3></div>
+        <div class="col-2 Right my-0 py-0">
+            <h3 class="my-2">
+                @if (lastmonth)
+                {
+                    <i class="bi bi-arrow-right-circle text-muted" title="Viewing Last Month"></i>
+                }
+                else
+                {
+                    <i class="bi bi-arrow-right-circle CSSaSimple text-white" @onclick="()=>ChangeMonth(1)" title="View Next Month"></i> <!-- I'd rather the title mention the month, like 'View September, 2021' -->
+                }
+
+            </h3>
+        </div>
+    </div>
+
+    <div class="row my-0 py-0">
+        <TelerikGrid Data="@empFTOListforGrid" Class="no-scroll GridSmallPad col-12 FullLaptopMinusNavigation my-0 py-0" Pageable="false" Sortable="false" Resizable="false" Reorderable="false" ShowColumnMenu="false">
+            <GridColumns>
+                <GridColumn Editable="false" Width="17%" Title="Employee">
+                    <HeaderTemplate><div class="Left">Employee</div></HeaderTemplate>
+                    <Template>
+                        <div class="GimmePadding">@((context as EmployeeFTO).EmployeeName)</div>
+                    </Template>
+                </GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="1" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,1))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="2" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,2))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="3" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,3))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="4" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,4))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="5" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,5))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="6" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,6))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="7" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,7))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="8" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,8))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="9" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,9))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="10" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,10))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="11" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,11))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="12" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,12))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="13" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,13))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="14" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,14))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="15" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,15))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="16" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,16))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="17" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,17))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="18" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,18))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="19" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,19))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="20" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,20))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="21" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,21))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="22" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,22))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="23" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,23))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="24" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,24))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="25" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,25))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="26" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,26))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="27" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,27))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="28" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,28))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="29" Visible="@day29" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,29))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="30" Visible="@day30" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,30))"></GridColumn>
+                <GridColumn Editable="false" Width="2.75%" Title="31" Visible="@day31" OnCellRender="@((GridCellRenderEventArgs e) => OnCellRenderHandler(e,31))"></GridColumn>
+            </GridColumns>
+        </TelerikGrid>
+    </div>
+    <div class="row bg-transparent my-3">
+        <div class="Left pl-0 mb-5 col-6">
+            <div class="FTONote">
+                <!-- Left = 15px if collapsed, 265px if not -DD -->
+                <strong>Note:</strong> Employees are only displayed above if they have FTO approved through the Time Sheet app for the displayed month.
+            </div>
+        </div>
+        <div class="Right px-5 mb-5 col-6">
+            <div class="InlineBlock" style="width: 65px;"><strong>Key:</strong>&nbsp;</div>
+            <div class="InlineBlock" style="width: 125px;"><div class="InlineBlock holiday" style="width: 20px; height: 20px;">&nbsp;</div>&nbsp;<span>Sundt Holiday</span></div>
+            <div class="InlineBlock" style="width: 125px;"><div class="InlineBlock fto" style="width: 20px; height: 20px;">&nbsp;</div>&nbsp;<span>All-Day FTO</span></div>
+            <div class="InlineBlock" style="width: 125px;"><div class="InlineBlock fto-part" style="width: 20px; height: 20px;">&nbsp;</div>&nbsp;<span>Partial FTO</span></div>
+            <div class="InlineBlock" style="width: 125px;"><div class="InlineBlock weekend" style="width: 20px; height: 20px;">&nbsp;</div>&nbsp;<span>Weekend</span></div>
+        </div>
+    </div>
+</div>
+
+@code{
+    #region Parameters
+
+    //list of employee names and month/year as parameters
+    [Parameter] public string monthYear { get; set; }
+
+    [Parameter] public EventCallback<string> monthYearChanged { get; set; }
+
+    [Parameter] public List<Employee> filteredFTO { get; set; }
+
+    //compare past iterations of the same variable against the same
+    List<Employee> filteredFTOv2;
+    string monthYearv2;
+
+    #endregion
+
+    #region Variables
+    //initial list to get all employee FTO for selected month
+    public List<EmployeeFTO> empFTOList = new List<EmployeeFTO>();
+
+    //list of employees from filter with FTO for currently selected month
+    public List<EmployeeFTO> empFTOListforGrid = new List<EmployeeFTO>();
+
+    List<string> MonthNames, MonthNums;
+    public int days, month, year;
+    public bool leapYear;
+    public string monthName;
+
+    public List<string> monthNumToNameList;
+
+    public string monthValue;
+    public EventCallback<string> monthValueChanged;
+
+    //remove day columns for months under 31 days
+    public bool day29 = true, day30 = true, day31 = true;
+
+    //set calendar arrows functionality
+    protected bool firstmonth { get; set; }
+    protected bool lastmonth { get; set; }
+
+    #endregion
+
+    protected override void OnInitialized()
+    {
+        //TEST 
+        var b = new Newtonsoft.Json.JsonSerializer();
+
+        //populate month dropdown
+        MonthNames = EmployeeService.GetMonthNames();
+        MonthNums = EmployeeService.GetMonthNums();
+
+        //determine forward/back month arrows
+        firstmonth = false;
+        lastmonth = false;
+
+        //07 2021 format
+        monthYear = MonthNums[0];
+
+        //07 format
+        month = Convert.ToInt32(monthYear.Substring(0, 2).Trim());
+
+        monthNumToNameList = EmployeeService.GetMonthNumToString(month);
+        monthName = monthNumToNameList[0];
+
+        if (month < 10)
+        {
+            year = Convert.ToInt32(MonthNums[0].Substring(2, 4));
+        }
+        if (month >= 10)
+        {
+            year = Convert.ToInt32(MonthNums[0].Substring(3, 4));
+        }
+
+        monthValue = monthName + " " + year;
+
+        DetermineDays(month);
+    }
+
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if (!firstRender)
+    //    {
+    //        PopulateData();
+    //    }
+    //}
+
+    protected override Task OnParametersSetAsync()
+    {
+        PopulateData();
+        return base.OnParametersSetAsync();
+    }
+
+    async void PopulateData()
+    {
+        //AppInsights();
+
+        //clear current list of employee FTO
+        empFTOList.Clear();
+
+        //default month year if query is on load and is the current month
+        if (monthYear == null)
+        {
+            monthYear = month + " " + year;
+        }
+
+        //remove blanks to have the 82020 format
+        monthYear = String.Concat(monthYear.Where(c => !Char.IsWhiteSpace(c)));
+
+        //create a copy of filter list to compare against what's passing through - if the lists or months are the same don't run the query
+        if ((filteredFTO != filteredFTOv2) || (monthYearv2 != monthYear))
+        {
+            //get latest employee FTO - if it has updated since last call
+            empFTOList = EmployeeService.GetEmployeeFTO(monthYear);
+
+            //only run if combo box selection has been picked
+            if (filteredFTO != null)
+            {
+                empFTOListforGrid = EmployeeService.GetEmployeeFTOforGrid(empFTOList, filteredFTO);
+            }
+
+            //assign current list to new list to compare results in the future - if the same query dont run
+            filteredFTOv2 = filteredFTO;
+            monthYearv2 = monthYear;
+
+            StateHasChanged();
+            await Task.Delay(1000);
+        }
+        else if (filteredFTO != null)
+        {
+            if (filteredFTO.Count == 0)
+            {
+                empFTOListforGrid = null;
+
+                StateHasChanged();
+                await Task.Delay(1000);
+            }
+        }
+    }
+
+    public void DetermineDays(int month)
+    {
+        switch (month)
+        {
+            case 2:
+                if (leapYear)
+                {
+                    days = 29;
+                }
+                else
+                {
+                    days = 28;
+                }
+                break;
+            case 4:
+                days = 30;
+                break;
+            case 6:
+                days = 30;
+                break;
+            case 9:
+                days = 30;
+                break;
+            case 11:
+                days = 30;
+                break;
+            default:
+                days = 31;
+                break;
+        }
+
+        if (days == 28)
+        {
+            day29 = false;
+            day30 = false;
+            day31 = false;
+        }
+        else if (days == 29)
+        {
+            day30 = false;
+            day31 = false;
+        }
+        else if (days == 30)
+        {
+            day31 = false;
+        }
+        else
+        {
+            day29 = true;
+            day30 = true;
+            day31 = true;
+        }
+    }
+
+    private Task ChangeMonth(int monthIndex)
+    {
+        //month = Convert.ToInt32(monthYear.Substring(0, 2).Trim());
+
+        month = month + monthIndex;
+
+        if (month > 12)
+        {
+            month = 1;
+            year = year + 1;
+        }
+        if (month < 1)
+        {
+            month = 12;
+            year = year - 1;
+        }
+        monthNumToNameList = EmployeeService.GetMonthNumToString(month);
+        monthName = monthNumToNameList[0];
+
+        monthYear = month + " " + year;
+
+        //FirstLastMonth(monthYear);
+
+        DetermineDays(month);
+
+        PopulateData();
+
+        monthValue = monthName + " " + year;
+
+        return monthValueChanged.InvokeAsync(monthValue);
+
+    }
+
+    private void FirstLastMonth(string monthYear)
+    {
+        if (monthYear == MonthNums[0])
+        {
+            firstmonth = true;
+            lastmonth = false;
+        }
+        else if (monthYear == MonthNums[11])
+        {
+            firstmonth = false;
+            lastmonth = true;
+        }
+        else
+        {
+            firstmonth = false;
+            lastmonth = false;
+        }
+    }
+
+    private Task MonthSelected(string selectedMonth)
+    {
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(selectedMonth))
+        {
+            return null;
+        }
+        else
+        {
+            var monthYearResult = EmployeeService.GetMonthNumFromString(selectedMonth);
+            monthYear = monthYearResult[0];
+
+            month = Convert.ToInt32(monthYear.Remove(monthYear.Length - 4));
+            monthNumToNameList = EmployeeService.GetMonthNumToString(month);
+            monthName = monthNumToNameList[0];
+
+            if (month < 10)
+            {
+                year = Convert.ToInt32(monthYear.Substring(2, 4));
+            }
+            if (month >= 10)
+            {
+                year = Convert.ToInt32(monthYear.Substring(3, 4));
+            }
+
+            FirstLastMonth(monthYear);
+
+            DetermineDays(month);
+
+            PopulateData();
+
+            monthValue = monthName + " " + year;
+
+            return monthValueChanged.InvokeAsync(monthValue);
+        }
+
+    }
+
+    void OnCellRenderHandler(GridCellRenderEventArgs args, int num)
+    {
+        EmployeeFTO item = (EmployeeFTO)args.Item;
+
+        var propName = Convert.ToInt32(item.GetType().GetProperty("d" + num).GetValue(item));
+
+        args.Class = 1 == propName ? "fto" : args.Class = 2 == propName ? "fto-part" : args.Class = 3 == propName ? "weekend" : args.Class = 4 == propName ? "holiday" : "ColourTransparent";
+    }
+}

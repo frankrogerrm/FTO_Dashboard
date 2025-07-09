@@ -1,0 +1,611 @@
+﻿@using ftodashboard.Data
+@using ftodashboard.Models
+@using ftodashboard.Services
+@using Microsoft.EntityFrameworkCore
+
+@inject CommonDataSourceContext CDS
+@inject EmployeeService EmployeeService
+@inject NavigationManager NavManager
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+
+<div class="mb-5">
+    <div style="position: relative;">
+        <div class="TopLevelSelectionHeading mx-4">Select Filters:</div>
+        <div class="mx-4" style="position: absolute; top:14px; right:0px;"><i class="bi bi-info-circle-fill Icon16 CSSaNoUL" title="Select one filter below. Multiple projects can be selected at once."></i></div>
+        <!-- Once Don is all-in, the next two lines can be deleted (in case he forgets to delete them) 08-09-2021 -DD -->
+        @*<i class="k-icon k-i-question-circle Icon16 CSSaNoUL" title="Select one method below."></i>*@
+        @*<span class="TopLevelSelectionHeadingHelpIcon VAlignTop"><TelerikButton Class="TableHelpIcon" Icon="question-circle"></TelerikButton></span>*@
+    </div>
+    <div class="NavRow">
+        <div class="col-12">
+            @* Manager Filter *@
+            <TelerikComboBox Placeholder="Managers"
+                             Data="@Managers"
+                             Width="100%"
+                             @bind-Value="@ManagerValue"
+                             ClearButton="true"
+                             Filterable="true"
+                             OnChange="@ManagerSelected"
+                             FilterOperator="@StringFilterOperator.Contains"
+                             ItemHeight="36"
+                             PageSize="10"
+                             ScrollMode="@DropDownScrollMode.Virtual">
+            </TelerikComboBox>
+        </div>
+        <div class="col-1 p-0"></div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="Center text-muted col-2 mt-1 pt-0 mb-2">or</div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="col-1 p-0"></div>
+        <div class="col-12">
+            @* Employee (first name, last name) Filter *@
+            <TelerikComboBox Placeholder="Employees"
+                             Data="@Employees"
+                             @bind-Value="@EmployeeValue"
+                             Width="100%"
+                             ClearButton="true"
+                             Filterable="true"
+                             OnChange="@EmployeeSelected"
+                             FilterOperator="@StringFilterOperator.Contains"
+                             ItemHeight="36"
+                             PageSize="10"
+                             ScrollMode="@DropDownScrollMode.Virtual">
+            </TelerikComboBox>
+        </div>
+        <div class="col-1 p-0"></div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="Center text-muted col-2 mt-1 pt-0 mb-2">or</div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="col-1 p-0"></div>
+        <div class="col-12">
+            @* Project # Filter *@
+            <TelerikMultiSelect Data="@Projects"
+                                Width="100%"
+                                OnChange="ProjectSelected"
+                                @bind-Value="@ProjectValue"
+                                Filterable="true"
+                                FilterOperator="@StringFilterOperator.Contains"
+                                ClearButton="false"
+                                Placeholder="Projects">
+            </TelerikMultiSelect>
+
+            @*            <TelerikComboBox Placeholder="Project Numbers"
+                Data="@Projects"
+                Width="100%"
+                Class="my-1"
+                @bind-Value="@ProjectValue"
+                ClearButton="true"
+                Filterable="true"
+                OnChange="@ProjectSelected"
+                FilterOperator="@StringFilterOperator.Contains"
+                ItemHeight="46"
+                PageSize="10"
+                ScrollMode="@DropDownScrollMode.Virtual">
+                <ComboBoxSettings>
+                <ComboBoxPopupSettings Height="200px"
+                Width="150px" />
+                </ComboBoxSettings>
+                </TelerikComboBox>*@
+
+        </div>
+        <div class="col-1 p-0"></div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="Center text-muted col-2 mt-1 pt-0 mb-2">or</div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="col-1 p-0"></div>
+        <div class="col-12">
+            @* Home Cost Center Filter *@
+
+            <TelerikComboBox Placeholder="Home Cost Centers"
+                             Data="@CostCenters"
+                             Width="100%"
+                             @bind-Value="@CostCenterValue"
+                             ClearButton="true"
+                             Filterable="true"
+                             OnChange="@CostCenterSelected"
+                             FilterOperator="@StringFilterOperator.Contains"
+                             ItemHeight="46"
+                             PageSize="10"
+                             ScrollMode="@DropDownScrollMode.Virtual">
+            </TelerikComboBox>
+        </div>
+        <div class="col-1 p-0"></div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="Center text-muted col-2 mt-1 pt-0 mb-2">or</div>
+        <div class="col-4 p-0 mt-3 bg-secondary" style="height: 1px;"></div>
+        <div class="col-1 p-0"></div>
+        <div class="col-12">
+            @* Division Filter *@
+            <TelerikComboBox Placeholder="Business Units"
+                             Data="@Divisions"
+                             @bind-Value="@DivisionValue"
+                             Width="100%"
+                             ClearButton="true"
+                             Filterable="true"
+                             OnChange="@DivisionSelected"
+                             FilterOperator="@StringFilterOperator.Contains"
+                             ItemHeight="36"
+                             PageSize="10"
+                             ScrollMode="@DropDownScrollMode.Virtual">
+            </TelerikComboBox>
+
+            @* Group Filter - Only display if a division has been selected *@
+            <div class="w-100 Right" style="@groupCB">
+                <TelerikComboBox Placeholder="Groups"
+                                 Data="@Groups"
+                                 @bind-Value="GroupValue"
+                                 Width="100%"
+                                 ClearButton="true"
+                                 Filterable="true"
+                                 OnChange="@GroupSelected"
+                                 FilterOperator="@StringFilterOperator.Contains"
+                                 ItemHeight="36"
+                                 PageSize="10"
+                                 ScrollMode="@DropDownScrollMode.Virtual">
+                </TelerikComboBox>
+            </div>
+
+            @* Region Filter - Only display if a group has been selected *@
+            <div class="w-100 Right" style="@regionCB">
+                <TelerikComboBox Placeholder="Regions"
+                                 Data="@Regions"
+                                 @bind-Value="@RegionValue"
+                                 Width="100%"
+                                 ClearButton="true"
+                                 Filterable="true"
+                                 OnChange="@RegionSelected"
+                                 FilterOperator="@StringFilterOperator.Contains"
+                                 ItemHeight="36"
+                                 PageSize="10"
+                                 ScrollMode="@DropDownScrollMode.Virtual">
+                </TelerikComboBox>
+            </div>
+
+            @* Type Filter - Only display if a region has been selected *@
+            <div class="w-100 Right" style="@typeCB">
+                <TelerikComboBox Placeholder="Types"
+                                 Data="@Types"
+                                 @bind-Value="@TypeValue"
+                                 Width="100%"
+                                 ClearButton="true"
+                                 Filterable="true"
+                                 OnChange="@TypeSelected"
+                                 FilterOperator="@StringFilterOperator.Contains"
+                                 ItemHeight="28"
+                                 PageSize="10"
+                                 ScrollMode="@DropDownScrollMode.Virtual">
+                </TelerikComboBox>
+            </div>
+
+            <div class="Center mt-2 mb-0 pb-0">
+
+                @if (activeFilters)
+                {
+                    <!-- Replace demo with actual functionality -->
+                    <div @onclick="clearFilters" class="SubtleButton mt-1" title="Clear Filters">
+                        Clear Filters<i class="k-icon k-i-filter-clear Icon16 ml-1 mb-1"></i>
+                    </div>
+                }
+                else
+                {
+                    <div class="SubtleButtonDisabled mt-1" title="No filters selected">
+                        Clear Filters<i class="k-icon k-i-filter-clear Icon16 ml-1 mb-1"></i>
+                    </div>
+                    @*<div class="FTORelative">
+                        <div @onclick="filtersSelected" class="CSSaSimple DODev my-1 py-0 Center InlineBlock SemiBoldText" title="Toggle the Clear Filter button back to on" style="position: absolute; top: 0px; left: 72px;">Fake a filter</div>
+                        </div>*@
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@code
+{
+
+    #region Help
+    bool activeFilters { get; set; } = false;
+
+    public bool showFTOHelp { get; set; }
+    [Parameter] public EventCallback<bool> showFTOHelpChanged { get; set; }
+
+    private Task OnshowFTOHelpChanged(bool showHelp)
+    {
+        showFTOHelp = showHelp;
+
+        return showFTOHelpChanged.InvokeAsync(showFTOHelp);
+    }
+    #endregion
+
+    #region Filter Variables
+    //Look Up Object List for filter id's
+    List<Employee> EmployeesObjects;
+
+    //Manager filter
+    List<string> Managers;
+    public string ManagerValue = "Managers";
+
+    //Employee First/Last Name fitler variables
+    List<string> Employees;
+    public string EmployeeValue = "Employees";
+
+    //Project # filter variables
+    //List<ProjectList> Projects { get; set; }
+    List<string> Projects { get; set; }
+    List<string> ProjectValue { get; set; }
+    //public List<ProjectList> ProjectValue { get; set; }
+    //public string ProjectPlaceholder = "Projects";
+
+    //Home Cost Center filter variables
+    List<string> CostCenters;
+    public string CostCenterValue = "Home Cost Centers";
+
+    //Division filter variables
+    List<string> Divisions;
+    public string DivisionValue = "Business Units";
+
+    //Group filter variables
+    List<string> Groups;
+    public string groupCB, GroupValue = "Groups";
+
+    //Region filter variables
+    List<string> Regions;
+    public string regionCB, RegionValue = "Regions";
+
+    //Type filter variables
+    List<string> Types;
+    public string typeCB, TypeValue = "Types";
+
+    #endregion
+
+    #region Parameter Variables
+
+    [Parameter] public string monthYear { get; set; }
+
+    [Parameter] public EventCallback<string> monthYearChanged { get; set; }
+
+    [Parameter] public List<Employee> filteredFTO { get; set; }
+    [Parameter] public EventCallback<List<Employee>> filteredFTOChanged { get; set; }
+
+    #endregion
+
+    //On page load
+    protected override void OnInitialized()
+    {
+        showFTOHelp = false;    //By default help should not be visible
+
+        //list of employee objects -> used as look up for filter lists
+        EmployeesObjects = EmployeeService.GetEmployeeObjects();
+
+        //load managers in filter
+        Managers = EmployeeService.GetManagers();
+
+        //load employees in filter
+        Employees = EmployeeService.GetEmployees();
+
+        //load projects in filter
+        Projects = EmployeeService.GetProjectNumbers();
+        //Projects = EmployeeService.GetEmployeeProjects();
+
+        //load projects in filter
+        CostCenters = EmployeeService.GetHomeCostCenters();
+
+        //load divisions in filter
+        Divisions = EmployeeService.GetDivisions();
+
+        base.OnInitialized();
+
+        groupCB = "display:none";
+        regionCB = "display:none";
+        typeCB = "display:none";
+    }
+
+    private Task clearFilters()
+    {
+        EmployeeValue = "Employees";
+        CostCenterValue = "Home Cost Centers";
+        DivisionValue = "Business Units";
+        GroupValue = "Groups";
+        RegionValue = "Regions";
+        TypeValue = "Types";
+        ManagerValue = "Managers";
+        ProjectValue = new List<string>();
+
+        groupCB = "display:none";
+        regionCB = "display:none";
+        typeCB = "display:none";
+
+        activeFilters = false;
+
+        filteredFTO.Clear();
+
+        return filteredFTOChanged.InvokeAsync(filteredFTO);
+    }
+
+    private Task EmployeeSelected(object input)
+    {
+        string emp = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(emp))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = emp;
+            CostCenterValue = "Home Cost Centers";
+            DivisionValue = "Business Units";
+            GroupValue = "Groups";
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+            ProjectValue = new List<string>();
+
+            groupCB = "display:none";
+            regionCB = "display:none";
+            typeCB = "display:none";
+
+            //grab employee number and assign to parameter
+            var employeeParameter = EmployeesObjects.FirstOrDefault(a => a.Name == emp).EmplNo;
+
+            filteredFTO = EmployeeService.GetFilteredEmployees(employeeParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+    }
+
+    private Task ManagerSelected(object input)
+    {
+        string mgr = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(mgr))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            ManagerValue = mgr;
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            DivisionValue = "Business Units";
+            GroupValue = "Groups";
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ProjectValue = new List<string>();
+
+            groupCB = "display:none";
+            regionCB = "display:none";
+            typeCB = "display:none";
+
+            var managerParameter = EmployeesObjects.FirstOrDefault(a => a.Name == mgr).EmplNo;
+
+            filteredFTO = EmployeeService.GetFilteredManagers(managerParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+    }
+
+    private Task ProjectSelected(object input)
+    {
+        List<string> proj = (List<string>)input;
+
+        //if selection is empty, do nothing
+        if (proj == null)
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            //ProjectPlaceholder = proj;
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            DivisionValue = "Business Units";
+            GroupValue = "Groups";
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+
+            groupCB = "display:none";
+            regionCB = "display:none";
+            typeCB = "display:none";
+
+            //pass project code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredProjects(proj).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+    }
+
+    private Task CostCenterSelected(object input)
+    {
+        string cost = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(cost))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = "Employees";
+            CostCenterValue = cost;
+            DivisionValue = "Business Units";
+            GroupValue = "Groups";
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+            ProjectValue = new List<string>();
+
+            groupCB = "display:none";
+            regionCB = "display:none";
+            typeCB = "display:none";
+
+            cost = cost.Substring(0, 4);
+
+            //pass project code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredProjects(cost).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+    }
+
+    private Task DivisionSelected(object input)
+    {
+        string div = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(div))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            DivisionValue = div;
+            GroupValue = "Groups";
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+            ProjectValue = new List<string>();
+
+            //populate regions based on chosen division
+            Groups = EmployeeService.GetGroups(div);
+            groupCB = "display:initial;";
+
+            //grab div code from div desc and assign to parameter
+            var divParameter = EmployeesObjects.FirstOrDefault(a => a.DivisionDesc == div).Division;
+
+            //pass division code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredDivision(divParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+
+    }
+
+    private Task GroupSelected(object input)
+    {
+        string grp = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(grp))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            //DivisionValue = "Divisions";
+            GroupValue = grp;
+            RegionValue = "Regions";
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+            ProjectValue = new List<string>();
+
+            //populate regions based on chosen division
+            Regions = EmployeeService.GetRegions(grp);
+            regionCB = "display:initial;";
+
+            //grab group code from group desc and assign to parameter
+            var grpParameter = EmployeesObjects.FirstOrDefault(a => a.GroupDesc == grp).Group;
+
+            //pass division code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredGroup(grpParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+
+    }
+
+    private Task RegionSelected(object input)
+    {
+        string reg = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(reg))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            //DivisionValue = "Division";
+            //GroupValue = "Groups";
+            RegionValue = reg;
+            TypeValue = "Types";
+            ManagerValue = "Managers";
+
+            //populate areas based on chosen division
+            //Types = EmployeeService.GetTypes(reg);
+            //typeCB = "display:initial;";
+
+            ProjectValue = new List<string>();
+
+            //grab region code from region desc and assign to parameter
+            var regionParameter = EmployeesObjects.FirstOrDefault(a => a.RegionDesc == reg).Region;
+
+            //pass division code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredRegion(regionParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+
+    }
+
+    private Task TypeSelected(object input)
+    {
+        string type = (string)input;
+
+        //if selection is empty, do nothing
+        if (string.IsNullOrWhiteSpace(type))
+        {
+            return null;
+        }
+        else
+        {
+            activeFilters = true;
+
+            EmployeeValue = "Employees";
+            CostCenterValue = "Home Cost Centers";
+            //DivisionValue = "Division";
+            //GroupValue = "Groups";
+            //RegionValue = "Regions";
+            TypeValue = type;
+            ManagerValue = "Managers";
+            ProjectValue = new List<string>();
+
+            //grab region code from region desc and assign to parameter
+            var typeParameter = EmployeesObjects.FirstOrDefault(a => a.TypeDesc == type).Type;
+
+            //pass division code to filter employee object list
+            filteredFTO = EmployeeService.GetFilteredType(typeParameter).ToList();
+
+            return filteredFTOChanged.InvokeAsync(filteredFTO);
+        }
+
+    }
+
+}

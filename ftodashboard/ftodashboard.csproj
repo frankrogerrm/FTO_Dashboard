@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+		<UserSecretsId>aspnet-ftodashboard-7B3C57CE-D4FF-4847-9291-3519D931EB2C</UserSecretsId>
+		<WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
+		<ApplicationInsightsResourceId>/subscriptions/2989858e-bd05-40a8-82dc-05658aa1c658/resourceGroups/SDT-BlazorTemplate-dev-rg/providers/microsoft.insights/components/SDT-EFftodashboard-dev-as</ApplicationInsightsResourceId>
+		<CodeAnalysisRuleSet>..\.sonarlint\sundt_dotnet5_blazor_templatecsharp.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="..\.sonarlint\sundt_dotnet5_blazor_template\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap-grid.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap-grid.min.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap-reboot.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap-reboot.min.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\css\bootstrap.min.css.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.bundle.js" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.bundle.js.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.bundle.min.js" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.bundle.min.js.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.js" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.js.map" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.min.js" />
+	  <None Include="wwwroot\css\bootstrap-4.3.1-dist\js\bootstrap.min.js.map" />
+	  <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+	  <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
+	  <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+	  <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
+	  <None Include="wwwroot\css\open-iconic\README.md" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
+		<PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.4.0" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.15.0" />
+		<PackageReference Include="Azure.Storage.Files.Shares" Version="12.13.0" />
+		<PackageReference Include="Azure.Storage.Queues" Version="12.13.0" />
+		<PackageReference Include="coverlet.collector" Version="3.2.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.13" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.14">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.14" />
+		<PackageReference Include="Microsoft.Graph" Version="5.24.0" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="2.5.0" />
+		<PackageReference Include="Microsoft.Identity.Web.GraphServiceClient" Version="2.13.3" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="2.5.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
+		<PackageReference Include="Telerik.UI.for.Blazor" Version="3.6.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="wwwroot\css\site.css">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties UseCdnSupport="True" />
+		</VisualStudio>
+	</ProjectExtensions>
+</Project>

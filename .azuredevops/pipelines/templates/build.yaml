@@ -1,0 +1,162 @@
+parameters:
+- name: jobDisplayName
+  default: ''
+- name: appName
+  default: ''
+- name: azServicePrincipal
+  default: ''
+- name: azKeyVaultName
+  default: ''
+- name: sonarCloud
+  default: ''
+- name: sonarOrg
+  default: ''
+- name: sonarProjectKey
+  default: ''
+- name: sonarProjectName
+  default: ''
+
+jobs:
+- job:
+  displayName: ${{ parameters.jobDisplayName }} # Template Parameter
+  variables:
+    dotNetVersion: 8.x
+    buildConfiguration: Release
+    entryProject: $(Build.Repository.LocalPath)/src/${{ parameters.appName }}/${{ parameters.appName }}.csproj
+    outputDirectory: $(Build.ArtifactStagingDirectory)/output
+  
+  steps:
+    - task: UseDotNet@2
+      displayName: Install .NET SDK
+      inputs:
+        packageType: 'sdk'
+        version: '6.x'
+        performMultiLevelLookup: true  # Ensure the right version is used
+
+    - task: AzureKeyVault@2
+      displayName: Access Azure Key Vault
+      inputs:
+        azureSubscription: ${{ parameters.azServicePrincipal }} # Template Parameter
+        KeyVaultName: ${{ parameters.azKeyVaultName }} # Template Parameter
+
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: Replace tokens
+      inputs:
+        rootDirectory: $(Pipeline.Workspace) # Runtime Variable
+        tokenPattern: custom
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+        targetFiles: |
+          **/appsettings.json
+          **/NuGet.Config
+    
+    - task: NuGetAuthenticate@1
+      displayName: "Authenticate with NuGet"
+
+    - script: |
+       echo "Clearing NuGet Cache..."
+       dotnet nuget locals all --clear
+      displayName: "Clear NuGet Cache"
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore Dependencies
+      inputs:
+        command: restore
+        projects: "**/*.csproj"
+        feedsToUse: config
+        nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config  # Ensure NuGet.Config is in the repository
+    
+    - task: AdvancedSecurity-Codeql-Init@1
+      displayName: Advance Security Init
+      inputs:
+        languages: csharp
+
+    - task: AdvancedSecurity-Dependency-Scanning@1
+      displayName: Advance Security Dependency Scan
+
+    - task: AdvancedSecurity-Codeql-Autobuild@1
+      displayName: Advance Security Build Scan
+      inputs:
+        autobuild: false  # Disable AutoBuild
+        buildCommands:
+
+    - task: AdvancedSecurity-Codeql-Analyze@1
+      displayName: Advance Security Analyze
+
+    - task: SonarCloudPrepare@1
+      displayName: Sonar Prepare
+      inputs:
+        SonarCloud: ${{ parameters.sonarCloud }} # Template Parameter
+        organization: ${{ parameters.sonarOrg }} # Template Parameter
+        scannerMode: MSBuild
+        projectKey: ${{ parameters.sonarProjectKey }} # Template Parameter
+        projectName: ${{ parameters.sonarProjectName }} # Template Parameter
+        extraProperties: |
+          sonar.projectKey=${{ parameters.sonarProjectKey }}
+          sonar.exclusions=**/obj/**,**/bin/**,**/*.dll
+
+    - task: UseDotNet@2
+      displayName: Install Dotnet
+      inputs:
+        version: $(dotNetVersion) # Inline Variable
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Restore
+      inputs:
+        command: restore
+        arguments: -c $(buildConfiguration)  # Inline Variable
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Build
+      inputs:
+        command: build
+        arguments: -c $(buildConfiguration)  # Inline Variable
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Test
+      inputs:
+        command: test
+        arguments: -c $(buildConfiguration)  # Inline Variable
+
+    - task: SonarCloudAnalyze@1
+      displayName: Sonar Analyze
+
+    - task: SonarCloudPublish@1
+      displayName: Sonar Publish
+      inputs:
+        pollingTimeoutSec: 300
+
+       # ✅ Ensure Output Directory Exists
+    - script: |
+        echo "Ensuring Output Directory Exists..."
+        if not exist "$(Build.ArtifactStagingDirectory)/output" mkdir "$(Build.ArtifactStagingDirectory)/output"
+      displayName: "Ensure Output Directory Exists"
+
+    # ✅ Dotnet Publish Step (Fix Output Path)
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Publish
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/output'
+        zipAfterPublish: False  # Disabled since we are manually zipping
+
+    # ✅ Manually Zip Output Instead of Using `zipAfterPublish`
+    - script: |
+        echo "Creating output.zip manually..."
+        powershell Compress-Archive -Path "$(Build.ArtifactStagingDirectory)/output/*" -DestinationPath "$(Build.ArtifactStagingDirectory)/output/output.zip"
+      displayName: "Manually Zip Output"
+
+    # ✅ Check If `output.zip` Exists Before Publishing
+    - script: |
+        echo "Checking if output.zip exists..."
+        dir "$(Build.ArtifactStagingDirectory)/output" /A /B /S
+      displayName: "Debug: Verify output.zip after publish"
+
+    # ✅ Publish Build Artifacts (Fixed Path)
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Build Artifacts
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)/output  # Ensuring correct folder
+        ArtifactName: drop
+        publishLocation: Container

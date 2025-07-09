@@ -1,0 +1,92 @@
+﻿@page "/Index"
+@page "/"
+
+<div class="Index @background">
+
+    <!-- START Navigation -->
+    <div class="LeftSide @expandLeftMenu">
+        <NavMenu @bind-filteredFTO="_filteredFTO" @bind-monthYear="_monthYear" />
+    </div>
+    <!-- End Navigation -->
+    <!-- START Body -->
+    <div class="MainContent @mainContentWidth">
+        <FTOMonth filteredFTO="_filteredFTO" @bind-monthYear="_monthYear" />
+    </div>
+    <!-- End Body -->
+    <!-- START Collapse/Expand Left Menu -->
+    <div @onclick="@HideLeftMenu" class="collapseNavIcon @expandLeftMenu" title="Collapse">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+        </svg>
+    </div>
+    <div @onclick="@ShowLeftMenu" class="expandNavIcon @collapseLeftMenu" title="Expand">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+        </svg>
+    </div>
+    <!-- END Collapse/Expand Left Menu -->
+
+</div>
+
+@code{
+
+    public string _monthYear;
+
+    public List<Employee> _filteredFTO { get; set; }
+
+    [Parameter] public string sidenavigation { get; set; }
+    [Parameter] public string sidenavigationBackground { get; set; }
+    [Parameter] public string collapseNavIcon { get; set; }
+    [Parameter] public string expandNavIcon { get; set; }
+    [Parameter] public string titleClass { get; set; }
+    [Parameter] public string o365Menu { get; set; }
+    [Parameter] public string o365MenuIcon { get; set; }
+
+
+    //  This came from the GNG visibility toggle for JV
+    // [Parameter] public string footerTextPosition { get; set; }
+    // [Parameter] public EventCallback<string> footerTextPositionChanged { get; set; }
+    // private Task OnfooterTextPositionChanged(string footerText)
+    // {
+    //     footerTextPosition = footerText;
+    //     return footerTextPositionChanged.InvokeAsync(footerTextPosition);
+    // }
+    // string _footerTextPosition = "FTONavShown";
+
+
+    protected override void OnInitialized()
+    {
+        expandLeftMenu = "Visible";
+        collapseLeftMenu = "Hidden";
+        mainContentWidth = "ShowNav";
+        background = "";
+    }
+
+    #region Collapse Menu
+    private string expandLeftMenu { get; set; }
+    private string collapseLeftMenu { get; set; }
+    private string mainContentWidth { get; set; }
+    // The next variable is for the new 'Note' text in the footer (delete this comment once it works) -DD
+    // private string footerTextPosition { get; set; }
+    private string background { get; set; }
+    protected void HideLeftMenu()
+    {
+        expandLeftMenu = "Hidden";
+        collapseLeftMenu = "Visible";
+        mainContentWidth = "HideNav";
+        // The next variable is for the new 'Note' text in the footer (delete this comment once it works) -DD
+        // footerTextPosition = "FTONavHidden";
+        background = "NoNav";
+    }
+    protected void ShowLeftMenu()
+    {
+        expandLeftMenu = "Visible";
+        collapseLeftMenu = "Hidden";
+        mainContentWidth = "ShowNav";
+        // The next variable is for the new 'Note' text in the footer (delete this comment once it works) -DD
+        // footerTextPosition = "FTONavShown";
+        background = "";
+    }
+    #endregion Collapse Menu
+
+}

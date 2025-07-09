@@ -1,0 +1,160 @@
+﻿/* This is the main Portrait .CSS file for all .NET apps as of 09/09/2022 (Sonar Cloud Clean-up Update) */
+
+@media (orientation: portrait) {
+    html, body {
+        font-size: 2.5vw;
+    }
+
+    .LeftBar { /* Width is 22vw with LogOut, 15.5vw without */
+        float: right;
+        height: 9vw;
+        width: 15.5vw;
+        text-align: right;
+    }
+
+    .Logo {
+        float: left;
+    }
+
+    .LogoSizer {
+        max-height: 6.8vw;
+        padding: 0.3vh 1em 0.3vh 0.5em;
+    }
+
+    .User {
+        opacity: 1; /* This is a placeholder for future use; a feature we started & put on hold. */
+    }
+
+    .UserImage {
+        float: left;
+    }
+
+    .UserImageSizer {
+        max-width: 6.8vw;
+        max-height: 6.8vw;
+        border-radius: 50%;
+        padding: 0.2vh 0.3vh 0.4vh 0.3vh;
+    }
+
+    .UserName {
+        display: none;
+    }
+
+    .UserTitle {
+        display: none;
+    }
+
+    .LogInOut {
+        float: left;
+    }
+
+    .LogInOutIcon {
+        max-width: 7vw;
+        max-height: 7vw;
+        padding: 0.75vh 0vh 0.75vh 1.25vh;
+    }
+
+    .Hamburger {
+        background-color: #FFFFFF; /* for IE */
+        background-color: var(--SundtWhite);
+        border-radius: 1em;
+        padding: 0.75em;
+        margin: 0em 1.5em 1.5em 1.5em;
+        text-align: center;
+    }
+
+    .HamburgerIcon {
+        max-width: 7vw;
+        max-height: 7vw;
+        padding: 0.75vh 0vh 0.75vh 1.25vh;
+    }
+
+    .LeftSelections {
+        display: none;
+    }
+
+    .LeftSelection {
+        margin: 0.75vh 0 0 15vw;
+        padding: 0.25em;
+        background-color: #B7BABC; /* for IE */
+        background-color: var(--SundtLightGray);
+        border: 1px solid;
+        border-color: #898A8D; /* for IE */
+        border-color: var(--SundtDarkGray);
+        width: 50vw;
+    }
+
+    .RightBar {
+        margin-left: 0vw;
+    }
+
+    .Header {
+        font-size: 6vw;
+        padding-left: 2vw;
+        width: 80vw;
+        margin-bottom: 0.1vh;
+    }
+
+    .SubHeader {
+        font-size: 2vw;
+    }
+
+    .HeadlineFiveCallout {
+        font-size: 3vw;
+    }
+
+    .Tabs {
+        display: none;
+    }
+
+    .MainFooter {
+        font-family: Buttons, sans-serif;
+        color: #FFFFFF; /* for IE */
+        color: var(--SundtWhite);
+        padding: 1em;
+        text-align: center;
+    }
+
+    .Buttons {
+        font-size: 3.5vw;
+    }
+
+    .SmallButtons {
+        margin-top: 0.5em;
+        font-size: 2.5vw;
+    }
+
+    .ToggledForms {
+        padding: 0.25em 0em 0em 0em;
+    }
+
+    table.TSTable {
+        margin-left: 1%;
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+        width: 98%;
+    }
+
+        table.TSTable td, th {
+            padding: 0.1em 0.25em 0.1em 0.25em;
+        }
+
+    table.BGtable {
+        margin-left: 1%;
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+        width: 98%;
+    }
+
+        table.BGtable td, th {
+            padding: 0.1em 0.25em 0.1em 0.25em;
+        }
+
+    .PortraitOnly {
+        display: block;
+    }
+
+    .LandscapeOnly {
+        display: none;
+    }
+}

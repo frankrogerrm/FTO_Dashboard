@@ -1,0 +1,76 @@
+trigger:
+- none
+
+pool:
+  vmImage: windows-latest
+  
+stages:
+
+- stage: Build
+  jobs:
+  - template: templates/build.yaml
+    parameters:
+      jobDisplayName: Build
+      appName: ftodashboard
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      sonarCloud: SonarCloud-sundt_FTODashboard
+      sonarOrg: sundt
+      sonarProjectKey: sundt_FTODashboard
+      sonarProjectName: FTODashboard
+    
+- stage: Dev
+  dependsOn:
+    - Build
+  jobs:
+  - template: templates/release.yaml
+    parameters:
+      jobDisplayName: Deploy to Dev
+      azDevOpsEnvironment: FTODashboard-Web-Dev
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      azResourceGroupName: sdt-ftodashboardapp-prod-rg
+      azWebAppName: ftodashboard-sundt
+      azWebAppSlotName: dev
+
+- stage: Test
+  dependsOn:
+    - Dev
+  jobs:
+  - template: templates/release.yaml
+    parameters:
+      jobDisplayName: Deploy to Test
+      azDevOpsEnvironment: FTODashboard-Web-Test
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      azResourceGroupName: sdt-ftodashboardapp-prod-rg
+      azWebAppName: ftodashboard-sundt
+      azWebAppSlotName: test
+
+- stage: Stage
+  dependsOn:
+    - Test
+  jobs:
+  - template: templates/release.yaml
+    parameters:
+      jobDisplayName: Deploy to Stage
+      azDevOpsEnvironment: FTODashboard-Web-Stage
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      azResourceGroupName: sdt-ftodashboardapp-prod-rg
+      azWebAppName: ftodashboard-sundt
+      azWebAppSlotName: stg
+
+- stage: Prod
+  dependsOn:
+    - Stage
+  jobs:
+  - template: templates/release.yaml
+    parameters:
+      jobDisplayName: Deploy to Prod
+      azDevOpsEnvironment: FTODashboard-Web-Prod
+      azServicePrincipal: SP-DevOps-FTODashboard-Prod - App Registration
+      azKeyVaultName: FTODashboardApp-prod-kv
+      azResourceGroupName: sdt-ftodashboardapp-prod-rg
+      azWebAppName: ftodashboard-sundt
+      azWebAppSlotName: production

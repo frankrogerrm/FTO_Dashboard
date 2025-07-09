@@ -1,0 +1,717 @@
+﻿/* Margin Report App */
+
+/* 
+    This is specifically for the Overrides pop-up - for some reason the <article> tab breaks the curser in the 
+    Telerik numeric textboxes (only there).  This replaces that with an Article-classed <div> -DD 
+*/
+.Article {
+    position: relative;
+    margin: 0px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem !important;
+    padding: 0.25rem;
+    padding-bottom: 1rem;
+    color: #333;
+    background: linear-gradient(180deg, rgb(250,250,250), rgb(255,255,255));
+    background-clip: padding-box;
+    border: 1px solid rgba(183,186,188,0.5);
+    border-radius: 5px;
+    max-width: 1100px;
+}
+    .Article.WideArticle {
+        max-width: 100%;
+    }
+    .Article h2 {
+        padding-left: 15px;
+    }
+    .Article.PrintArticle {
+        background: rgba(0,0,0,0);
+        border: 0px;
+        padding: 0px;
+        max-width: 1050px;
+    }
+        .Article.PrintBar {
+            border-bottom: 0px;
+        }
+
+/* This fixes the header & footer of locked column(s) in the Details grid (added 02/23/2023 -DD) */
+.k-grid-header .k-grid-header-sticky, 
+.k-grid-header .k-grid-header-sticky.k-sorted, 
+.k-grid-footer .k-grid-footer-sticky, 
+.k-grid-footer .k-grid-footer-sticky.k-sorted {
+    background-color: var(--SundtDarkGray);
+    color: var(--SundtWhite);
+}
+
+/* This fixes the override flags when using locked column(s) in the Details grid (added 02/23/2023 -DD) */
+.MarginReportGrid tr {
+    height: 1px;
+}
+.MarginReportGrid td {
+    height: inherit;
+}
+.OverrideCell {
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    position: relative;
+}
+.NotOverridden {
+    padding: 5px 0px;
+}
+
+/* This fixes the "Columns only look right when grid is short or grid is long (enough to scroll) but not both since merging" issue */
+.force-scroll .k-grid-content {
+    overflow-x: scroll;
+    overflow-y: scroll !important;
+}
+
+
+.PopupLimitHeight {
+    max-height: calc(100vh - 150px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
+/* Put this away */
+.ApprovalHistoryGridMaxHeight {
+    max-height: calc(100vh - 500px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* This too */
+.MarginAppTextNotDropdown { /* This is used where sometimes we have a dropdown and sometimes there's only 1 option so it's text */
+    padding-top: 7px;
+    padding-left: 5px;
+}
+.MarginAppLeftMargin11px {  /* This is used for the 'Add a Note' button (ml-2 is 13px, just a little too much) */
+    padding-left: 11px;
+}
+
+/* This is a 'Sometimes Scroll' for grids; essentially assumes laptops will scroll - consider promoting */
+@media screen and ( min-height: 625px ) {
+    .contextually-scroll .k-grid-content {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .contextually-scroll .k-grid-header {
+        padding-right: 0px !important;
+    }
+
+    .contextually-scroll .k-grid-header-wrap {
+        border-width: 0px !important;
+    }
+
+    .contextually-scroll .k-grid-footer {
+        padding-right: 0px !important;
+    }
+}
+
+
+/* #region CONSIDER PROMOTING */
+
+/*
+    90% sure I can delete this (test first)
+*/
+    .k-grid-header .k-grid-filter.k-state-active, 
+    .k-grid-header .k-grid-filter.k-active, 
+    .k-grid-header .k-header-column-menu.k-state-active, 
+    .k-grid-header .k-header-column-menu.k-active, 
+    .k-grid-header .k-hierarchy-cell .k-icon.k-state-active, 
+    .k-grid-header .k-hierarchy-cell .k-icon.k-active {
+        color: var(--SundtBlue);
+        /*background-color: var(--SundtQDRGray); REMOVE THIS LINE */
+        background-color: rgba(255,255,255,0.65);
+        padding-left: 0px;
+        padding-right: 2px;
+        width: 14px;
+        border-top: 2px solid var(--SundtDarkGray);
+        /*border-bottom: 1px solid var(--SundtDarkGray); REMOVE THIS LINE */
+        border-bottom: 0px solid var(--SundtDarkGray);
+    }
+
+/*
+    Consider promoting this; it's also used in the FTO Dashboard (copied from there)
+*/
+.SubtleButton {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--SundtQDRGray);
+    color: var(--SundtNavy);
+    background-color: RGBA(0, 0, 0, .05);
+}
+    .SubtleButton:hover {
+        background-color: RGBA(0, 0, 0, .075);
+        border-color: var(--SundtLightGray);
+        filter: brightness(110%) saturate(110%) drop-shadow(0px 0px 0px #ffffff);
+    }
+    .SubtleButton:active {
+        background-color: RGBA(0, 0, 0, .025);
+        border-color: var(--SundtLightGray);
+        filter: brightness(90%) saturate(100%) drop-shadow(0px 0px 0px #ffffff);
+    }
+.SubtleButtonDisabled {
+    font-family: Buttons, sans-serif;
+    font-size: 10pt;
+    padding: 5px 10px 5px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: default;
+    border: 1px solid var(--SundtQDRGray);
+    color: var(--SundtLightGray);
+    background-color: RGBA(0, 0, 0, .025);
+}
+
+/*
+    Promote this like GridHeaderIcon:
+*/
+.GridHeaderFlag {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    height: 13px;
+    width: 12px;
+    cursor: help;
+    background-image: url(../images/GridHeaderFlagV2.png)
+}
+
+
+.MainContent.ShowNav { /* When the navigation is expanded (default) */
+    max-width: calc(100vw - 253px);
+    overflow-x: hidden;
+}
+
+/*  NUKE THIS IF NOT NEEDED 09/13/2022
+.LeftSide {
+    z-index: 99;
+    border-right: 1px solid var(--SundtLightGray);
+    background-image: url("../images/NavBackground.png");
+    background-repeat: repeat-y;
+    height: calc(100vh - 135px);
+}
+.LeftSide.SitOnTop {    *//* This is the "I want it to sit on top of the app like help, etc." version *//*
+    position: absolute;
+    z-index: 99;
+    border-right: 1px solid var(--SundtLightGray);
+    background-image: url("../images/NavBackground.png");
+    background-repeat: repeat-y;
+    height: 100%;
+}
+*/
+
+/*
+    From FTO app - dropdowns in navigation (promote):
+*/
+.NavRow {
+    display: -ms-flexbox; /* Here down is as much of Bootstrap's "row" as I needed to use "col" in it */
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+/*
+    This is new to Margin App, but will need to be promoted to all apps; it displays full text even when not hovered. 
+    Delete all version-related comments when promoting.
+*/
+.NavButton {
+    position: absolute;
+    top: -1px;
+    padding: 3px;
+    text-align: center;
+    width: 250px; /* This is v3 only */
+    /* color: var(--SundtBlack80); */
+    /* background-color: var(--SundtQDRGray); */
+    border: 1px solid var(--SundtLightGray);
+    cursor: pointer;
+    z-index: 9997;
+}
+    .NavButton:hover {
+        /* color: var(--SundtWhite); */
+        /* background-color: var(--SundtBlue); */
+        border-color: var(--SundtDarkGray);
+    }
+    .NavButton.Expand {
+        /*left: 0px; This is v1 & v2 */
+        left: -1px;
+        border-radius: 0px 0px 4px 0px;
+    }
+    .NavButton.Collapse {
+        /*left: 249px; This is original */
+        /*right: calc(100vw - 249px); This is v2*/
+        left: -1px; /* This is v3 */
+        border-radius: 0px 0px 0px 0px;
+    }
+
+/*
+    No need to promote:
+*/
+.RefreshFromMPRContainer { /* This is simillar to GNG's "Refresh from Cosential" class [HeadingButtonContainer] */
+    position: fixed;
+    top: calc(100vh - 150px);
+    left: 0px;
+    height: 125px;
+    width: 248px;
+    text-align: center;
+}
+
+:root {
+    --SundtDevPurple: #8C37EE;
+}
+
+/* 
+    Override SundtDefault because it wasn't centered horizontally (it is now) - ready to promote (just replace the one line)
+*/
+    .Footer {
+        width: 100%; 
+        min-width: 1330px;
+        min-height: 85px;
+    }
+
+/* 
+    This was 1.5; 1.25 is cleaner - it's the headings of grids, might be something else too (figure out before promoting).
+*/
+    .k-grid {
+        line-height: 1.25;
+    }
+
+/*
+    These are shorter versions (1/2 width)
+*/
+.ButtonShortSpacing {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.ButtonLeftShortSpacing {
+    margin-left: 10px;
+}
+.ButtonRightShortSpacing {
+    margin-right: 10px;
+}
+
+/* #endregion CONSIDER PROMOTING */
+
+
+/* #region Partial Override SundtDefault, Partial Specific to Margin */
+
+    article {
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+        min-width: 1038px;
+        max-width: 1288px;
+        padding: 0px 15px;
+        overflow: hidden;
+    }
+    .ShowNav article.Summary,
+    .ShowNav article.Approval {
+        width: 1310px;
+        padding: 0px;
+    }
+    .HideNav article.Summary,
+    .HideNav article.Approval  {
+        width: 1310px;
+        padding: 0px;
+    }
+        article.Details {
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 100%;
+            padding: 0px;
+        }
+    section {
+        width: 100%;
+    }
+        .ShowNav section .Summary,
+        .HideNav section .Summary,
+        .ShowNav section .Approval,
+        .HideNav section .Approval,
+        .ShowNav section .Admin,
+        .HideNav section .Admin { /* Width of the grid, expanded nav, not laptop */
+            width: 1280px;
+        }
+        .ShowNav section .Details { /* Width of the grid, expanded nav */
+            width: calc(100vw - 335px) !important;
+        }
+        .HideNav section .Details { /* Width of the grid, collapsed nav */
+            width: calc(100vw - 85px) !important;
+        }
+        .Summary .GridContainer,
+        .Approval .GridContainer { /* This is the container for Summary and Approval Grids */
+            padding: 0px 14px 0px 14px;
+        }
+
+        .Details .GridContainer { /* This is the container for Details Grid */
+            padding: 4px 14px 9px 14px;
+        }
+
+    /*
+        Summary & Approval's width + left nav necessitated this for laptops:
+    */
+    @media (max-width: 1600px) {
+        .HideNav article.Summary,
+        .HideNav article.Approval,
+        .HideNav article.Admin { /* Width of the grid, expanded nav, laptop */
+            width: 1310px;
+        }
+        .ShowNav article.Summary,
+        .ShowNav article.Approval,
+        .ShowNav article.Admin { /* Width of the grid, expanded nav, laptop */
+            width: 1058px;
+        }
+        .HideNav .subsection-wide.Summary,
+        .HideNav .subsection-wide.Approval,
+        .HideNav .subsection-wide.Admin {
+            width: calc(100vw - 85px) !important;
+            overflow-x: visible;
+        }
+        .ShowNav .subsection-wide.Summary,
+        .ShowNav .subsection-wide.Admin {
+            overflow-x: auto;
+        }
+        .ShowNav .subsection-wide.Approval {
+            overflow-x: hidden;
+        }
+        .ShowNav section .Summary,
+        .ShowNav section .Approval,
+        .ShowNav section .Admin { /* Width of the grid, expanded nav, laptop */
+            width: 100%;
+        }
+    }
+
+/* #endregion Partial Override SundtDefault, Partial Specific to Margin */
+
+/* #region GENERAL LAYOUT */
+
+/*
+    These next three can eventually be promoted as a 'no left nav' option
+*/
+.MarginIndexFirstLevel {
+    width: 100%;
+    padding: 0px 10px 10px 10px;
+    margin: 0px;
+}
+.MarginIndexSecondLevel {
+    width: 100%;
+    min-width: 1080px;
+    /*min-width: 1038px;*/
+    /*min-width: 1330px;*/
+}
+.MarginHeading { /*<h1>Title</h1><h3>Subtitle (optionally)</h3> */
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    width: 100%;
+    min-width: 1082px; /* This allows left nav on laptop */
+}
+
+/*
+    This is the help icon
+    Remember to also do the 'hide from printing' version
+*/
+.NoTelerikTabsHelp {
+    position: absolute;
+    top: 11px;
+    right: 16px;
+}
+
+.MarginAdminTab {   /* This makes the Admin tab fit the height of the page like the other tabs; used in index.razor */
+    height: calc(100vh - 287px);
+    overflow-y: scroll;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+/* #endregion GENERAL LAYOUT */
+
+
+/* #region MARGIN GRID */
+/*
+    This is the space bellow the grid
+*/
+.MarginReportGrid {
+    margin-bottom: 10px;
+}
+
+/* 
+    The next few determine height of grid headings.
+*/
+.Summary .k-grid-header-wrap table thead tr {
+    height: 37px;
+}
+.Summary.MarginReportGrid .k-grid-header-wrap {
+    height: 56px; /* Should be height of '.Summary .k-grid-header-wrap table thead tr' + 9px */
+}
+.Details .k-grid-header-wrap table thead tr {
+    height: 37px;
+}
+.Details.MarginReportGrid .k-grid-header-wrap {
+    height: 56px; /* Should be height of '.Details .k-grid-header-wrap table thead tr' + 9px */
+}
+.Approval .k-grid-header-wrap table thead tr,
+.Approval.MarginReportGrid .k-grid-header-wrap {
+    height: 37px;
+}
+
+/*
+    This hides Division (the object with the 'X') when grouped by it; apply first class to grid to use.
+*/
+.HideDivisionGrouping .k-indicator-container:first-of-type {
+    display: none;
+}
+
+/* 
+    The next two determine visibility & size of group headings 
+*/
+.Summary .k-grid-header-wrap table thead tr:first-child {
+    /* display: none;   This is needed when we use one grid for both views (otherwise not) - it hides the column grouping */
+    height: 20px; /* Added when we added groupings to Summary Grid */
+}
+    .Summary .k-grid-header-wrap table thead tr:first-child th:first-child { /* Added when we added groupings to Summary Grid */
+        background-color: rgb(137,138,141); /* This can probably be simplified, but I'm waiting in case we change it again */
+    }
+.Details .k-grid-header-wrap table thead tr:first-child {
+    height: 20px;
+}
+    .Details .k-grid-header-wrap table thead tr:first-child th:first-child {
+        background-color: rgb(137,138,141); /* This can probably be simplified, but I'm waiting in case we change it again */
+    }
+
+/*
+    Background colouring for groups of columns (headings)
+*/
+.CurrentMonth {
+    background-color: rgba(120, 193, 150, 1) !important; 
+}
+.PriorMonth {
+    background-color: rgba(230, 168, 62, 1) !important; 
+}
+
+/*
+    Scrollbars set to auto on Summary, Details & Approval Grids
+*/
+.Summary.MarginReportGrid .k-grid-content,
+.Details.MarginReportGrid .k-grid-content {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+/*
+    No horizontal scrollbar on the Approval Grid
+*/
+.Approval.MarginReportGrid .k-grid-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/*
+    These are new; I used them on the Details Grid to colour-code groupings of data sources
+*/
+.MarginReportGrid th {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+
+}
+
+/*
+    These are the separators for the groupings of columns
+*/
+.GridColumnSeparator {
+    background-color: var(--SundtLightGray);
+    height: calc(100% + 15px);
+    width: 1px;
+    padding: 0px;
+    margin: -10px 0px 0px -3px;
+    overflow: clip;
+    font-size: smaller;
+}
+
+/* 
+    See Line Comments
+*/
+.MarginReportGrid tr {
+    height: 1px;        /* https://stackoverflow.com/questions/3215553/make-a-div-fill-an-entire-table-cell */
+}
+.MarginReportGrid td {
+    height: inherit;    /* https://stackoverflow.com/questions/3215553/make-a-div-fill-an-entire-table-cell */
+
+    overflow: visible;  /* Allows Notes div to exceed the cell */
+}
+
+/* 
+    Denoting a cell that was overridden with a new value (Excel-style Note)
+*/
+.OverriddenFlag {
+    position: absolute;
+    top: -3px;      /* This was changed from 0px on 02/23/2023 to accomodate the fix for the locked columns -DD */
+    right: -3px;    /* This was changed from 0px on 02/23/2023 to accomodate the fix for the locked columns -DD */
+    background-image: url(../images/ExcelNote.png);
+    height: 15px; /* Full height of image */
+    width: 12px; /* However wide/tall I want it to be (up to height) */
+}
+.Overridden {
+    color: var(--SundtNavy);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 5px 0px;
+}
+
+/* 
+    This overrides the sytle of the default tooltip
+*/
+.OverrideToolTip .k-tooltip {
+    text-align: left;
+    background-color: var(--SundtAlmostWhite);
+    border: 1px solid var(--SundtLightGray);
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+    line-height: 1.5em;
+    font-size: 1rem;
+    padding: 8px 4px 8px 10px;
+    font-family: Body, sans-serif;
+    color: var(--SundtBlack80);
+}
+.OverrideHoverNote {
+    overflow: hidden;   /* In case someone leaves a really long note */
+}
+        .OverrideHoverNote .Darker {
+            font-family: SemiBoldBody, sans-serif;
+            color: var(--SundtBlack);
+            padding-right: 5px;
+        }
+        .OverrideHoverNote .SeeMore {
+            position: absolute;
+            bottom: 2px;
+            right: 3px;
+            padding: 0px 8px 3px 10px;
+            font-style: italic;
+            color: var(--SundtBlack80);
+            background-color: rgba(248, 249, 251, .9);
+        }
+
+/*
+    Container for the buttons in the top right corner of the grids with grouping (if used)
+    NOTE: The icon (if used) does not use class Icon16
+*/
+.GroupedGridButtonContainer {
+    position: absolute;
+    top: 57px;
+    right: 26px;
+    display: inline-block;
+    z-index: 9999;
+}
+/*
+    Container for the buttons in the top right corner of the grids with grouping (if used)
+    NOTE: The icon (if used) does not use class Icon16
+*/
+.GridButtonContainer {
+    position: absolute;
+    top: 9px;
+    right: 44px;
+    display: inline-block;
+    z-index: 9999;
+}
+
+/*
+    The buttons in the top left corner of the grid itself (if used)
+*/
+    .ExpandCollapseGridGroupingButton {
+        position: absolute;
+        top: 95px;
+        left: 15px;
+        width: 34px;
+        height: 58px;
+        padding-top: 10px;
+        margin: 0px;
+        font-family: Buttons, sans-serif;
+        font-size: 18pt;
+        text-align: center;
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid var(--SundtQDRGray);
+        color: var(--SundtBlack);
+        background-color: rgba(248, 249, 250, 1);
+        z-index: 9999;
+    }
+        .ExpandCollapseGridGroupingButton:hover {
+            border-color: var(--SundtLightGray);
+            background-color: rgba(235, 235, 235, 1);
+        }
+
+/* #endregion MARGIN GRID */
+
+
+/* #region ProjectPopUp & ApprovalPopUp */
+
+.PopupProject,
+.PopupApproval {
+    position: fixed;
+    background-color: var(--SundtWhite);
+    border-color: var(--SundtBlack80);
+    border-radius: 5px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.4);
+}
+.PopupApproval {
+    background-color: var(--SundtQDRGray);
+}
+    .PopupProject h3,
+    .PopupApproval h3 {
+        color: var(--SundtNavy);
+        margin-top: 5px;
+        margin-bottom: 0px;
+        line-height: 1;
+    }
+    .PopupProject .k-window-content.k-dialog-content,
+    .PopupApproval .k-window-content.k-dialog-content {
+        margin: 0px;
+    }
+    .PopupProject .k-tabstrip-items,
+    .PopupApproval .k-tabstrip-items {
+        margin: 0px;
+    }
+    .PopupProject .k-tabstrip-content, .k-tabstrip > .k-content,
+    .PopupApproval .k-tabstrip-content, .k-tabstrip > .k-content {
+        padding: 8px 15px 3px 15px;
+    }
+
+
+
+/* #endregion ProjectPopUp */
+
+
+
+
+/*
+    This is the colour for the Notes icon when there is no note (not invisible, but less visible)
+*/
+.MarginNoNote {
+    color: rgba(0,0,0,0.2);
+}
+    .MarginNoNote:hover {
+        color: rgba(0,0,0,0.6);
+    }
+
+
+
+@media print {
+
+
+    .NoTelerikTabsHelp {
+        display: none;
+    }
+
+
+}

@@ -1,0 +1,39 @@
+﻿/* Merge as needed into SundtDefault.css/MPR.css & eliminate this .css file -DD, 06/08/2021 */
+
+.notification .k-notification-container .k-notification-wrap {
+	position:relative;
+	font-size: 18px;
+	margin: 10px;
+}
+
+.shaded {
+	background-color: #EEECE1 !important;
+}
+.k-grid .k-grid-header .k-header .k-link {
+	height: auto;
+}
+
+.k-grid .k-grid-header .k-header {
+	white-space: pre;
+	text-align: center;
+}
+
+.forecast td:first-child, .forecast td:nth-child(4), .forecast td:nth-child(5), .forecast td:nth-child(7) {
+	background-color: antiquewhite;
+}
+
+.alignRight.k-numerictextbox {
+	text-align: right;
+}
+
+.icon-32 {
+	font-size: 32px; /* Sets icon size to 32px */
+}
+
+.icon-48 {
+	font-size: 48px; /* Sets icon size to 48px */
+}
+
+.icon-64 {
+	font-size: 64px; /* Sets icon size to 64px */
+}

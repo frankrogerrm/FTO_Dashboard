@@ -1,0 +1,25 @@
+﻿<h2>@AppName Help</h2>
+<div class="HelpRightPopoutItem">
+    <div class="pb-5 mb-5">
+        <p class="m-2 pl-2">For help using @AppName:</p>
+        <div class="HelpOuterContainer">
+            <div class="HelpIconContainer"><i class="bi bi-info-circle-fill CSSaTooltip Icon16 mx-2" title="Sample Item Help Icon"></i></div>
+            <div class="HelpTextContainer">This icon provides additional information when hovered.</div>
+        </div>
+        <p class="m-2 pl-2 pt-2">Or reach out to the Service Desk via one of the below options:</p>
+    </div>
+    <div class="HelpRightPopoutHelpDesk">
+        <p><b>Sundt IT Service Desk</b></p>
+        <p><i class="bi bi-phone"></i><span class="HelpRightPopoutHelpDeskItem">+1 (520)-750-4799</span></p>
+        <p><a class="CSSaNoUL" href="mailto:it@sundt.com?subject=I need help with the @AppName app" title="Email IT Service Desk"><i class="bi bi-envelope"></i><span class="HelpRightPopoutHelpDeskItem">it@sundt.com</span></a></p>
+        <p><a class="CSSaNoUL" href="https://servicedesk.sundt.com/" title="IT Service Desk Tickets"><i class="bi bi-link-45deg"></i><span class="HelpRightPopoutHelpDeskItem">IT Service Desk Tickets</span></a></p>
+    </div>
+</div>
+
+
+@code {
+
+    // This variable is new since GNG; it's three places to update all references except the _Host.cshtml - update in Header.razor & Index.razor too -DD
+    string AppName = "FTO Dashboard"; // FUTURE: Maybe set this up to use parameters to only have to set it in one place?
+
+}
