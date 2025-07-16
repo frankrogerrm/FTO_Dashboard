@@ -6,135 +6,154 @@
 
 namespace ftodashboard.Shared
 {
-    #line default
-    using global::System;
-    using global::System.Collections.Generic;
-    using global::System.Linq;
-    using global::Microsoft.AspNetCore.Components;
+    #line hidden
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Components;
 #nullable restore
-#line (1,2)-(1,23) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using System.Net.Http
+#line 1 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using System.Net.Http;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (2,2)-(2,42) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Authorization
+#line 2 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Authorization;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (3,2)-(3,45) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Components.Forms
+#line 3 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Components.Forms;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (4,2)-(4,47) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Components.Routing
+#line 4 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Components.Routing;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (5,2)-(5,53) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Components.Authorization
+#line 5 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Components.Authorization;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (6,2)-(6,43) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Components.Web
+#line 6 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Components.Web;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (7,2)-(7,58) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.AspNetCore.Components.Web.Virtualization
+#line 7 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.AspNetCore.Components.Web.Virtualization;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (8,2)-(8,27) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Microsoft.JSInterop
+#line 8 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Microsoft.JSInterop;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (9,2)-(9,20) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using ftodashboard
+#line 9 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using ftodashboard;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (10,2)-(10,27) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using ftodashboard.Shared
+#line 10 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using ftodashboard.Shared;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (11,2)-(11,27) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using ftodashboard.Models
+#line 11 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using ftodashboard.Models;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (12,2)-(12,22) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Telerik.Blazor
+#line 12 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Telerik.Blazor;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (13,2)-(13,33) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-using Telerik.Blazor.Components
+#line 13 "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
+using Telerik.Blazor.Components;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (1,2)-(1,31) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+#line 1 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
 using System.Threading.Tasks;
 
+#line default
+#line hidden
 #nullable disable
 #nullable restore
-#line (2,2)-(2,37) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+#line 2 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
 using Microsoft.AspNetCore.Hosting;
 
+#line default
+#line hidden
 #nullable disable
 #nullable restore
-#line (3,2)-(3,37) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+#line 3 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
 using Microsoft.Extensions.Hosting;
 
+#line default
+#line hidden
 #nullable disable
 #nullable restore
-#line (4,2)-(4,30) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-using Microsoft.Identity.Web
+#line 4 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+using Microsoft.Identity.Web;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (5,2)-(5,15) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-using Classes
+#line 5 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+using Classes;
 
+#line default
+#line hidden
 #nullable disable
-    ;
 #nullable restore
-#line (7,2)-(7,43) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+#line 7 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
 using Microsoft.Extensions.Configuration;
 
+#line default
+#line hidden
 #nullable disable
-    #line default
-    #line hidden
-    #nullable restore
-    public partial class Header : global::Microsoft.AspNetCore.Components.ComponentBase
-    #nullable disable
+    public partial class Header : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
-        protected override void BuildRenderTree(global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
+        protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
 #nullable restore
-#line (89,8)-(190,1) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-
+#line 89 "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
+       
     string envClass;
     string envName;
     protected IConfiguration config;
@@ -239,115 +258,12 @@ using Microsoft.Extensions.Configuration;
 #line default
 #line hidden
 #nullable disable
-
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (14,9)-(14,16) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-AppUser
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (14,17)-(14,24) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-appUser
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (13,9)-(13,28) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-IWebHostEnvironment
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (13,29)-(13,32) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-Env
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (12,9)-(12,26) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-NavigationManager
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (12,27)-(12,35) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-Navigate
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (11,9)-(11,60) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-MicrosoftIdentityConsentAndConditionalAccessHandler
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (11,61)-(11,75) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-ConsentHandler
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (9,9)-(9,36) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-AuthenticationStateProvider
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (9,37)-(9,64) "C:\Repos\FTO_Dashboard\ftodashboard\Shared\Header.razor"
-AuthenticationStateProvider
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (14,9)-(14,67) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (14,68)-(14,85) "C:\Repos\FTO_Dashboard\ftodashboard\_Imports.razor"
-JavaScriptSnippet
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AppUser appUser { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IWebHostEnvironment Env { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager Navigate { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private MicrosoftIdentityConsentAndConditionalAccessHandler ConsentHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet { get; set; }
     }
 }
 #pragma warning restore 1591

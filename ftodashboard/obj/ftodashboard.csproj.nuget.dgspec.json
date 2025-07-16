@@ -23,7 +23,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -31,8 +31,8 @@
           "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -45,120 +45,81 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Azure.Extensions.AspNetCore.Configuration.Secrets": {
               "target": "Package",
-              "version": "[1.2.2, )"
+              "version": "[1.4.0, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.14.1, )"
             },
             "Azure.Security.KeyVault.Secrets": {
               "target": "Package",
-              "version": "[4.4.0, )"
+              "version": "[4.8.0, )"
             },
             "Azure.Storage.Blobs": {
               "target": "Package",
-              "version": "[12.15.0, )"
+              "version": "[12.24.1, )"
             },
-            "Azure.Storage.Files.Shares": {
+            "Azure.Storage.Common": {
               "target": "Package",
-              "version": "[12.13.0, )"
-            },
-            "Azure.Storage.Queues": {
-              "target": "Package",
-              "version": "[12.13.0, )"
+              "version": "[12.23.0, )"
             },
             "Microsoft.ApplicationInsights": {
               "target": "Package",
-              "version": "[2.21.0, )"
+              "version": "[2.23.0, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
-              "version": "[2.21.0, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[6.0.14, )",
-              "noWarn": [
-                "NU1605"
-              ]
-            },
-            "Microsoft.AspNetCore.Authentication.Negotiate": {
-              "target": "Package",
-              "version": "[6.0.14, )"
+              "version": "[2.23.0, )"
             },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[6.0.13, )",
-              "noWarn": [
-                "NU1605"
-              ]
+              "version": "[8.0.18, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.14, )"
+              "version": "[9.0.7, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[6.0.14, )"
+              "version": "[9.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.14, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.14, )"
-            },
-            "Microsoft.Extensions.Azure": {
-              "target": "Package",
-              "version": "[1.6.0, )"
-            },
-            "Microsoft.Extensions.Logging.AzureAppServices": {
-              "target": "Package",
-              "version": "[6.0.14, )"
-            },
-            "Microsoft.Graph": {
-              "target": "Package",
-              "version": "[5.24.0, )"
+              "version": "[9.0.7, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[2.5.0, )"
+              "version": "[3.10.0, )"
             },
-            "Microsoft.Identity.Web.GraphServiceClient": {
+            "Microsoft.Identity.Web.MicrosoftGraph": {
               "target": "Package",
-              "version": "[2.13.3, )"
+              "version": "[3.10.0, )"
             },
             "Microsoft.Identity.Web.UI": {
               "target": "Package",
-              "version": "[2.5.0, )"
+              "version": "[3.10.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[13.0.2, )"
-            },
-            "System.Configuration.ConfigurationManager": {
-              "target": "Package",
-              "version": "[6.0.1, )"
+              "version": "[13.0.3, )"
             },
             "Telerik.UI.for.Blazor": {
               "target": "Package",
-              "version": "[3.6.1, )"
+              "version": "[6.2.0, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[6.0.4, )"
             }
           },
           "imports": [
@@ -172,24 +133,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -198,7 +141,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

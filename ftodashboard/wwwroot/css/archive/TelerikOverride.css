@@ -14871,7 +14871,7 @@ kendo-label.k-radio-label > .k-label:first-child {
 }
 
 .k-pane-wrapper .k-popup-edit-form .k-mobiletimezoneeditor {
-    width: 100;
+    width: 100%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
@@ -15803,7 +15803,7 @@ input.k-textbox {
     /* UPDATED BELOW, WAS #343a40, NO APPARENT AFFECT*/
     .k-textbox .k-input-prefix > .k-icon,
     .k-textbox .k-input-suffix > .k-icon {
-        color: #00f00;
+        color: #00f000;
         opacity: 0.5;
     }
 
@@ -17884,7 +17884,7 @@ textarea.k-textarea {
 
 .k-colorpicker .k-state-active {
     border-color: #bfc6d0;
-    color: FFFFFF;
+    color: #FFFFFF;
     background-color: #1AB3E6;
 }
 
@@ -21376,7 +21376,6 @@ select.k-dropdown, select.k-dropdowntree {
         font: 170px monospace !important;
         margin: 0;
         padding: 0;
-        filter: alpha(opacity=0);
         opacity: 0;
         cursor: pointer;
         position: absolute;

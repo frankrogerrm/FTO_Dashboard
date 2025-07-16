@@ -35,7 +35,10 @@ builder.Configuration.AddAzureKeyVault(
     new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
     new DefaultAzureCredential());
 
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = builder.Configuration["APPINSIGHTS_CONNECTIONSTRING"];
+});
 
 builder.WebHost.UseStaticWebAssets();
 
@@ -51,7 +54,7 @@ else if (env == "Development")
 {
     builder.Services.AddDbContext<CommonDataSourceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CommonDataSourceDevConnection")).EnableSensitiveDataLogging());
     builder.Services.AddDbContext<LoggingContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LoggingDataSourceConnection")).EnableSensitiveDataLogging());
-    builder.Services.AddDbContext<TimeSheetAppContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TestConnection")).EnableSensitiveDataLogging());
+    builder.Services.AddDbContext<TimeSheetAppContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TimeSheetAppDevConnection")).EnableSensitiveDataLogging());
 }
 else if (env == "Test")
 {
@@ -59,12 +62,7 @@ else if (env == "Test")
     builder.Services.AddDbContext<LoggingContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LoggingDataSourceConnection")).EnableSensitiveDataLogging());
     builder.Services.AddDbContext<TimeSheetAppContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TimeSheetAppDevConnection")).EnableSensitiveDataLogging());
 }
-else if (env == "Staging")
-{
-    builder.Services.AddDbContext<CommonDataSourceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CommonDataSourceConnection")).EnableSensitiveDataLogging());
-    builder.Services.AddDbContext<TimeSheetAppContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TimeSheetAppConnection")).EnableSensitiveDataLogging());
-}
-else if (env == "Production")
+else if (env == "Staging" || env == "Production")
 {
     builder.Services.AddDbContext<CommonDataSourceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CommonDataSourceConnection")).EnableSensitiveDataLogging());
     builder.Services.AddDbContext<TimeSheetAppContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TimeSheetAppConnection")).EnableSensitiveDataLogging());
@@ -100,5 +98,4 @@ app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-app.Run();
-
+await app.RunAsync();

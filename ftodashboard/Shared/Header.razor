@@ -126,7 +126,7 @@
     // Used for printing the webapp:
     private string timeDate;
 
-    string photo;
+    string photo ;
 
     private bool helpRightPane { get; set; }
     protected void ShowhelpRightPane()
@@ -141,50 +141,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-
-        //try
-        //{
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         if (user.Identity.IsAuthenticated)
         {
-            
-
-
             await appUser.Startup(AuthenticationStateProvider);
-
         }
-        //user = await GraphServiceClient.Me.Request().GetAsync();
-        //photo = await GetPhoto();
-        //}
-        //catch (Exception ex)
-        //{
-        //    ConsentHandler.HandleException(ex);
 
-        //}
         timeDate = DateTime.Now.ToString("MM-dd-yyyy hh:mm tt");
         helpRightPane = false;
         DetermineEnvironment();
     }
-
-    //protected async Task<string> GetPhoto()
-    //{
-    //    string photo;
-
-    //    try
-    //    {
-    //        using (var photoStream = await GraphServiceClient.Me.Photo.Content.Request().GetAsync())
-    //        {
-    //            byte[] photoByte = ((System.IO.MemoryStream)photoStream).ToArray();
-    //            photo = Convert.ToBase64String(photoByte);
-    //            this.StateHasChanged();
-    //        }
-
-    //    }
-    //    catch (Exception)
-    //    {
-    //        photo = null;
-    //    }
-    //    return photo;
-    //}
 }

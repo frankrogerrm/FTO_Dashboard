@@ -57,34 +57,32 @@ namespace ftodashboard.Services
         public List<string> GetMonthNames()
         {
             List<DateDimension> list3 = _dbContext.DateDimensions
-                                .Where(n => n.TheDay == 1)
-                                .Where(n => n.TheDate <= DateTime.Now.Date)
-                                .ToList();
+                                          .Where(n => n.TheDay == 1)
+                                          .Where(n => n.TheDate <= DateTime.Now.Date)
+                                          .ToList();
 
-            DateDimension prevmonth = new DateDimension();
+            var n = list3.Count - 2;
 
-            var n = list3.Count() - 2;
-
-            prevmonth = list3[n];
+            var prevmonth = list3[n];
             List<DateDimension> prevmonthList = new List<DateDimension>();
             prevmonthList.Add(prevmonth);
 
             List<DateDimension> list = _dbContext.DateDimensions
-                                .Where(n => n.TheDate == DateTime.Now.Date)
-                                .Take(1)
-                                .ToList();
+                                          .Where(n => n.TheDate == DateTime.Now.Date)
+                                          .Take(1)
+                                          .ToList();
 
             List<DateDimension> list2 = _dbContext.DateDimensions
-                                .Where(n => n.TheDay == 1)
-                                .Where(n => n.TheDate >= DateTime.Now.Date)
-                                .Take(11)
-                                .ToList();
+                                          .Where(n => n.TheDay == 1)
+                                          .Where(n => n.TheDate >= DateTime.Now.Date)
+                                          .Take(11)
+                                          .ToList();
 
             var listfinal = prevmonthList.Concat(list).Concat(list2);
 
             List<string> dateStrings = listfinal
-                     .Select(a => a.TheMonthName + " " + a.TheYear)
-                     .ToList();
+                                       .Select(a => a.TheMonthName + " " + a.TheYear)
+                                       .ToList();
 
             return dateStrings;
         }
@@ -165,21 +163,17 @@ namespace ftodashboard.Services
         //this one isnt used but the codes nice so keeping it for reference
         public List<ProjectList> GetEmployeeProjects()
         {
-            List<ProjectList> ProjectListResults = new List<ProjectList>();
-
-            //***Employee Object
             List<Employee> emp = _dbContext.Employees
                                         .Where(a => a.EmployeeStatus == "ACTIVE")
                                         .Where(a => a.AdminOrCraft == "ADMIN")
                                         .Where(a => a.LastJobWorked.Length >= 5)
                                         .Distinct()
-                                        .OrderBy(project => project)
+                                        .OrderBy(project => project) 
                                         .ToList();
 
-            //***ProjectsActive Object
             List<ProjectsActive> proj = _dbContext.ProjectsActives
-                                            .Distinct()
-                                            .ToList();
+                                                .Distinct()
+                                                .ToList();
 
             var projList = (from emp1 in emp
                             join proj1 in proj
@@ -190,9 +184,7 @@ namespace ftodashboard.Services
                                 JobName = proj1.Name
                             }).ToList();
 
-            ProjectListResults = projList;
-
-            return ProjectListResults;
+            return projList;
         }
 
         //Initial population of home cost center filter
@@ -301,20 +293,11 @@ namespace ftodashboard.Services
 
         public List<Employee> GetFilteredProjects(List<string> ProjectList)
         {
-            //find employees of project code from method parameter and put in temp list
-            //add to result list 
-            //clear temp list & repeat
+            var projectCodes = ProjectList.Select(p => p.Substring(0, 6)).Distinct().ToList();
 
-            List<Employee> EmployeeResults = new List<Employee>();
-            List<Employee> EmployeeListPerProject = new List<Employee>();
-
-            foreach (string ProjectFull in ProjectList)
-            {
-                string ProjectCode = ProjectFull.Substring(0, 6);
-                EmployeeListPerProject = _dbContext.Employees.Where(a => a.LastJobWorked == ProjectCode).ToList();
-                EmployeeResults.AddRange(EmployeeListPerProject);
-                EmployeeListPerProject.Clear();
-            }
+            List<Employee> EmployeeResults = _dbContext.Employees
+                                                        .Where(a => projectCodes.Contains(a.LastJobWorked))
+                                                        .ToList();
 
             return EmployeeResults;
         }
@@ -322,18 +305,13 @@ namespace ftodashboard.Services
         //this one isnt used but the codes nice so keeping it for reference
         public List<Employee> GetFilteredProjects(List<ProjectList> ProjectList)
         {
-            //find employees of project code
-            //add to result list 
-            //clear & repeat
-
             List<Employee> EmployeeResults = new List<Employee>();
-            List<Employee> EmployeeListPerProject = new List<Employee>();
+            List<Employee> EmployeeListPerProject;
 
             foreach (ProjectList Project in ProjectList)
             {
                 EmployeeListPerProject = _dbContext.Employees.Where(a => a.LastJobWorked == Project.LastJobWorked).ToList();
                 EmployeeResults.AddRange(EmployeeListPerProject);
-                EmployeeListPerProject.Clear();
             }
 
             return EmployeeResults;
@@ -364,65 +342,65 @@ namespace ftodashboard.Services
             return _dbContext.Employees.Where(a => a.Type == filter).ToList();
         }
 
+        // Refactored GetEmployeeFTO method to reduce Cognitive Complexity
         public List<EmployeeFTO> GetEmployeeFTO(string monthYear)
         {
-            //record of the month with weekends/holidays
-            List<VFTODashboardFTOMonth> monthList = _dbContext.V_FTODashboard_FTOMonths
-                                            .Where(a => a.MMYYYY == monthYear)
-                                            .ToList();
-
-            //list of employees with FTO in the given month
-            List<VFTODashboardFTOByMonth> ftoByMonthList = _tsContext.V_FTODashboard_FTOByMonth
-                                            .Where(a => a.MMYYYY == monthYear)
-                                            .ToList();
-
-            List<EmployeeFTO> comboList = new List<EmployeeFTO>();
-
-            if (monthList.Count > 0 && ftoByMonthList.Count > 0)
+            // Helper method to merge month and FTO data
+            List<EmployeeFTO> MergeMonthAndFTOData(List<VFTODashboardFTOMonth> monthList, List<VFTODashboardFTOByMonth> ftoByMonthList)
             {
-                var result = (from l1 in monthList
-                              join l2 in ftoByMonthList
-                              on l1.MMYYYY equals l2.MMYYYY
-                              select new EmployeeFTO
-                              {
-                                  EmployeeName = l2.EmployeeName,
-                                  EmployeeNo = l2.EmployeeNo,
-                                  MMYYYY = l1.MMYYYY,
-                                  d1 = (l1.d1 == 0) ? l2.d1 : l1.d1,
-                                  d2 = (l1.d2 == 0) ? l2.d2 : l1.d2,
-                                  d3 = (l1.d3 == 0) ? l2.d3 : l1.d3,
-                                  d4 = (l1.d4 == 0) ? l2.d4 : l1.d4,
-                                  d5 = (l1.d5 == 0) ? l2.d5 : l1.d5,
-                                  d6 = (l1.d6 == 0) ? l2.d6 : l1.d6,
-                                  d7 = (l1.d7 == 0) ? l2.d7 : l1.d7,
-                                  d8 = (l1.d8 == 0) ? l2.d8 : l1.d8,
-                                  d9 = (l1.d9 == 0) ? l2.d9 : l1.d9,
-                                  d10 = (l1.d10 == 0) ? l2.d10 : l1.d10,
-                                  d11 = (l1.d11 == 0) ? l2.d11 : l1.d11,
-                                  d12 = (l1.d12 == 0) ? l2.d12 : l1.d12,
-                                  d13 = (l1.d13 == 0) ? l2.d13 : l1.d13,
-                                  d14 = (l1.d14 == 0) ? l2.d14 : l1.d14,
-                                  d15 = (l1.d15 == 0) ? l2.d15 : l1.d15,
-                                  d16 = (l1.d16 == 0) ? l2.d16 : l1.d16,
-                                  d17 = (l1.d17 == 0) ? l2.d17 : l1.d17,
-                                  d18 = (l1.d18 == 0) ? l2.d18 : l1.d18,
-                                  d19 = (l1.d19 == 0) ? l2.d19 : l1.d19,
-                                  d20 = (l1.d20 == 0) ? l2.d20 : l1.d20,
-                                  d21 = (l1.d21 == 0) ? l2.d21 : l1.d21,
-                                  d22 = (l1.d22 == 0) ? l2.d22 : l1.d22,
-                                  d23 = (l1.d23 == 0) ? l2.d23 : l1.d23,
-                                  d24 = (l1.d24 == 0) ? l2.d24 : l1.d24,
-                                  d25 = (l1.d25 == 0) ? l2.d25 : l1.d25,
-                                  d26 = (l1.d26 == 0) ? l2.d26 : l1.d26,
-                                  d27 = (l1.d27 == 0) ? l2.d27 : l1.d27,
-                                  d28 = (l1.d28 == 0) ? l2.d28 : l1.d28,
-                                  d29 = (l1.d29 == 0) ? l2.d29 : l1.d29,
-                                  d30 = (l1.d30 == 0) ? l2.d30 : l1.d30,
-                                  d31 = (l1.d31 == 0) ? l2.d31 : l1.d31,
-                              }).ToList();
-                comboList = result;
+                return (from l1 in monthList
+                        join l2 in ftoByMonthList on l1.MMYYYY equals l2.MMYYYY
+                        select new EmployeeFTO
+                        {
+                            EmployeeName = l2.EmployeeName,
+                            EmployeeNo = l2.EmployeeNo,
+                            MMYYYY = l1.MMYYYY,
+                            d1 = MergeDayData(l1.d1, l2.d1),
+                            d2 = MergeDayData(l1.d2, l2.d2),
+                            d3 = MergeDayData(l1.d3, l2.d3),
+                            d4 = MergeDayData(l1.d4, l2.d4),
+                            d5 = MergeDayData(l1.d5, l2.d5),
+                            d6 = MergeDayData(l1.d6, l2.d6),
+                            d7 = MergeDayData(l1.d7, l2.d7),
+                            d8 = MergeDayData(l1.d8, l2.d8),
+                            d9 = MergeDayData(l1.d9, l2.d9),
+                            d10 = MergeDayData(l1.d10, l2.d10),
+                            d11 = MergeDayData(l1.d11, l2.d11),
+                            d12 = MergeDayData(l1.d12, l2.d12),
+                            d13 = MergeDayData(l1.d13, l2.d13),
+                            d14 = MergeDayData(l1.d14, l2.d14),
+                            d15 = MergeDayData(l1.d15, l2.d15),
+                            d16 = MergeDayData(l1.d16, l2.d16),
+                            d17 = MergeDayData(l1.d17, l2.d17),
+                            d18 = MergeDayData(l1.d18, l2.d18),
+                            d19 = MergeDayData(l1.d19, l2.d19),
+                            d20 = MergeDayData(l1.d20, l2.d20),
+                            d21 = MergeDayData(l1.d21, l2.d21),
+                            d22 = MergeDayData(l1.d22, l2.d22),
+                            d23 = MergeDayData(l1.d23, l2.d23),
+                            d24 = MergeDayData(l1.d24, l2.d24),
+                            d25 = MergeDayData(l1.d25, l2.d25),
+                            d26 = MergeDayData(l1.d26, l2.d26),
+                            d27 = MergeDayData(l1.d27, l2.d27),
+                            d28 = MergeDayData(l1.d28, l2.d28),
+                            d29 = MergeDayData(l1.d29, l2.d29),
+                            d30 = MergeDayData(l1.d30, l2.d30),
+                            d31 = MergeDayData(l1.d31, l2.d31),
+                        }).ToList();
             }
-            return comboList;
+
+            // Helper method to merge individual day data
+            int MergeDayData(int monthDay, int ftoDay)
+            {
+                return monthDay == 0 ? ftoDay : monthDay;
+            }
+
+            // Fetch data
+            var monthList = _dbContext.V_FTODashboard_FTOMonths.Where(a => a.MMYYYY == monthYear).ToList();
+            var ftoByMonthList = _tsContext.V_FTODashboard_FTOByMonth.Where(a => a.MMYYYY == monthYear).ToList();
+
+            // Return merged data if both lists have data
+            return (monthList.Count > 0 && ftoByMonthList.Count > 0) ? MergeMonthAndFTOData(monthList, ftoByMonthList) : new List<EmployeeFTO>();
         }
 
         public List<EmployeeFTO> GetEmployeeFTOforGrid(List<EmployeeFTO> empFTOList, List<Employee> empFilterList)

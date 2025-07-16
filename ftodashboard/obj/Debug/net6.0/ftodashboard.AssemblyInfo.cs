@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ftodashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f33870bf7b55d7aa69c8300e4535a2a1e5c23bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ftodashboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ftodashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
